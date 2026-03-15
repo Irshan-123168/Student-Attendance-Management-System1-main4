@@ -64,8 +64,8 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                             letterSpacing: '-0.04em',
                             textShadow: '0 4px 12px rgba(0,0,0,0.1)'
                         }}>
-                            Redefining Attendance <br />
-                            <span style={{ color: 'rgba(255,255,255,0.7)', fontStyle: 'italic' }}>For Modern Institutions</span>
+                            Attendance <br />
+                            <span style={{ color: 'rgba(255,255,255,0.7)', fontStyle: 'italic' }}>Management System</span>
                         </h1>
                         
                         <p style={{ 
@@ -149,8 +149,8 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
             <section style={{ padding: '80px 2rem', background: 'white' }}>
                 <div className="container">
                     <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-                        <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>Institutional Registry</h2>
-                        <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>Active student profiles currently synchronized in the system</p>
+                        <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>The Team Members</h2>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>Active profiles currently synchronized in the system</p>
                     </div>
 
                     <div style={{ 
@@ -232,7 +232,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                         <FeatureCard 
                             icon={<Users className="text-indigo-600" />} 
                             title="Global Directory" 
-                            desc="A centralized hub for all student and staff identities across the entire campus." 
+                            desc="A centralized hub for all staff and member identities across the entire campus." 
                         />
                     </div>
                 </div>

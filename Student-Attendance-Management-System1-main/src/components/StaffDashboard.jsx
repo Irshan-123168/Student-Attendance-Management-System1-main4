@@ -78,7 +78,7 @@ const StaffDashboard = ({ user, students = [], onNavigateToAttendance }) => {
                 </div>
             </div>
             <div className="card">
-                <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Institutional Registry</h3>
+                <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>The Team Members</h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
                     {[
                         "M Shiva Balaji Gouda",

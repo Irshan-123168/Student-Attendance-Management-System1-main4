@@ -40,7 +40,13 @@ const LeaveGateway = ({ user }) => {
         ));
     };
 
-    const isAuthority = user?.role === 'HOD' || user?.role === 'ADMIN';
+    const handleDisapprove = (id) => {
+        setRequests(requests.map(req => 
+            req.id === id ? { ...req, status: 'Rejected' } : req
+        ));
+    };
+
+    const isAuthority = user?.role === 'HOD' || user?.role === 'ADMIN' || user?.role === 'TEACHER';
 
     return (
         <div className="animate-fade space-y-8">
@@ -97,20 +103,30 @@ const LeaveGateway = ({ user }) => {
                             </div>
                             <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                                 <div style={{ textAlign: 'right' }}>
-                                    <span className={`badge badge-${req.status === 'Approved' ? 'success' : 'warning'}`}>
+                                    <span className={`badge badge-${req.status === 'Approved' ? 'success' : req.status === 'Rejected' ? 'danger' : 'warning'}`}>
                                         {req.status}
                                     </span>
                                     <p style={{ fontSize: '0.75rem', color: 'var(--text-light)', marginTop: '0.5rem', fontWeight: 600 }}>{req.date}</p>
                                 </div>
                                 {isAuthority && req.status === 'Pending' && (
-                                    <button 
-                                        onClick={() => handleApprove(req.id)}
-                                        className="btn btn-primary"
-                                        style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem', borderRadius: '8px' }}
-                                    >
-                                        Approve
-                                    </button>
+                                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                        <button 
+                                            onClick={() => handleApprove(req.id)}
+                                            className="btn btn-primary"
+                                            style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem', borderRadius: '8px', background: 'var(--success-color)', borderColor: 'var(--success-color)' }}
+                                        >
+                                            Approve
+                                        </button>
+                                        <button 
+                                            onClick={() => handleDisapprove(req.id)}
+                                            className="btn btn-secondary"
+                                            style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem', borderRadius: '8px', color: 'var(--error-color)', borderColor: 'var(--error-color)' }}
+                                        >
+                                            Disapprove
+                                        </button>
+                                    </div>
                                 )}
+
                             </div>
                         </motion.div>
                     ))}
