@@ -22,6 +22,7 @@ import SchedulePage from './components/SchedulePage';
 import LeaveGateway from './components/LeaveGateway';
 import ProfilePage from './components/ProfilePage';
 import HomePage from './components/HomePage';
+import CurriculumHub from './components/CurriculumHub';
 import { api } from './api';
 
 function App() {
@@ -242,10 +243,10 @@ function App() {
                     hideNavbar={true}
                 />
             )}
-            {activeTab === 'admin-dashboard' && <AdminDashboard users={users} students={students} onNavigate={(tab) => setActiveTab(tab)} />}
-            {activeTab === 'hod-dashboard' && <HodDashboard onNavigate={(tab) => setActiveTab(tab)} students={students} onUpdateStudent={handleUpdateStudent} />}
-            {activeTab === 'staff-dashboard' && <StaffDashboard user={currentUser} onNavigateToAttendance={(tab) => setActiveTab(tab)} students={students} />}
-            {activeTab === 'student-dashboard' && <StudentDashboard user={currentUser} students={students} onStatusChange={handleStatusChange} onNavigate={(tab) => setActiveTab(tab)} />}
+            {activeTab === 'admin-dashboard' && <AdminDashboard users={users} students={students} onNavigate={(tab) => setActiveTab(tab)} searchQuery={searchQuery} />}
+            {activeTab === 'hod-dashboard' && <HodDashboard onNavigate={(tab) => setActiveTab(tab)} students={students} onUpdateStudent={handleUpdateStudent} searchQuery={searchQuery} />}
+            {activeTab === 'staff-dashboard' && <StaffDashboard user={currentUser} onNavigateToAttendance={(tab) => setActiveTab(tab)} students={students} searchQuery={searchQuery} />}
+            {activeTab === 'student-dashboard' && <StudentDashboard user={currentUser} students={students} onStatusChange={handleStatusChange} onNavigate={(tab) => setActiveTab(tab)} searchQuery={searchQuery} />}
             {(activeTab === 'dashboard' || activeTab === 'analytics') && <Dashboard students={students} searchQuery={searchQuery} isSearching={isSearching} />}
             {activeTab === 'reports' && <ReportPage records={students} />}
             {(activeTab === 'attendance' || activeTab === 'quick-mark' || activeTab === 'attenditics' || activeTab === 'staff-attendance') && (
@@ -273,6 +274,8 @@ function App() {
             {activeTab === 'profile' && <ProfilePage user={currentUser} onDeleteAccount={handleDeleteAccount} />}
 
             {activeTab === 'schedule' && <SchedulePage />}
+
+            {activeTab === 'curriculum' && <CurriculumHub />}
 
             {['students', 'admissions', 'staff-management', 'employees'].includes(activeTab) && (
                 directoryActive ? (

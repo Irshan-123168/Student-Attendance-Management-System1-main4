@@ -1,14 +1,28 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Activity, Users, ClipboardList, TrendingUp, UserCheck, AlertTriangle, Download, FileText } from 'lucide-react';
+import { Activity, Users, ClipboardList, TrendingUp, UserCheck, AlertTriangle, Download, FileText, CheckCircle } from 'lucide-react';
 import { generateStudentReport, generateRegistryExport } from '../utils/exportUtils';
 
-const HodDashboard = ({ user, students = [], onNavigate }) => {
+const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '' }) => {
     // Dynamic Analysis
     const totalStudents = students.length;
     const presentRate = totalStudents > 0 
         ? Math.round((students.filter(s => s.status === 'Present').length / totalStudents) * 100) 
         : 0;
+
+    const filteredStudents = students.filter(s => 
+        s.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        s.roll.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const teamMembers = [
+        "M Shiva Balaji Gouda",
+        "Shaik Irshan",
+        "Dasari Charan Venkat",
+        "Sidda Reddy",
+        "Harsha Reddy",
+        "Indravaraprasad"
+    ].filter(name => name.toLowerCase().includes(searchQuery.toLowerCase()));
 
     return (
         <div className="animate-fade space-y-6">
@@ -36,24 +50,63 @@ const HodDashboard = ({ user, students = [], onNavigate }) => {
                 <div className="card">
                     <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Quick Protocols</h3>
                     <div className="grid grid-cols-2 gap-4">
-                        <ProtocolButton icon={<Download />} label="Download Registry" onClick={() => generateRegistryExport(students)} />
+                        <ProtocolButton icon={<CheckCircle />} label="Mark Attendance" onClick={() => onNavigate('attendance')} />
                         <ProtocolButton icon={<FileText />} label="Generate Report" onClick={() => generateStudentReport(students)} />
                         <ProtocolButton icon={<Activity />} label="Analytics" onClick={() => onNavigate('reports')} />
                         <ProtocolButton icon={<Users />} label="Leave Gateway" onClick={() => onNavigate('leave')} />
                     </div>
                 </div>
             </div>
+
+            <div className="card">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                    <h3 style={{ fontWeight: 700 }}>Attendance Monitor</h3>
+                    <button 
+                        onClick={() => onNavigate('attendance')}
+                        className="btn btn-primary"
+                        style={{ padding: '0.5rem 1rem', fontSize: '0.8rem' }}
+                    >
+                        Mark Attendance
+                    </button>
+                </div>
+                <div className="overflow-x-auto">
+                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                        <thead>
+                            <tr style={{ borderBottom: '2px solid var(--border-color)', textAlign: 'left' }}>
+                                <th style={{ padding: '1rem', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase' }}>Learner Identity</th>
+                                <th style={{ padding: '1rem', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase' }}>Index No.</th>
+                                <th style={{ padding: '1rem', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase' }}>Protocol Status</th>
+                                <th style={{ padding: '1rem', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase' }}>Sync Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredStudents.length > 0 ? (
+                                filteredStudents.slice(0, 5).map((student, i) => (
+                                    <tr key={student.id || i} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                                        <td style={{ padding: '1rem', fontWeight: 700 }}>{student.name}</td>
+                                        <td style={{ padding: '1rem', color: 'var(--text-light)' }}>{student.roll}</td>
+                                        <td style={{ padding: '1rem' }}>
+                                            <span className={`badge badge-${student.status === 'Present' ? 'success' : student.status === 'Absent' ? 'danger' : 'warning'}`}>
+                                                {student.status || 'Pending'}
+                                            </span>
+                                        </td>
+                                        <td style={{ padding: '1rem', fontSize: '0.8rem', color: 'var(--text-light)' }}>{student.time || '-'}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="4" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-light)' }}>No matching metrics found.</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div className="card">
                 <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>The Team Members</h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
-                    {[
-                        "M Shiva Balaji Gouda",
-                        "Shaik Irshan",
-                        "Dasari Charan Venkat",
-                        "Sidda Reddy",
-                        "Harsha Reddy",
-                        "Indravaraprasad"
-                    ].map((name, idx) => (
+                    {teamMembers.length > 0 ? teamMembers.map((name, idx) => (
                         <div key={idx} style={{ 
                             padding: '1rem', 
                             background: 'var(--bg-secondary)', 
@@ -82,7 +135,9 @@ const HodDashboard = ({ user, students = [], onNavigate }) => {
                                 <p style={{ fontSize: '0.65rem', color: 'var(--success-color)', fontWeight: 700, margin: 0 }}>SGP STUDENT</p>
                             </div>
                         </div>
-                    ))}
+                    )) : (
+                        <p style={{ padding: '1rem', color: 'var(--text-light)', fontStyle: 'italic' }}>No matching team members found.</p>
+                    )}
                 </div>
             </div>
         </div>

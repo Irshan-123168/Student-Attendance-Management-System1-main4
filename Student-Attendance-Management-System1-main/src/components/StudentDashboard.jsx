@@ -4,7 +4,7 @@ import { Activity, Clock, UserCheck, Calendar, FileText, PieChart, Download } fr
 import { generateStudentReport, generateRegistryExport } from '../utils/exportUtils';
 import { api } from '../api';
 
-const StudentDashboard = ({ user, students = [], onNavigate }) => {
+const StudentDashboard = ({ user, students = [], onNavigate, searchQuery = '' }) => {
     // Attempt to find the current student's record in the registry
     const studentRecord = students.find(s => s.name === user?.username || s.roll === user?.rollNumber);
     
@@ -12,6 +12,15 @@ const StudentDashboard = ({ user, students = [], onNavigate }) => {
     const totalPresent = students.filter(s => s.status === 'Present').length;
     const totalStudents = students.length || 1;
     const globalAttendance = Math.round((totalPresent / totalStudents) * 100);
+
+    const teamMembers = [
+        "M Shiva Balaji Gouda",
+        "Shaik Irshan",
+        "Dasari Charan Venkat",
+        "Sidda Reddy",
+        "Harsha Reddy",
+        "Indravaraprasad"
+    ].filter(name => name.toLowerCase().includes(searchQuery.toLowerCase()));
 
     const metrics = {
         personalStatus: studentRecord?.status || "Pending",
@@ -37,13 +46,15 @@ const StudentDashboard = ({ user, students = [], onNavigate }) => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 card">
                     <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Weekly Attendance Trace</h3>
-                    <div style={{ height: '300px', display: 'flex', alignItems: 'flex-end', gap: '1rem', padding: '1rem' }}>
-                        <Bar day="Mon" height="90%" active />
-                        <Bar day="Tue" height="85%" active />
-                        <Bar day="Wed" height="70%" />
-                        <Bar day="Thu" height="95%" active />
-                        <Bar day="Fri" height="80%" active />
-                        <Bar day="Sat" height="40%" />
+                    <div style={{ height: '300px', padding: '1rem' }}>
+                        <LineGraph data={[
+                            { day: "Mon", value: 90 },
+                            { day: "Tue", value: 85 },
+                            { day: "Wed", value: 70 },
+                            { day: "Thu", value: 95 },
+                            { day: "Fri", value: 80 },
+                            { day: "Sat", value: 40 }
+                        ]} />
                     </div>
                 </div>
 
@@ -59,14 +70,7 @@ const StudentDashboard = ({ user, students = [], onNavigate }) => {
             <div className="card">
                 <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Peer Registry</h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
-                    {[
-                        "M Shiva Balaji Gouda",
-                        "Shaik Irshan",
-                        "Dasari Charan Venkat",
-                        "Sidda Reddy",
-                        "Harsha Reddy",
-                        "Indravaraprasad"
-                    ].map((name, idx) => (
+                    {teamMembers.length > 0 ? teamMembers.map((name, idx) => (
                         <div key={idx} style={{ 
                             padding: '1rem', 
                             background: 'var(--bg-secondary)', 
@@ -76,7 +80,7 @@ const StudentDashboard = ({ user, students = [], onNavigate }) => {
                             gap: '1rem',
                             border: '1px solid var(--border-color)'
                         }}>
-                            <div style={{ 
+                             <div style={{ 
                                 width: '32px', 
                                 height: '32px', 
                                 background: 'var(--primary-gradient)', 
@@ -95,7 +99,9 @@ const StudentDashboard = ({ user, students = [], onNavigate }) => {
                                 <p style={{ fontSize: '0.65rem', color: 'var(--success-color)', fontWeight: 700, margin: 0 }}>SGP STUDENT</p>
                             </div>
                         </div>
-                    ))}
+                    )) : (
+                        <p style={{ padding: '1rem', color: 'var(--text-light)', fontStyle: 'italic' }}>No matching peers found.</p>
+                    )}
                 </div>
             </div>
         </div>
@@ -112,12 +118,62 @@ const MetricCard = ({ icon, title, value, color }) => (
     </div>
 );
 
-const Bar = ({ day, height, active }) => (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
-        <div style={{ width: '100%', height: height, background: active ? 'var(--primary-gradient)' : 'var(--bg-tertiary)', borderRadius: '6px' }}></div>
-        <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-light)' }}>{day}</span>
-    </div>
-);
+const LineGraph = ({ data }) => {
+    const points = data.map((d, i) => `${(i * 100) / (data.length - 1)},${100 - d.value}`).join(' ');
+    
+    return (
+        <div style={{ width: '100%', height: '100%', position: 'relative', paddingTop: '2rem' }}>
+            <svg viewBox="0 0 100 110" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
+                <defs>
+                    <linearGradient id="lineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="var(--primary-color)" stopOpacity="0.2" />
+                        <stop offset="100%" stopColor="var(--primary-color)" stopOpacity="0" />
+                    </linearGradient>
+                </defs>
+                
+                {/* Area under line */}
+                <polyline
+                    fill="url(#lineGradient)"
+                    stroke="none"
+                    points={`0,100 ${points} 100,100`}
+                />
+                
+                {/* Main Trace Line */}
+                <polyline
+                    fill="none"
+                    stroke="var(--primary-color)"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    points={points}
+                    style={{ filter: 'drop-shadow(0 4px 6px rgba(99, 102, 241, 0.3))' }}
+                />
+                
+                {/* Data Nodes */}
+                {data.map((d, i) => (
+                    <g key={i}>
+                        <circle
+                            cx={(i * 100) / (data.length - 1)}
+                            cy={100 - d.value}
+                            r="3"
+                            fill="white"
+                            stroke="var(--primary-color)"
+                            strokeWidth="2"
+                        />
+                        <text
+                            x={(i * 100) / (data.length - 1)}
+                            y="112"
+                            textAnchor="middle"
+                            style={{ fontSize: '5px', fontWeight: 800, fill: 'var(--text-light)' }}
+                        >
+                            {d.day}
+                        </text>
+                    </g>
+                ))}
+            </svg>
+        </div>
+    );
+};
 
 const ActionButton = ({ icon, label, color, onClick }) => (
     <button 

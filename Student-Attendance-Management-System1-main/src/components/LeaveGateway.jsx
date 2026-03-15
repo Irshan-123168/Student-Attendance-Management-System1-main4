@@ -23,7 +23,7 @@ const LeaveGateway = ({ user }) => {
             id: Date.now(),
             type: formData.type.split(' ')[0], // Extract first word
             reason: formData.reason,
-            status: 'Approved',
+            status: 'Pending',
             date: formData.startDate
         };
         setRequests([newRequest, ...requests]);
@@ -175,6 +175,7 @@ const LeaveGateway = ({ user }) => {
                                         <option>Educational Sync</option>
                                         <option>Medical Override</option>
                                         <option>Personal Node Lag</option>
+                                        <option>Others</option>
                                     </select>
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">

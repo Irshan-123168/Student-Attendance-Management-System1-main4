@@ -3,7 +3,16 @@ import { motion } from 'framer-motion';
 import { Shield, Users, FileText, Settings, Activity, Download } from 'lucide-react';
 import { generateStudentReport, generateRegistryExport } from '../utils/exportUtils';
 
-const AdminDashboard = ({ users = [], students = [], onNavigate }) => {
+const AdminDashboard = ({ users = [], students = [], onNavigate, searchQuery = '' }) => {
+    const teamMembers = [
+        "M Shiva Balaji Gouda",
+        "Shaik Irshan",
+        "Dasari Charan Venkat",
+        "Sidda Reddy",
+        "Harsha Reddy",
+        "Indravaraprasad"
+    ].filter(name => name.toLowerCase().includes(searchQuery.toLowerCase()));
+
     return (
         <div className="animate-fade space-y-6">
             <header>
@@ -40,14 +49,7 @@ const AdminDashboard = ({ users = [], students = [], onNavigate }) => {
             <div className="card">
                 <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>The Team Members</h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
-                    {[
-                        "M Shiva Balaji Gouda",
-                        "Shaik Irshan",
-                        "Dasari Charan Venkat",
-                        "Sidda Reddy",
-                        "Harsha Reddy",
-                        "Indravaraprasad"
-                    ].map((name, idx) => (
+                    {teamMembers.length > 0 ? teamMembers.map((name, idx) => (
                         <div key={idx} style={{ 
                             padding: '1rem', 
                             background: 'var(--bg-secondary)', 
@@ -76,7 +78,9 @@ const AdminDashboard = ({ users = [], students = [], onNavigate }) => {
                                 <p style={{ fontSize: '0.65rem', color: 'var(--success-color)', fontWeight: 700, margin: 0 }}>SGP STUDENT</p>
                             </div>
                         </div>
-                    ))}
+                    )) : (
+                        <p style={{ padding: '1rem', color: 'var(--text-light)', fontStyle: 'italic' }}>No matching team members found.</p>
+                    )}
                 </div>
             </div>
         </div>
