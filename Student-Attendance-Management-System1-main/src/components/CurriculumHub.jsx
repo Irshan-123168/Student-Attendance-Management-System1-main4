@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Book, GraduationCap, Microscope, Code, Database, Globe, Layers, Award, HardHat, Zap, Settings, Building2, FlaskConical } from 'lucide-react';
+import { Book, GraduationCap, Microscope, Code, Database, Globe, Layers, Award, HardHat, Zap, Settings, Home, FlaskRound as Flask } from 'lucide-react';
 
 const CurriculumHub = () => {
     const [selectedBranch, setSelectedBranch] = useState('CSE');
@@ -10,8 +10,8 @@ const CurriculumHub = () => {
         { id: 'CSE', name: 'Computer Science', icon: <Code size={20} />, color: '#6366f1' },
         { id: 'EEE', name: 'Electrical & Electronics', icon: <Zap size={20} />, color: '#f59e0b' },
         { id: 'MEC', name: 'Mechanical Engg', icon: <Settings size={20} />, color: '#ef4444' },
-        { id: 'CE', name: 'Civil Engg', icon: <Building2 size={20} />, color: '#3b82f6' },
-        { id: 'MT', name: 'Metallurgy Engg', icon: <FlaskConical size={20} />, color: '#10b981' }
+        { id: 'CE', name: 'Civil Engg', icon: <Home size={20} />, color: '#3b82f6' },
+        { id: 'MT', name: 'Metallurgy Engg', icon: <Flask size={20} />, color: '#10b981' }
     ];
 
     const curriculumData = {
@@ -72,7 +72,7 @@ const CurriculumHub = () => {
                 { id: 'MA102', name: 'Applied Mathematics', type: 'Theory', icon: <Layers size={20} />, weight: '4 Credits' }
             ],
             2: [
-                { id: 'ME201', name: 'Thermodynamics', type: 'Theory', icon: <FlaskConical size={20} />, weight: '4 Credits' },
+                { id: 'ME201', name: 'Thermodynamics', type: 'Theory', icon: <Flask size={20} />, weight: '4 Credits' },
                 { id: 'ML202', name: 'Workshop Practice', type: 'Lab', icon: <Microscope size={20} />, weight: '2 Credits' }
             ],
             3: [
@@ -92,11 +92,11 @@ const CurriculumHub = () => {
         },
         CE: {
             1: [
-                { id: 'CE101', name: 'Building Materials', type: 'Theory', icon: <Building2 size={20} />, weight: '4 Credits' },
+                { id: 'CE101', name: 'Building Materials', type: 'Theory', icon: <Home size={20} />, weight: '4 Credits' },
                 { id: 'MA102', name: 'Applied Mathematics', type: 'Theory', icon: <Layers size={20} />, weight: '4 Credits' }
             ],
             2: [
-                { id: 'CE201', name: 'Surveying', type: 'Theory', icon: <Building2 size={20} />, weight: '4 Credits' },
+                { id: 'CE201', name: 'Surveying', type: 'Theory', icon: <Home size={20} />, weight: '4 Credits' },
                 { id: 'CL202', name: 'Surveying Lab', type: 'Lab', icon: <Microscope size={20} />, weight: '2 Credits' }
             ],
             3: [
@@ -106,7 +106,7 @@ const CurriculumHub = () => {
                 { id: 'CL401', name: 'Concrete Technology Lab', type: 'Lab', icon: <Microscope size={20} />, weight: '4 Credits' }
             ],
             5: [
-                { id: 'CE501', name: 'Structural Analysis', type: 'Theory', icon: <Building2 size={20} />, weight: '4 Credits' },
+                { id: 'CE501', name: 'Structural Analysis', type: 'Theory', icon: <Home size={20} />, weight: '4 Credits' },
                 { id: 'CL502', name: 'Geo-Technical Lab', type: 'Lab', icon: <Microscope size={20} />, weight: '3 Credits' }
             ],
             6: [
@@ -116,7 +116,7 @@ const CurriculumHub = () => {
         },
         MT: {
             1: [
-                { id: 'MT101', name: 'Intro to Metallurgy', type: 'Theory', icon: <FlaskConical size={20} />, weight: '4 Credits' },
+                { id: 'MT101', name: 'Intro to Metallurgy', type: 'Theory', icon: <Flask size={20} />, weight: '4 Credits' },
                 { id: 'MA102', name: 'Applied Mathematics', type: 'Theory', icon: <Layers size={20} />, weight: '4 Credits' }
             ],
             2: [
@@ -130,11 +130,11 @@ const CurriculumHub = () => {
                 { id: 'ML401', name: 'Foundry Technology Lab', type: 'Lab', icon: <Microscope size={20} />, weight: '4 Credits' }
             ],
             5: [
-                { id: 'MT501', name: 'Extractive Metallurgy', type: 'Theory', icon: <FlaskConical size={20} />, weight: '4 Credits' },
+                { id: 'MT501', name: 'Extractive Metallurgy', type: 'Theory', icon: <Flask size={20} />, weight: '4 Credits' },
                 { id: 'ML502', name: 'Heat Treatment Lab', type: 'Lab', icon: <Layers size={20} />, weight: '3 Credits' }
             ],
             6: [
-                { id: 'MT601', name: 'Corrosion Engineering', type: 'Theory', icon: <FlaskConical size={20} />, weight: '4 Credits' },
+                { id: 'MT601', name: 'Corrosion Engineering', type: 'Theory', icon: <Flask size={20} />, weight: '4 Credits' },
                 { id: 'ML602', name: 'Major Project', type: 'Practical', icon: <Award size={20} />, weight: '8 Credits' }
             ]
         }

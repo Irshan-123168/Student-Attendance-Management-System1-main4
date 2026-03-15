@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Activity, Users, CheckCircle, Clock, Download, FileText, FileSpreadsheet, Contact } from 'lucide-react';
+import { Activity, Users, CheckCircle, Clock, Download, FileText, UserPlus } from 'lucide-react';
 import { generateStudentReport, generateRegistryExport, generateMasterReport } from '../utils/exportUtils';
 
 const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQuery = '' }) => {
@@ -40,7 +40,7 @@ const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQue
                         className="btn btn-secondary"
                         style={{ height: '48px', padding: '0 1.5rem', fontWeight: 700, borderColor: 'var(--primary-color)', color: 'var(--primary-color)' }}
                     >
-                        <FileSpreadsheet size={18} />
+                        <FileText size={18} />
                         Export Master
                     </button>
                     <button 
@@ -79,7 +79,7 @@ const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQue
                     <div className="grid grid-cols-2 gap-4">
                         <ActionButton icon={<Users />} label="Student Registry" onClick={() => onNavigateToAttendance('students')} />
                         <ActionButton icon={<CheckCircle />} label="Mark Attendance" onClick={() => onNavigateToAttendance('attendance')} />
-                        <ActionButton icon={<Contact size={20} />} label="Member Directory" onClick={() => onNavigateToAttendance('students')} />
+                        <ActionButton icon={<UserPlus size={20} />} label="Member Directory" onClick={() => onNavigateToAttendance('students')} />
                         <ActionButton icon={<Download />} label="Download Registry" onClick={() => generateRegistryExport(students)} />
                         <ActionButton icon={<FileText />} label="Generate Report" onClick={() => generateStudentReport(students)} />
                         <ActionButton icon={<Clock />} label="Leave Gateway" onClick={() => onNavigateToAttendance('leave')} />

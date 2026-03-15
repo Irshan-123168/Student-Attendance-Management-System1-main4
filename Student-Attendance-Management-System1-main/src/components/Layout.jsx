@@ -17,7 +17,8 @@ import {
     User,
     Home,
     Search,
-    Trash2
+    Trash2,
+    Book
 } from 'lucide-react';
 
 const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccount, searchQuery, setSearchQuery }) => {
