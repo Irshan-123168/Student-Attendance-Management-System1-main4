@@ -8,11 +8,17 @@ const StudentDashboard = ({ user, students = [], onNavigate, searchQuery = '' })
     // Attempt to find the current student's record in the registry
     const studentRecord = students.find(s => s.name === user?.username || s.roll === user?.rollNumber);
     
+    // Personal stats calculation
+    const presentDays = studentRecord?.presentCount || 0;
+    const absentDays = studentRecord?.absentCount || 0;
+    const totalPersonal = presentDays + absentDays;
+    const personalPercentage = totalPersonal > 0 ? ((presentDays / totalPersonal) * 100).toFixed(1) : '0.0';
+
     // Aggregated Metrics
     const totalPresent = students.filter(s => s.status === 'Present').length;
     const totalStudents = students.length || 1;
     const globalAttendance = Math.round((totalPresent / totalStudents) * 100);
-
+    
     const teamMembers = [
         "M Shiva Balaji Gouda",
         "Shaik Irshan",
@@ -26,21 +32,27 @@ const StudentDashboard = ({ user, students = [], onNavigate, searchQuery = '' })
         personalStatus: studentRecord?.status || "Pending",
         personalTime: studentRecord?.time !== '-' ? studentRecord?.time : "N/A",
         globalTrend: `${globalAttendance}%`,
-        totalNodes: totalStudents
+        totalNodes: totalStudents,
+        percentage: `${personalPercentage}%`,
+        present: presentDays,
+        absent: absentDays
     };
 
     return (
         <div className="animate-fade space-y-6">
             <header>
                 <h2 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Student Portal: {user?.username}</h2>
-                <p style={{ color: 'var(--text-secondary)' }}>Central Learning Terminal & Academic Trace</p>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginTop: '0.25rem' }}>
+                    <p style={{ color: 'var(--text-secondary)' }}>Central Learning Terminal & Academic Trace</p>
+                    <div className="badge badge-info" style={{ fontWeight: 800 }}>ROLL: {user?.rollNumber || 'N/A'}</div>
+                </div>
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <MetricCard icon={<PieChart />} title="My Status" value={metrics.personalStatus} color={metrics.personalStatus === 'Present' ? '#10b981' : '#f59e0b'} />
-                <MetricCard icon={<Clock />} title="Last Verified" value={metrics.personalTime} color="#6366f1" />
-                <MetricCard icon={<Activity />} title="Global Trend" value={metrics.globalTrend} color="#8b5cf6" />
-                <MetricCard icon={<UserCheck />} title="Total Registry" value={metrics.totalNodes} color="#10b981" />
+                <MetricCard icon={<PieChart />} title="Performance" value={metrics.percentage} color={parseFloat(personalPercentage) >= 75 ? '#10b981' : '#ef4444'} />
+                <MetricCard icon={<UserCheck />} title="Present Days" value={metrics.present} color="#10b981" />
+                <MetricCard icon={<Activity />} title="Absent Days" value={metrics.absent} color="#ef4444" />
+                <MetricCard icon={<Clock />} title="Last Activity" value={metrics.personalTime} color="#6366f1" />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

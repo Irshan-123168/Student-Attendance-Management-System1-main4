@@ -4,20 +4,49 @@ import { User, ClipboardList, CheckCircle2, XCircle, Clock, Users, Edit2, Save, 
 
 const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent }) => {
     const [editingStudent, setEditingStudent] = React.useState(null);
-    const [editForm, setEditForm] = React.useState({ name: '', roll: '', studentClass: '', status: '' });
+    const [editForm, setEditForm] = React.useState({ name: '', roll: '', studentClass: '', status: '', branch: '', semester: '', subject: '' });
+    
+    // Attendance Session State
+    const [selectedBranch, setSelectedBranch] = React.useState('CSE');
+    const [selectedSem, setSelectedSem] = React.useState('1');
+    const [selectedSubject, setSelectedSubject] = React.useState('FOC');
+
+    const branches = ['CSE', 'EEE', 'MEC', 'CE', 'MT'];
+    const semesters = ['1', '2', '3', '4', '5', '6'];
+    const subjects = {
+        'CSE': ['FOC', 'PMS', 'Java', 'Full Stack', 'Cyber Security'],
+        'EEE': ['Basic Electrical', 'Electrical Circuits', 'Power Systems', 'Control Systems'],
+        'MEC': ['Mechanics', 'Thermodynamics', 'Thermal Engg', 'Workshop'],
+        'CE': ['Building Materials', 'Surveying', 'Structural Analysis', 'Environmental'],
+        'MT': ['Intro Metallurgy', 'Physical Metallurgy', 'Extractive', 'Corrosion']
+    };
 
     const handleEditStart = (s) => {
         setEditingStudent(s.id);
-        setEditForm({ name: s.name, roll: s.roll, studentClass: s.studentClass, status: s.status });
+        setEditForm({ 
+            name: s.name, 
+            roll: s.roll, 
+            studentClass: s.studentClass, 
+            status: s.status,
+            branch: s.branch || selectedBranch,
+            semester: s.semester || selectedSem,
+            subject: s.subject || selectedSubject
+        });
     };
 
     const handleSaveEdit = async () => {
         if (onUpdateStudent) {
             await onUpdateStudent(editingStudent, editForm);
-        } else if (updateStatus && editForm.status !== students.find(s => s.id === editingStudent)?.status) {
-            await updateStatus(editingStudent, editForm.status);
+        } else if (updateStatus) {
+            await updateStatus(editingStudent, editForm.status, editForm.branch, editForm.semester, editForm.subject);
         }
         setEditingStudent(null);
+    };
+
+    const handleQuickStatusUpdate = async (id, status) => {
+        if (updateStatus) {
+            await updateStatus(id, status, selectedBranch, selectedSem, selectedSubject);
+        }
     };
 
     const query = (searchQuery || '').toLowerCase();
@@ -40,8 +69,56 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
                     <h2 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)' }}>Attendance Central</h2>
                     <p style={{ color: 'var(--text-secondary)' }}>Manage and synchronize student attendance records</p>
                 </div>
-                <div className="badge badge-info shadow-sm">Updated Just Now</div>
+                <div style={{ display: 'flex', gap: '0.75rem' }}>
+                    <div className="badge badge-info shadow-sm">Updated Just Now</div>
+                </div>
             </header>
+
+            {/* Session Configuration Card */}
+            <div className="card" style={{ padding: '1.5rem', background: 'var(--bg-secondary)', border: '1px solid var(--primary-color)', borderLeft: '8px solid var(--primary-color)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
+                    <div>
+                        <label style={{ display: 'block', fontSize: '0.7rem', fontWeight: 900, color: 'var(--text-light)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Active Branch</label>
+                        <select 
+                            className="form-input" 
+                            value={selectedBranch} 
+                            onChange={(e) => {
+                                setSelectedBranch(e.target.value);
+                                setSelectedSubject(subjects[e.target.value][0]);
+                            }}
+                            style={{ fontWeight: 700 }}
+                        >
+                            {branches.map(b => <option key={b} value={b}>{b} Engineering</option>)}
+                        </select>
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', fontSize: '0.7rem', fontWeight: 900, color: 'var(--text-light)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Academic Semester</label>
+                        <select 
+                            className="form-input" 
+                            value={selectedSem} 
+                            onChange={(e) => setSelectedSem(e.target.value)}
+                            style={{ fontWeight: 700 }}
+                        >
+                            {semesters.map(s => <option key={s} value={s}>Semester 0{s}</option>)}
+                        </select>
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', fontSize: '0.7rem', fontWeight: 900, color: 'var(--text-light)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Active Subject</label>
+                        <select 
+                            className="form-input" 
+                            value={selectedSubject} 
+                            onChange={(e) => setSelectedSubject(e.target.value)}
+                            style={{ fontWeight: 700 }}
+                        >
+                            {subjects[selectedBranch].map(s => <option key={s} value={s}>{s}</option>)}
+                        </select>
+                    </div>
+                </div>
+                <div style={{ marginTop: '1rem', fontSize: '0.75rem', color: 'var(--primary-color)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <div style={{ width: '8px', height: '8px', background: 'var(--primary-color)', borderRadius: '50%', animation: 'pulse 1s infinite' }}></div>
+                    Live Session: {selectedBranch} / SEM-0{selectedSem} / {selectedSubject}
+                </div>
+            </div>
 
             {/* Stats Overview */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -62,42 +139,64 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
                     <table>
                         <thead>
                             <tr>
-                                <th>Identity Plate</th>
-                                <th>Registry Roll</th>
-                                <th>Operational Class</th>
-                                <th>Status Vector</th>
-                                <th>Command Link</th>
+                                <th>Student Identity</th>
+                                <th>Roll No</th>
+                                <th>Branch/Sem</th>
+                                 <th>Subject</th>
+                                <th>Status</th>
+                                <th>Performance</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <AnimatePresence>
-                                {filteredStudents.map((s, idx) => (
-                                    <motion.tr 
-                                        key={s.id}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: idx * 0.05 }}
-                                    >
-                                        <td>
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                                <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'var(--bg-tertiary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                                    <User size={18} className="text-gray-400" />
+                                {filteredStudents.map((s, idx) => {
+                                    const total = (s.presentCount || 0) + (s.absentCount || 0);
+                                    const percentage = total > 0 
+                                        ? ((s.presentCount || 0) / total * 100).toFixed(1) 
+                                        : '0.0';
+                                    
+                                    return (
+                                        <motion.tr 
+                                            key={s.id}
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: idx * 0.05 }}
+                                        >
+                                            <td>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                                    <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'var(--bg-tertiary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                        <User size={18} className="text-gray-400" />
+                                                    </div>
+                                                    <span style={{ fontWeight: 600 }}>{s.name}</span>
                                                 </div>
-                                                <span style={{ fontWeight: 600 }}>{s.name}</span>
-                                            </div>
-                                        </td>
-                                        <td style={{ fontWeight: 700, color: 'var(--text-light)' }}>{s.roll}</td>
-                                        <td style={{ fontWeight: 600 }}>{s.studentClass}</td>
-                                        <td>
-                                            <span className={`badge badge-${s.status === 'Present' ? 'success' : s.status === 'Absent' ? 'danger' : 'warning'}`}>
-                                                {s.status}
-                                            </span>
-                                        </td>
-                                        <td>
+                                            </td>
+                                            <td style={{ fontWeight: 700, color: 'var(--text-light)' }}>{s.roll}</td>
+                                            <td>
+                                                <div style={{ fontSize: '0.8rem', fontWeight: 700 }}>{s.branch || selectedBranch}</div>
+                                                <div style={{ fontSize: '0.7rem', color: 'var(--text-light)' }}>SEM-0{s.semester || selectedSem}</div>
+                                            </td>
+                                            <td style={{ fontWeight: 600, fontSize: '0.85rem' }}>{s.subject || selectedSubject}</td>
+                                            <td>
+                                                <span className={`badge badge-${s.status === 'Present' ? 'success' : s.status === 'Absent' ? 'danger' : 'warning'}`}>
+                                                    {s.status}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                                    <div style={{ fontSize: '0.9rem', fontWeight: 800, color: parseFloat(percentage) >= 75 ? 'var(--success-color)' : 'var(--danger-color)' }}>
+                                                        {percentage}%
+                                                    </div>
+                                                    <div style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--text-light)' }}>
+                                                        P:{s.presentCount || 0} / A:{s.absentCount || 0}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
                                             <div className="flex gap-2">
-                                                <ControlButton type="Present" active={s.status === 'Present'} onClick={() => updateStatus(s.id, 'Present')} />
-                                                <ControlButton type="Absent" active={s.status === 'Absent'} onClick={() => updateStatus(s.id, 'Absent')} />
-                                                <ControlButton type="Late" active={s.status === 'Late'} onClick={() => updateStatus(s.id, 'Late')} />
+                                                <ControlButton type="Present" active={s.status === 'Present'} onClick={() => handleQuickStatusUpdate(s.id, 'Present')} />
+                                                <ControlButton type="Absent" active={s.status === 'Absent'} onClick={() => handleQuickStatusUpdate(s.id, 'Absent')} />
+                                                <ControlButton type="Late" active={s.status === 'Late'} onClick={() => handleQuickStatusUpdate(s.id, 'Late')} />
                                                 <button 
                                                     onClick={() => handleEditStart(s)}
                                                     className="btn btn-secondary" 
@@ -109,7 +208,8 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
                                             </div>
                                         </td>
                                     </motion.tr>
-                                ))}
+                                    );
+                                })}
                             </AnimatePresence>
                         </tbody>
                     </table>
@@ -178,6 +278,35 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
                                         <option value="Absent">Absent</option>
                                         <option value="Late">Late</option>
                                         <option value="Pending">Pending</option>
+                                    </select>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-light)', marginBottom: '0.5rem' }}>BRANCH</label>
+                                        <select 
+                                            className="form-input" value={editForm.branch} 
+                                            onChange={(e) => setEditForm({...editForm, branch: e.target.value})}
+                                        >
+                                            {branches.map(b => <option key={b} value={b}>{b}</option>)}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-light)', marginBottom: '0.5rem' }}>SEMESTER</label>
+                                        <select 
+                                            className="form-input" value={editForm.semester} 
+                                            onChange={(e) => setEditForm({...editForm, semester: e.target.value})}
+                                        >
+                                            {semesters.map(s => <option key={s} value={s}>{s}</option>)}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-light)', marginBottom: '0.5rem' }}>SUBJECT</label>
+                                    <select 
+                                        className="form-input" value={editForm.subject} 
+                                        onChange={(e) => setEditForm({...editForm, subject: e.target.value})}
+                                    >
+                                        {subjects[editForm.branch || 'CSE'].map(s => <option key={s} value={s}>{s}</option>)}
                                     </select>
                                 </div>
                             </div>

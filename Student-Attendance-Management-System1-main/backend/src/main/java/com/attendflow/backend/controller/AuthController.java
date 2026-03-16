@@ -51,6 +51,9 @@ public class AuthController {
             student.setParentPhoneNumber(user.getPhoneNumber());
             student.setStatus("Unknown");
             student.setTime("-");
+            student.setBranch("");
+            student.setSemester("");
+            student.setSubject("");
             studentRepository.save(student);
         }
 

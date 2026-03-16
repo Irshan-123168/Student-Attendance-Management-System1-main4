@@ -32,8 +32,18 @@ public class StudentController {
             @RequestBody Student statusUpdate) {
         return studentRepository.findById(id)
                 .map(student -> {
-                    student.setStatus(statusUpdate.getStatus());
+                    String newStatus = statusUpdate.getStatus();
+                    if ("Present".equalsIgnoreCase(newStatus)) {
+                        student.setPresentCount(student.getPresentCount() + 1);
+                    } else if ("Absent".equalsIgnoreCase(newStatus)) {
+                        student.setAbsentCount(student.getAbsentCount() + 1);
+                    }
+                    
+                    student.setStatus(newStatus);
                     student.setTime(statusUpdate.getTime());
+                    student.setBranch(statusUpdate.getBranch());
+                    student.setSemester(statusUpdate.getSemester());
+                    student.setSubject(statusUpdate.getSubject());
                     return ResponseEntity.ok(studentRepository.save(student));
                 })
                 .orElse(ResponseEntity.notFound().build());
@@ -50,6 +60,9 @@ public class StudentController {
 
                     student.setRoll(studentDetails.getRoll());
                     student.setStudentClass(studentDetails.getStudentClass());
+                    student.setBranch(studentDetails.getBranch());
+                    student.setSemester(studentDetails.getSemester());
+                    student.setSubject(studentDetails.getSubject());
                     student.setParentPhoneNumber(newPhone);
 
                     if (studentDetails.getStatus() != null)

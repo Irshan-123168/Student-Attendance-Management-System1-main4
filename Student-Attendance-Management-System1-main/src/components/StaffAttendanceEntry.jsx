@@ -19,16 +19,28 @@ import { api } from '../api';
 const StaffAttendanceEntry = ({ user }) => {
     const [students, setStudents] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [selectedSector, setSelectedSector] = useState('All');
+    const [selectedBranch, setSelectedBranch] = React.useState('CSE');
+    const [selectedSem, setSelectedSem] = React.useState('1');
+    const [selectedSubject, setSelectedSubject] = React.useState('FOC');
     const [isSaving, setIsSaving] = useState(false);
     const [saveSuccess, setSaveSuccess] = useState(false);
     const [activeDate, setActiveDate] = useState(new Date().toISOString().split('T')[0]);
 
+    const branches = ['CSE', 'EEE', 'MEC', 'CE', 'MT'];
+    const semesters = ['1', '2', '3', '4', '5', '6'];
+    const subjects = {
+        'CSE': ['FOC', 'PMS', 'Java', 'Full Stack', 'Cyber Security'],
+        'EEE': ['Basic Electrical', 'Electrical Circuits', 'Power Systems', 'Control Systems'],
+        'MEC': ['Mechanics', 'Thermodynamics', 'Thermal Engg', 'Workshop'],
+        'CE': ['Building Materials', 'Surveying', 'Structural Analysis', 'Environmental'],
+        'MT': ['Intro Metallurgy', 'Physical Metallurgy', 'Extractive', 'Corrosion']
+    };
+
     useEffect(() => {
         const fetchStudents = async () => {
             try {
-                const data = await api.searchStudents('');
-                setStudents(data.map(s => ({ ...s, status: 'Present' })));
+                const data = await api.getStudents();
+                setStudents(data.map(s => ({ ...s, status: s.status || 'Pending' })));
             } catch (err) {
                 console.error("Registry sync failed:", err);
             }
@@ -42,20 +54,27 @@ const StaffAttendanceEntry = ({ user }) => {
 
     const handleSave = async () => {
         setIsSaving(true);
-        // Simulate mass node update
-        setTimeout(() => {
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        try {
+            await Promise.all(students.map(s => 
+                api.updateStudentStatus(s.id, s.status, time, selectedBranch, selectedSem, selectedSubject)
+            ));
             setIsSaving(false);
             setSaveSuccess(true);
             setTimeout(() => setSaveSuccess(false), 3000);
-        }, 1500);
+        } catch (error) {
+            console.error("Bulk sync failed:", error);
+            setIsSaving(false);
+            alert("Failed to synchronize records with the central ledger.");
+        }
     };
 
-    const sectors = ['All', ...new Set(students.map(s => s.studentClass))];
     const filteredStudents = students.filter(s => {
         const matchesQuery = s.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                            s.roll.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesSector = selectedSector === 'All' || s.studentClass === selectedSector;
-        return matchesQuery && matchesSector;
+        const matchesBranch = s.branch === selectedBranch || !s.branch;
+        return matchesQuery && matchesBranch;
     });
 
     const stats = {
@@ -89,34 +108,58 @@ const StaffAttendanceEntry = ({ user }) => {
                 </div>
             </header>
 
-            {/* Filter Matrix */}
-            <div className="card" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', padding: '1.25rem 2rem' }}>
-                <div style={{ display: 'flex', gap: '0.75rem', flex: 1, overflowX: 'auto' }}>
-                    {sectors.map(sector => (
-                        <button
-                            key={sector}
-                            onClick={() => setSelectedSector(sector)}
-                            style={{
-                                padding: '0.625rem 1.25rem', borderRadius: '10px',
-                                background: selectedSector === sector ? 'var(--primary-gradient)' : 'var(--bg-tertiary)',
-                                color: selectedSector === sector ? 'white' : 'var(--text-secondary)',
-                                fontWeight: 700, fontSize: '0.8125rem', border: 'none', cursor: 'pointer', transition: 'all 0.3s'
+            {/* Session Configuration Matrix */}
+            <div className="card" style={{ padding: '1.5rem', background: 'var(--bg-secondary)', border: '1px solid var(--primary-color)', borderLeft: '8px solid var(--primary-color)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
+                    <div>
+                        <label style={{ display: 'block', fontSize: '0.7rem', fontWeight: 900, color: 'var(--text-light)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Department Node</label>
+                        <select 
+                            className="form-input" 
+                            value={selectedBranch} 
+                            onChange={(e) => {
+                                setSelectedBranch(e.target.value);
+                                setSelectedSubject(subjects[e.target.value][0]);
                             }}
+                            style={{ fontWeight: 700 }}
                         >
-                            {sector === 'All' ? 'GLOBAL GRID' : sector}
-                        </button>
-                    ))}
-                </div>
-                <div style={{ position: 'relative', width: '280px' }}>
-                    <Search style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-light)' }} size={16} />
-                    <input 
-                        type="text" 
-                        className="form-input" 
-                        style={{ paddingLeft: '2.5rem', height: '40px', fontSize: '0.875rem' }} 
-                        placeholder="Filter entry..." 
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
+                            {branches.map(b => <option key={b} value={b}>{b} Engineering</option>)}
+                        </select>
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', fontSize: '0.7rem', fontWeight: 900, color: 'var(--text-light)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Target Semester</label>
+                        <select 
+                            className="form-input" 
+                            value={selectedSem} 
+                            onChange={(e) => setSelectedSem(e.target.value)}
+                            style={{ fontWeight: 700 }}
+                        >
+                            {semesters.map(s => <option key={s} value={s}>Semester 0{s}</option>)}
+                        </select>
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', fontSize: '0.7rem', fontWeight: 900, color: 'var(--text-light)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Academic Subject</label>
+                        <select 
+                            className="form-input" 
+                            value={selectedSubject} 
+                            onChange={(e) => setSelectedSubject(e.target.value)}
+                            style={{ fontWeight: 700 }}
+                        >
+                            {subjects[selectedBranch].map(s => <option key={s} value={s}>{s}</option>)}
+                        </select>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+                        <div style={{ position: 'relative', width: '100%' }}>
+                            <Search style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-light)' }} size={16} />
+                            <input 
+                                type="text" 
+                                className="form-input" 
+                                style={{ paddingLeft: '2.5rem', height: '44px', fontSize: '0.875rem' }} 
+                                placeholder="Search student..." 
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -137,10 +180,11 @@ const StaffAttendanceEntry = ({ user }) => {
                     <table>
                         <thead>
                             <tr>
-                                <th>Institutional Identity</th>
+                                <th>Student Identity</th>
                                 <th>Registry Roll</th>
-                                <th>Operational Class</th>
-                                <th style={{ textAlign: 'center' }}>Status Sequence</th>
+                                <th>Branch/Sem</th>
+                                <th>Subject</th>
+                                <th style={{ textAlign: 'center' }}>Presence Toggle</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -154,7 +198,11 @@ const StaffAttendanceEntry = ({ user }) => {
                                     >
                                         <td style={{ fontWeight: 700 }}>{s.name}</td>
                                         <td style={{ color: 'var(--text-light)', fontWeight: 600 }}>{s.roll}</td>
-                                        <td style={{ fontWeight: 600 }}>{s.studentClass}</td>
+                                        <td>
+                                            <div style={{ fontSize: '0.8rem', fontWeight: 700 }}>{s.branch || selectedBranch}</div>
+                                            <div style={{ fontSize: '0.7rem', color: 'var(--text-light)' }}>SEM-0{s.semester || selectedSem}</div>
+                                        </td>
+                                        <td style={{ fontWeight: 600, fontSize: '0.85rem' }}>{s.subject || selectedSubject}</td>
                                         <td>
                                             <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
                                                 <StatusToggle label="PR" active={s.status === 'Present'} onClick={() => updateStatus(s.id, 'Present')} color="#10b981" />

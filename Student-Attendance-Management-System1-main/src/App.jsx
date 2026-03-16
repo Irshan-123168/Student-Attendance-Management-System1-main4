@@ -94,7 +94,7 @@ function App() {
         }
     }, [searchQuery]);
 
-    const handleStatusChange = async (idOrUser, newStatus) => {
+    const handleStatusChange = async (idOrUser, newStatus, branch, semester, subject) => {
         const time = newStatus === 'Absent' ? '-' : new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         try {
             let targetId = idOrUser;
@@ -106,14 +106,17 @@ function App() {
                     roll: idOrUser.rollNumber,
                     parentPhoneNumber: idOrUser.phoneNumber,
                     status: newStatus,
-                    time: time
+                    time: time,
+                    branch,
+                    semester,
+                    subject
                 });
                 targetId = newStudent.id;
                 setStudents(prev => [...prev, newStudent]);
             } else {
-                await api.updateStudentStatus(targetId, newStatus, time);
+                const updatedStudent = await api.updateStudentStatus(targetId, newStatus, time, branch, semester, subject);
                 setStudents(prev => prev.map(s =>
-                    s.id === targetId ? { ...s, status: newStatus, time } : s
+                    s.id === targetId ? updatedStudent : s
                 ));
             }
 

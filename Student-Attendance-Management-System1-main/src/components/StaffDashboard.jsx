@@ -27,6 +27,11 @@ const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQue
         "Indravaraprasad"
     ].filter(name => name.toLowerCase().includes(searchQuery.toLowerCase()));
 
+    const avgAttendance = totalStudents > 0 
+        ? Math.round((students.reduce((acc, s) => acc + (s.presentCount || 0), 0) / 
+          students.reduce((acc, s) => acc + (s.presentCount || 0) + (s.absentCount || 0) || 1, 0)) * 100) 
+        : 0;
+
     return (
         <div className="animate-fade space-y-6">
             <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
@@ -54,9 +59,10 @@ const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQue
                 </div>
             </header>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <DashboardCard icon={<Activity />} title="Live Classes" value="04" color="#6366f1" />
                 <DashboardCard icon={<Users />} title="Total Students" value={totalStudents || "..."} color="#10b981" />
+                <DashboardCard icon={<CheckCircle />} title="Avg Attendance" value={`${avgAttendance}%`} color="#10b981" />
                 <DashboardCard icon={<Clock />} title="Pending Records" value={pendingActions} color="#f59e0b" />
             </div>
 

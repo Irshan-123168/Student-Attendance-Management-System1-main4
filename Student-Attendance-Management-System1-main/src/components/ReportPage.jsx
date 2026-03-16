@@ -96,8 +96,10 @@ const ReportPage = ({ records = [] }) => {
                             <thead>
                                 <tr>
                                     <th>Student Ref</th>
-                                    <th>Roll ID</th>
+                                    <th>Branch/Sem</th>
+                                     <th>Subject</th>
                                     <th>Status</th>
+                                    <th>Performance</th>
                                     <th>Timestamp</th>
                                     <th></th>
                                 </tr>
@@ -111,11 +113,16 @@ const ReportPage = ({ records = [] }) => {
                                             roll={record.roll} 
                                             status={record.status} 
                                             time={record.time} 
+                                            branch={record.branch}
+                                            semester={record.semester}
+                                            subject={record.subject}
+                                            presentCount={record.presentCount}
+                                            absentCount={record.absentCount}
                                         />
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="5" style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-light)', fontWeight: 600 }}>
+                                        <td colSpan="7" style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-light)', fontWeight: 600 }}>
                                             No telemetry data found for the current query.
                                         </td>
                                     </tr>
@@ -153,22 +160,40 @@ const ReportStat = ({ icon, label, value, color }) => (
     </div>
 );
 
-const ReportRow = ({ name, roll, status, time }) => (
-    <tr>
-        <td style={{ fontWeight: 700 }}>{name}</td>
-        <td style={{ fontWeight: 600 }}>{roll}</td>
-        <td>
-            <span className={`badge ${status === 'Present' ? 'badge-success' : status === 'Absent' ? 'badge-danger' : 'badge-info'}`}>
-                {status || 'Pending'}
-            </span>
-        </td>
-        <td style={{ color: 'var(--text-light)', fontWeight: 600 }}>{time || '-'}</td>
-        <td>
-            <button style={{ background: 'none', border: 'none', color: 'var(--primary-color)', cursor: 'pointer' }}>
-                <ChevronRight size={20} />
-            </button>
-        </td>
-    </tr>
-);
+const ReportRow = ({ name, roll, status, time, branch, semester, subject, presentCount = 0, absentCount = 0 }) => {
+    const total = presentCount + absentCount;
+    const percentage = total > 0 ? ((presentCount / total) * 100).toFixed(1) : '0.0';
+    
+    return (
+        <tr>
+            <td>
+                <div style={{ fontWeight: 700 }}>{name}</div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-light)' }}>{roll}</div>
+            </td>
+            <td>
+                <div style={{ fontSize: '0.8rem', fontWeight: 700 }}>{branch || 'General'}</div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-light)' }}>SEM-{semester || '1'}</div>
+            </td>
+            <td style={{ fontWeight: 600, fontSize: '0.85rem' }}>{subject || '-'}</td>
+            <td>
+                <span className={`badge ${status === 'Present' ? 'badge-success' : status === 'Absent' ? 'badge-danger' : 'badge-info'}`}>
+                    {status || 'Pending'}
+                </span>
+            </td>
+            <td>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <span style={{ fontWeight: 800, color: 'var(--primary-color)', fontSize: '0.85rem' }}>{percentage}%</span>
+                    <span style={{ fontSize: '0.65rem', color: 'var(--text-light)', fontWeight: 600 }}>P:{presentCount} A:{absentCount}</span>
+                </div>
+            </td>
+            <td style={{ color: 'var(--text-light)', fontWeight: 600, fontSize: '0.8rem' }}>{time || '-'}</td>
+            <td>
+                <button style={{ background: 'none', border: 'none', color: 'var(--primary-color)', cursor: 'pointer' }}>
+                    <ChevronRight size={20} />
+                </button>
+            </td>
+        </tr>
+    );
+};
 
 export default ReportPage;

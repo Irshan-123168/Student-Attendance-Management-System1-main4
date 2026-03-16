@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:9005/api';
+const API_BASE_URL = 'http://localhost:9008/api';
 
 // Helper to detect any network/connection error regardless of browser wording
 function isNetworkError(error) {
@@ -30,7 +30,7 @@ export const api = {
         } catch (error) {
             console.error('Login error:', error);
             if (isNetworkError(error)) {
-                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9005.');
+                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9008.');
             }
             throw error;
         }
@@ -51,7 +51,7 @@ export const api = {
         } catch (error) {
             console.error('Forgot password error:', error);
             if (isNetworkError(error)) {
-                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9005.');
+                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9008.');
             }
             throw error;
         }
@@ -72,7 +72,7 @@ export const api = {
         } catch (error) {
             console.error('Registration error:', error);
             if (isNetworkError(error)) {
-                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9005.');
+                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9008.');
             }
             throw error;
         }
@@ -119,12 +119,12 @@ export const api = {
         }
     },
 
-    async updateStudentStatus(id, status, time) {
+    async updateStudentStatus(id, status, time, branch, semester, subject) {
         try {
             const response = await fetch(`${API_BASE_URL}/students/${id}/status`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status, time })
+                body: JSON.stringify({ status, time, branch, semester, subject })
             });
             if (!response.ok) throw new Error('Failed to update status');
             return response.json();

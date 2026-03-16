@@ -75,7 +75,7 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                 }}
             >
                 <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-                    <div style={{ width: '100%', maxWidth: '280px', height: 'auto', background: 'white', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem', boxShadow: 'var(--shadow-lg)', overflow: 'hidden', padding: '12px' }}>
+                    <div style={{ width: '100%', height: 'auto', background: 'white', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem', boxShadow: 'var(--shadow-lg)', overflow: 'hidden', padding: '1.5rem' }}>
                         <img src="/src/assets/logo.png" alt="Sanjay Gandhi Polytechnic Logo" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
                     </div>
                     <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>

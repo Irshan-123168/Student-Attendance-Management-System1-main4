@@ -19,7 +19,12 @@ public class Student {
     private String name;
     private String roll;
     private String studentClass;
+    private String branch;
+    private String semester;
+    private String subject;
     private String status;
     private String time;
     private String parentPhoneNumber;
+    private int presentCount = 0;
+    private int absentCount = 0;
 }

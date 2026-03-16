@@ -13,6 +13,11 @@ const AdminDashboard = ({ users = [], students = [], onNavigate, searchQuery = '
         "Indravaraprasad"
     ].filter(name => name.toLowerCase().includes(searchQuery.toLowerCase()));
 
+    const globalAttendance = students.length > 0 
+        ? Math.round((students.reduce((acc, s) => acc + (s.presentCount || 0), 0) / 
+          students.reduce((acc, s) => acc + (s.presentCount || 0) + (s.absentCount || 0) || 1, 0)) * 100) 
+        : 0;
+
     return (
         <div className="animate-fade space-y-6">
             <header>
@@ -23,8 +28,8 @@ const AdminDashboard = ({ users = [], students = [], onNavigate, searchQuery = '
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <AdminCard icon={<Users />} title="Total Users" value={users.length || "0"} color="#6366f1" />
                 <AdminCard icon={<Shield />} title="Total Students" value={students.length || "0"} color="#10b981" />
+                <AdminCard icon={<Activity />} title="Global Attendance" value={`${globalAttendance}%`} color="#10b981" />
                 <AdminCard icon={<FileText />} title="Active Records" value={students.filter(s => s.status !== 'Pending').length} color="#f59e0b" />
-                <AdminCard icon={<Activity />} title="System Load" value="Optimal" color="#8b5cf6" />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

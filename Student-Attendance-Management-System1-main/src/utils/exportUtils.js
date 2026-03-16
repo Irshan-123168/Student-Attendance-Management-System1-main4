@@ -29,19 +29,19 @@ export const downloadCSV = (data, filename, headers) => {
 };
 
 export const generateStudentReport = (students) => {
-    const headers = ['Name', 'Roll', 'StudentClass', 'Status', 'Time'];
+    const headers = ['Name', 'Roll', 'Branch', 'Semester', 'Subject', 'Status', 'Time'];
     const filename = `Student_Report_${new Date().toISOString().split('T')[0]}.csv`;
     downloadCSV(students, filename, headers);
 };
 
 export const generateRegistryExport = (students) => {
-    const headers = ['Name', 'Roll', 'StudentClass'];
+    const headers = ['Name', 'Roll', 'Branch', 'Semester'];
     const filename = `Student_Registry_${new Date().toISOString().split('T')[0]}.csv`;
     downloadCSV(students, filename, headers);
 };
 
 export const generateMasterReport = (students) => {
-    const headers = ['Name', 'Roll', 'StudentClass', 'Status', 'Time'];
+    const headers = ['Name', 'Roll', 'Branch', 'Semester', 'Subject', 'Status', 'Time'];
     const filename = `Master_Attendance_Report_${new Date().toISOString().split('T')[0]}.csv`;
     downloadCSV(students, filename, headers);
 };
@@ -56,7 +56,9 @@ export const downloadTXT = (data, filename) => {
     data.forEach((s, idx) => {
         content += `${idx + 1}. NAME: ${s.name}\n`;
         content += `   ROLL: ${s.roll}\n`;
-        content += `   CLASS: ${s.studentClass}\n`;
+        content += `   BRANCH: ${s.branch || 'N/A'}\n`;
+        content += `   SEM: ${s.semester || 'N/A'}\n`;
+        content += `   SUBJECT: ${s.subject || 'N/A'}\n`;
         content += `   STATUS: ${s.status || 'Pending'}\n`;
         content += `   TIME: ${s.time || '-'}\n`;
         content += "-".repeat(30) + "\n";

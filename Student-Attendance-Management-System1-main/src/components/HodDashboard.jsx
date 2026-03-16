@@ -49,9 +49,10 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '' }) => 
 
                 <div className="card">
                     <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Quick Protocols</h3>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                         <ProtocolButton icon={<CheckCircle />} label="Mark Attendance" onClick={() => onNavigate('attendance')} />
                         <ProtocolButton icon={<FileText />} label="Generate Report" onClick={() => generateStudentReport(students)} />
+                        <ProtocolButton icon={<Download />} label="Download Registry" onClick={() => generateRegistryExport(students)} />
                         <ProtocolButton icon={<Activity />} label="Analytics" onClick={() => onNavigate('reports')} />
                         <ProtocolButton icon={<Users />} label="Leave Gateway" onClick={() => onNavigate('leave')} />
                     </div>
@@ -74,28 +75,48 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '' }) => 
                         <thead>
                             <tr style={{ borderBottom: '2px solid var(--border-color)', textAlign: 'left' }}>
                                 <th style={{ padding: '1rem', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase' }}>Learner Identity</th>
-                                <th style={{ padding: '1rem', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase' }}>Index No.</th>
-                                <th style={{ padding: '1rem', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase' }}>Protocol Status</th>
+                                <th style={{ padding: '1rem', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase' }}>Branch/Sem</th>
+                                <th style={{ padding: '1rem', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase' }}>Subject</th>
+                                 <th style={{ padding: '1rem', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase' }}>Protocol Status</th>
+                                <th style={{ padding: '1rem', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase' }}>Academic Performance</th>
                                 <th style={{ padding: '1rem', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase' }}>Sync Time</th>
                             </tr>
                         </thead>
                         <tbody>
                             {filteredStudents.length > 0 ? (
-                                filteredStudents.slice(0, 5).map((student, i) => (
-                                    <tr key={student.id || i} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                                        <td style={{ padding: '1rem', fontWeight: 700 }}>{student.name}</td>
-                                        <td style={{ padding: '1rem', color: 'var(--text-light)' }}>{student.roll}</td>
-                                        <td style={{ padding: '1rem' }}>
-                                            <span className={`badge badge-${student.status === 'Present' ? 'success' : student.status === 'Absent' ? 'danger' : 'warning'}`}>
-                                                {student.status || 'Pending'}
-                                            </span>
-                                        </td>
-                                        <td style={{ padding: '1rem', fontSize: '0.8rem', color: 'var(--text-light)' }}>{student.time || '-'}</td>
-                                    </tr>
-                                ))
+                                filteredStudents.slice(0, 5).map((student, i) => {
+                                    const total = (student.presentCount || 0) + (student.absentCount || 0);
+                                    const percentage = total > 0 ? ((student.presentCount / total) * 100).toFixed(1) : '0.0';
+                                    
+                                    return (
+                                        <tr key={student.id || i} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                                            <td style={{ padding: '1rem' }}>
+                                                <div style={{ fontWeight: 700 }}>{student.name}</div>
+                                                <div style={{ fontSize: '0.7rem', color: 'var(--text-light)' }}>{student.roll}</div>
+                                            </td>
+                                            <td style={{ padding: '1rem' }}>
+                                                <div style={{ fontSize: '0.8rem', fontWeight: 700 }}>{student.branch || 'CSE'}</div>
+                                                <div style={{ fontSize: '0.7rem', color: 'var(--text-light)' }}>SEM-0{student.semester || '1'}</div>
+                                            </td>
+                                            <td style={{ padding: '1rem', fontSize: '0.85rem', fontWeight: 600 }}>{student.subject || '-'}</td>
+                                            <td style={{ padding: '1rem' }}>
+                                                <span className={`badge badge-${student.status === 'Present' ? 'success' : student.status === 'Absent' ? 'danger' : 'warning'}`}>
+                                                    {student.status || 'Pending'}
+                                                </span>
+                                            </td>
+                                            <td style={{ padding: '1rem' }}>
+                                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                                    <span style={{ fontWeight: 800, color: 'var(--primary-color)', fontSize: '0.85rem' }}>{percentage}%</span>
+                                                    <span style={{ fontSize: '0.65rem', color: 'var(--text-light)', fontWeight: 600 }}>P:{student.presentCount || 0} A:{student.absentCount || 0}</span>
+                                                </div>
+                                            </td>
+                                            <td style={{ padding: '1rem', fontSize: '0.8rem', color: 'var(--text-light)' }}>{student.time || '-'}</td>
+                                        </tr>
+                                    );
+                                })
                             ) : (
                                 <tr>
-                                    <td colSpan="4" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-light)' }}>No matching metrics found.</td>
+                                    <td colSpan="6" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-light)' }}>No matching metrics found.</td>
                                 </tr>
                             )}
                         </tbody>
