@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:9017/api';
+const API_BASE_URL = 'http://localhost:9018/api';
 
 // Helper to detect any network/connection error regardless of browser wording
 function isNetworkError(error) {
@@ -30,7 +30,7 @@ export const api = {
         } catch (error) {
             console.error('Login error:', error);
             if (isNetworkError(error)) {
-                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9017.');
+                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9018.');
             }
             throw error;
         }
@@ -51,7 +51,7 @@ export const api = {
         } catch (error) {
             console.error('Forgot password error:', error);
             if (isNetworkError(error)) {
-                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9017.');
+                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9018.');
             }
             throw error;
         }
@@ -72,7 +72,7 @@ export const api = {
         } catch (error) {
             console.error('Registration error:', error);
             if (isNetworkError(error)) {
-                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9017.');
+                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9018.');
             }
             throw error;
         }
@@ -113,7 +113,7 @@ export const api = {
         } catch (error) {
             console.error('Update password error:', error);
             if (isNetworkError(error)) {
-                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9017.');
+                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9018.');
             }
             throw error;
         }
