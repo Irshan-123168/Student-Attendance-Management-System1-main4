@@ -44,9 +44,9 @@ const RegisterPage = ({ onRegister, onSwitchToLogin, onBackToHome }) => {
 
     return (
         <div 
+            className="animated-mesh"
             style={{ 
                 minHeight: '100vh', 
-                background: 'var(--primary-gradient)', 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
@@ -55,6 +55,10 @@ const RegisterPage = ({ onRegister, onSwitchToLogin, onBackToHome }) => {
                 overflow: 'hidden'
             }}
         >
+            {/* Animated Floating Orbs */}
+            <div className="floating-orb" style={{ top: '10%', right: '10%', width: '300px', height: '300px', background: 'rgba(255, 255, 255, 0.15)', animationDelay: '0s' }}></div>
+            <div className="floating-orb" style={{ bottom: '15%', left: '5%', width: '400px', height: '400px', background: 'rgba(0, 0, 0, 0.2)', animationDelay: '-5s' }}></div>
+            <div className="floating-orb" style={{ top: '40%', left: '25%', width: '200px', height: '200px', background: 'rgba(6, 182, 212, 0.15)', animationDelay: '-12s' }}></div>
             <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}

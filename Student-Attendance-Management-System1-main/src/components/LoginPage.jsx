@@ -45,9 +45,9 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
 
     return (
         <div 
+            className="animated-mesh"
             style={{ 
                 minHeight: '100vh', 
-                background: 'var(--primary-gradient)', 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
@@ -56,9 +56,10 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                 overflow: 'hidden'
             }}
         >
-            {/* Background Orbs */}
-            <div style={{ position: 'absolute', width: '500px', height: '500px', background: 'rgba(255,255,255,0.1)', borderRadius: '50%', top: '-250px', right: '-100px', filter: 'blur(80px)' }}></div>
-            <div style={{ position: 'absolute', width: '400px', height: '400px', background: 'rgba(255,255,255,0.1)', borderRadius: '50%', bottom: '-200px', left: '-100px', filter: 'blur(80px)' }}></div>
+            {/* Animated Floating Orbs */}
+            <div className="floating-orb" style={{ top: '5%', right: '5%', width: '350px', height: '350px', background: 'rgba(255, 255, 255, 0.12)', animationDelay: '0s' }}></div>
+            <div className="floating-orb" style={{ bottom: '10%', left: '2%', width: '450px', height: '450px', background: 'rgba(0, 0, 0, 0.15)', animationDelay: '-7s' }}></div>
+            <div className="floating-orb" style={{ top: '50%', left: '15%', width: '250px', height: '250px', background: 'rgba(236, 72, 153, 0.15)', animationDelay: '-14s' }}></div>
 
             <motion.div 
                 initial={{ opacity: 0, y: 30 }}

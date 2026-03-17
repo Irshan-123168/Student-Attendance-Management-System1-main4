@@ -6,9 +6,8 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
     return (
         <div style={{ position: 'relative' }}>
             {/* Hero Section */}
-            <section className="hero" style={{ 
+            <section className="hero animated-mesh" style={{ 
                 minHeight: '100vh', 
-                background: 'var(--primary-gradient)', 
                 color: 'white',
                 display: 'flex',
                 alignItems: 'center',
@@ -18,9 +17,11 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                 position: 'relative',
                 overflow: 'hidden'
             }}>
-                {/* Background Decoration */}
-                <div style={{ position: 'absolute', top: '-10%', right: '-10%', width: '40vw', height: '40vw', background: 'rgba(255,255,255,0.1)', borderRadius: '50%', filter: 'blur(100px)' }}></div>
-                <div style={{ position: 'absolute', bottom: '-10%', left: '-10%', width: '30vw', height: '30vw', background: 'rgba(0,0,0,0.1)', borderRadius: '50%', filter: 'blur(80px)' }}></div>
+                {/* Background Decoration - Animated Floating Orbs */}
+                <div className="floating-orb" style={{ top: '10%', right: '10%', width: '300px', height: '300px', background: 'rgba(255, 255, 255, 0.15)', animationDelay: '0s' }}></div>
+                <div className="floating-orb" style={{ bottom: '15%', left: '5%', width: '400px', height: '400px', background: 'rgba(0, 0, 0, 0.2)', animationDelay: '-5s' }}></div>
+                <div className="floating-orb" style={{ top: '40%', left: '25%', width: '200px', height: '200px', background: 'rgba(236, 72, 153, 0.2)', animationDelay: '-10s' }}></div>
+                <div className="floating-orb" style={{ bottom: '30%', right: '20%', width: '250px', height: '250px', background: 'rgba(6, 182, 212, 0.2)', animationDelay: '-15s' }}></div>
 
                 <div className="container" style={{ position: 'relative', zIndex: 10 }}>
                     <motion.div

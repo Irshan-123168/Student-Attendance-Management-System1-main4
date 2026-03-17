@@ -1,5 +1,6 @@
 :root {
-    --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    --primary-gradient: linear-gradient(-45deg, #4f46e5, #7c3aed, #ec4899, #06b6d4);
+    --mesh-size: 400% 400%;
     --primary-color: #4f46e5;
     --primary-dark: #4338ca;
     --primary-light: #eef2ff;
@@ -378,13 +379,47 @@ tr:hover td {
     color: var(--text-light);
 }
 
-/* Responsive utility */
-@media (max-width: 1024px) {
-    .sidebar {
-        position: fixed;
-        left: -280px;
-    }
-    .sidebar.mobile-active {
-        left: 0;
-    }
+@keyframes meshGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+@keyframes pulse-glow {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+.animated-mesh {
+    background: var(--primary-gradient);
+    background-size: var(--mesh-size);
+    animation: meshGradient 15s ease infinite;
+}
+
+.floating-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: float 20s ease-in-out infinite;
+    z-index: 0;
+}
+
+/* Custom Scrollbar for better consistency */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-light);
 }
