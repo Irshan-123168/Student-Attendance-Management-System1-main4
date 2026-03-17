@@ -39,14 +39,19 @@ function App() {
     const [directoryActive, setDirectoryActive] = useState(false);
     const [settings, setSettings] = useState(() => {
         const saved = localStorage.getItem('portal_settings');
-        return saved ? JSON.parse(saved) : {
+        const defaultSettings = {
             academicYear: '2023-2024',
             semester: 'Even',
             notifications: true,
-            darkMode: true,
+            darkMode: false,
             autoBackup: false,
             emailAlerts: true
         };
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            return { ...parsed, darkMode: false };
+        }
+        return defaultSettings;
     });
 
     useEffect(() => {
@@ -223,15 +228,16 @@ function App() {
     }
 
     return (
-        <Layout
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            logout={logout}
-            user={currentUser}
-            onDeleteAccount={handleDeleteAccount}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-        >
+        <div className={settings.darkMode ? 'dark' : ''}>
+            <Layout
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                logout={logout}
+                user={currentUser}
+                onDeleteAccount={handleDeleteAccount}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+            >
             {activeTab === 'home' && (
                 <HomePage 
                     onLogin={() => {}} 
@@ -246,8 +252,8 @@ function App() {
                     hideNavbar={true}
                 />
             )}
-            {activeTab === 'admin-dashboard' && <AdminDashboard users={users} students={students} onNavigate={(tab) => setActiveTab(tab)} searchQuery={searchQuery} />}
-            {activeTab === 'hod-dashboard' && <HodDashboard onNavigate={(tab) => setActiveTab(tab)} students={students} onUpdateStudent={handleUpdateStudent} searchQuery={searchQuery} />}
+            {activeTab === 'admin-dashboard' && <AdminDashboard user={currentUser} users={users} students={students} onNavigate={(tab) => setActiveTab(tab)} searchQuery={searchQuery} />}
+            {activeTab === 'hod-dashboard' && <HodDashboard user={currentUser} onNavigate={(tab) => setActiveTab(tab)} students={students} onUpdateStudent={handleUpdateStudent} searchQuery={searchQuery} />}
             {activeTab === 'staff-dashboard' && <StaffDashboard user={currentUser} onNavigateToAttendance={(tab) => setActiveTab(tab)} students={students} searchQuery={searchQuery} />}
             {activeTab === 'student-dashboard' && <StudentDashboard user={currentUser} students={students} onStatusChange={handleStatusChange} onNavigate={(tab) => setActiveTab(tab)} searchQuery={searchQuery} />}
             {(activeTab === 'dashboard' || activeTab === 'analytics') && <Dashboard students={students} searchQuery={searchQuery} isSearching={isSearching} />}
@@ -268,6 +274,7 @@ function App() {
 
             {(activeTab === 'settings' || activeTab === 'portal-settings') && (
                 <PortalSettings 
+                    user={currentUser}
                     settings={settings}
                     setSettings={setSettings}
                     onDeleteAccount={handleDeleteAccount} 
@@ -287,21 +294,22 @@ function App() {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="h-[60vh] flex flex-col items-center justify-center glass-panel border-white/5 relative overflow-hidden group px-8 text-center"
+                        className="h-[60vh] flex flex-col items-center justify-center card relative overflow-hidden group px-8 text-center"
+                        style={{ background: 'var(--bg-primary)', borderStyle: 'dashed', borderWidth: '2px' }}
                     >
                         <div className="absolute inset-0 bg-radial-at-c from-indigo-500/5 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
                         <div className="relative mb-10">
-                            <div className="w-24 h-24 bg-white/5 rounded-2xl border border-white/5 flex items-center justify-center text-indigo-500 shadow-xl">
+                            <div style={{ width: '80px', height: '80px', background: 'var(--primary-light)', borderRadius: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary-color)', boxShadow: 'var(--shadow-md)' }}>
                                 <Grid3X3 size={40} />
                             </div>
-                            <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-amber-500/10 border border-amber-500/20 rounded-xl flex items-center justify-center text-amber-500">
+                            <div style={{ position: 'absolute', bottom: '-8px', right: '-8px', width: '32px', height: '32px', background: 'white', border: '1px solid var(--border-color)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--warning-color)', boxShadow: 'var(--shadow-sm)' }}>
                                 <Clock size={16} />
                             </div>
                         </div>
 
-                        <h3 className="text-2xl font-bold text-white">Student Registry <span className="text-indigo-400">Offline</span></h3>
-                        <p className="text-slate-400 text-sm mt-4 max-w-sm">
+                        <h3 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Student Registry <span className="text-indigo-600">Offline</span></h3>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginTop: '1rem', maxWidth: '320px', fontWeight: 500 }}>
                             Connect to the central database to synchronize and view student records.
                         </p>
 
@@ -326,6 +334,7 @@ function App() {
                 )
             )}
         </Layout>
+        </div>
     );
 }
 

@@ -6,9 +6,10 @@ const MemberDirectory = ({ students, searchQuery, setSearchQuery }) => {
     const [activeSector, setActiveSector] = useState('All');
     
     const filteredStudents = (students || []).filter(s => {
-        const matchesQuery = s.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                           s.roll.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesSector = activeSector === 'All' || s.studentClass === activeSector;
+        const matchesQuery = (s.name || '').toLowerCase().includes((searchQuery || '').toLowerCase()) || 
+                           (s.roll || '').toLowerCase().includes((searchQuery || '').toLowerCase());
+        // Ensure s.studentClass is treated as a string for comparison
+        const matchesSector = activeSector === 'All' || (s.studentClass || '').toLowerCase() === activeSector.toLowerCase();
         return matchesQuery && matchesSector;
     });
 

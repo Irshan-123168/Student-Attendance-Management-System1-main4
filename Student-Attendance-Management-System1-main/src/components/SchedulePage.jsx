@@ -7,10 +7,14 @@ const SchedulePage = () => {
     const days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
     const classes = [
-        { time: '09:00 - 10:00', subject: 'Advanced Mathematics', room: 'RL-301', staff: 'Dr. S. Sharma', color: '#6366f1' },
-        { time: '10:15 - 11:15', subject: 'Cloud Computing Infrastructure', room: 'LAB-04', staff: 'Prof. A. Verma', color: '#10b981' },
-        { time: '12:00 - 01:00', subject: 'Institutional Protocol', room: 'HALL-A', staff: 'Dr. K. Gupta', color: '#f59e0b' },
-        { time: '02:00 - 03:00', subject: 'Cryptography & Security', room: 'RL-302', staff: 'Prof. M. Khan', color: '#ef4444' }
+        { time: '09:00 AM - 10:00 AM', subject: 'Advanced Mathematics', room: 'RL-301', staff: 'Dr. S. Sharma', color: '#6366f1' },
+        { time: '10:00 AM - 11:00 AM', subject: 'Cloud Computing Infrastructure', room: 'LAB-04', staff: 'Prof. A. Verma', color: '#10b981' },
+        { time: '11:00 AM - 12:00 PM', subject: 'Network Security', room: 'RL-305', staff: 'Prof. R. Kumar', color: '#8b5cf6' },
+        { time: '12:00 PM - 01:00 PM', subject: 'Institutional Protocol', room: 'HALL-A', staff: 'Dr. K. Gupta', color: '#f59e0b' },
+        { time: '01:00 PM - 02:00 PM', subject: 'LUNCH BREAK', room: 'CAFETERIA', staff: 'N/A', color: '#64748b', isBreak: true },
+        { time: '02:00 PM - 03:00 PM', subject: 'Cryptography & Security', room: 'RL-302', staff: 'Prof. M. Khan', color: '#ef4444' },
+        { time: '03:00 PM - 04:00 PM', subject: 'Project Lab Session', room: 'LAB-02', staff: 'Prof. J. Singh', color: '#ec4899' },
+        { time: '04:00 PM - 05:00 PM', subject: 'Seminar / Mentoring', room: 'HALL-B', staff: 'Dr. P. Patil', color: '#06b6d4' }
     ];
 
     return (

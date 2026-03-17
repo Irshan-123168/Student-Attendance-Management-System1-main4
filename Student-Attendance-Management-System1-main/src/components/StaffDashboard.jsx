@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Activity, Users, CheckCircle, Clock, Download, FileText, UserPlus } from 'lucide-react';
 import { generateStudentReport, generateRegistryExport, generateMasterReport } from '../utils/exportUtils';
+import ClassSchedule from './ClassSchedule';
 
 const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQuery = '' }) => {
     // Dynamic Stats
@@ -25,7 +26,7 @@ const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQue
         "Sidda Reddy",
         "Harsha Reddy",
         "Indravaraprasad"
-    ].filter(name => name.toLowerCase().includes(searchQuery.toLowerCase()));
+    ].filter(name => (name || '').toLowerCase().includes((searchQuery || '').toLowerCase()));
 
     const avgAttendance = totalStudents > 0 
         ? Math.round((students.reduce((acc, s) => acc + (s.presentCount || 0), 0) / 
@@ -92,6 +93,8 @@ const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQue
                     </div>
                 </div>
             </div>
+            <ClassSchedule />
+
             <div className="card">
                 <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>The Team Members</h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>

@@ -9,7 +9,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
             <section className="hero" style={{ 
                 minHeight: '100vh', 
                 background: 'var(--primary-gradient)', 
-                color: 'white',
+                color: 'var(--text-primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -18,9 +18,9 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                 position: 'relative',
                 overflow: 'hidden'
             }}>
-                {/* Background Decoration */}
-                <div style={{ position: 'absolute', top: '-10%', right: '-10%', width: '40vw', height: '40vw', background: 'rgba(255,255,255,0.1)', borderRadius: '50%', filter: 'blur(100px)' }}></div>
-                <div style={{ position: 'absolute', bottom: '-10%', left: '-10%', width: '30vw', height: '30vw', background: 'rgba(0,0,0,0.1)', borderRadius: '50%', filter: 'blur(80px)' }}></div>
+                {/* Background Decoration - Subtle for Light Mode */}
+                <div style={{ position: 'absolute', top: '-10%', right: '-10%', width: '40vw', height: '40vw', background: 'rgba(79, 70, 229, 0.05)', borderRadius: '50%', filter: 'blur(100px)' }}></div>
+                <div style={{ position: 'absolute', bottom: '-10%', left: '-10%', width: '30vw', height: '30vw', background: 'rgba(124, 58, 237, 0.05)', borderRadius: '50%', filter: 'blur(80px)' }}></div>
 
                 <div className="container" style={{ position: 'relative', zIndex: 10 }}>
                     <motion.div
@@ -62,17 +62,17 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                             lineHeight: 1.1, 
                             marginBottom: '1.5rem', 
                             letterSpacing: '-0.04em',
-                            textShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                            color: 'var(--text-primary)'
                         }}>
                             Attendance <br />
-                            <span style={{ color: 'rgba(255,255,255,0.7)', fontStyle: 'italic' }}>Management System</span>
+                            <span style={{ color: 'var(--primary-color)', fontStyle: 'italic' }}>Management System</span>
                         </h1>
                         
                         <p style={{ 
                             fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', 
                             maxWidth: '750px', 
                             margin: '0 auto 3.5rem', 
-                            opacity: 0.85, 
+                            color: 'var(--text-secondary)',
                             lineHeight: 1.7,
                             fontWeight: 500
                         }}>
@@ -126,14 +126,14 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                                         onClick={onLogin}
                                         className="btn btn-hero-outline"
                                         style={{ 
-                                            background: 'rgba(255,255,255,0.1)', 
-                                            backdropFilter: 'blur(15px)', 
-                                            color: 'white', 
-                                            border: '2px solid rgba(255,255,255,0.4)', 
+                                            background: 'white', 
+                                            color: 'var(--text-primary)', 
+                                            border: '2px solid var(--border-color)', 
                                             padding: '1.25rem 2.75rem', 
                                             fontSize: '1.1rem', 
                                             borderRadius: '20px',
-                                            fontWeight: 700
+                                            fontWeight: 700,
+                                            boxShadow: 'var(--shadow-md)'
                                         }}
                                     >
                                         Sign In

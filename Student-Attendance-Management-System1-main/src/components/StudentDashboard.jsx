@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Activity, Clock, UserCheck, Calendar, FileText, PieChart, Download } from 'lucide-react';
 import { generateStudentReport, generateRegistryExport } from '../utils/exportUtils';
+import ClassSchedule from './ClassSchedule';
 import { api } from '../api';
 
 const StudentDashboard = ({ user, students = [], onNavigate, searchQuery = '' }) => {
@@ -74,11 +75,14 @@ const StudentDashboard = ({ user, students = [], onNavigate, searchQuery = '' })
                     <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Registry Actions</h3>
                     <div className="space-y-3">
                         <ActionButton icon={<Download />} label="Download Registry" color="#6366f1" onClick={() => generateRegistryExport(students)} />
+                        <ActionButton icon={<FileText />} label="Download Syllabus" color="#ec4899" onClick={() => window.open('https://dtek.karnataka.gov.in/52/c-20-syllabus/en', '_blank')} />
                         <ActionButton icon={<FileText />} label="Generate Report" color="#f59e0b" onClick={() => generateStudentReport(students)} />
                         <ActionButton icon={<UserCheck />} label="Update Identity" color="#10b981" onClick={() => onNavigate('profile')} />
                     </div>
                 </div>
             </div>
+            <ClassSchedule />
+
             <div className="card">
                 <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Peer Registry</h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>

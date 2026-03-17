@@ -108,4 +108,24 @@ public class AuthController {
         }
         return ResponseEntity.notFound().build();
     }
+    @PutMapping("/update-password/{id}")
+    public ResponseEntity<?> updatePassword(@PathVariable Long id, @RequestBody java.util.Map<String, String> request) {
+        String oldPassword = request.get("oldPassword");
+        String newPassword = request.get("newPassword");
+        if (id == null || oldPassword == null || newPassword == null || newPassword.isEmpty()) {
+            return ResponseEntity.badRequest().body("User ID, old password, and new password are required");
+        }
+
+        Optional<User> userOpt = userRepository.findById(id);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            if (!user.getPassword().equals(oldPassword)) {
+                return ResponseEntity.status(401).body("Invalid old access key");
+            }
+            user.setPassword(newPassword);
+            userRepository.save(user);
+            return ResponseEntity.ok().body(java.util.Map.of("message", "Access key updated successfully"));
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

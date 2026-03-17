@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Activity, Users, CheckCircle, Clock, TrendingUp, BarChart3 } from 'lucide-react';
+import ClassSchedule from './ClassSchedule';
 
 const Dashboard = ({ students = [] }) => {
     const stats = {
@@ -23,6 +24,8 @@ const Dashboard = ({ students = [] }) => {
                 <ModernStatCard label="Absence Trace" value={stats.absent} icon={<Activity />} color="#ef4444" trend="-1.2%" />
                 <ModernStatCard label="Delayed Nodes" value={stats.late} icon={<Clock />} color="#f59e0b" />
             </div>
+
+            <ClassSchedule />
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <div className="lg:col-span-8 card">

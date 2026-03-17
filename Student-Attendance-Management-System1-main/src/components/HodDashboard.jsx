@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Activity, Users, ClipboardList, TrendingUp, UserCheck, AlertTriangle, Download, FileText, CheckCircle } from 'lucide-react';
 import { generateStudentReport, generateRegistryExport } from '../utils/exportUtils';
+import ClassSchedule from './ClassSchedule';
 
 const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '' }) => {
     // Dynamic Analysis
@@ -11,8 +12,8 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '' }) => 
         : 0;
 
     const filteredStudents = students.filter(s => 
-        s.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        s.roll.toLowerCase().includes(searchQuery.toLowerCase())
+        (s.name || '').toLowerCase().includes((searchQuery || '').toLowerCase()) || 
+        (s.roll || '').toLowerCase().includes((searchQuery || '').toLowerCase())
     );
 
     const teamMembers = [
@@ -22,7 +23,7 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '' }) => 
         "Sidda Reddy",
         "Harsha Reddy",
         "Indravaraprasad"
-    ].filter(name => name.toLowerCase().includes(searchQuery.toLowerCase()));
+    ].filter(name => (name || '').toLowerCase().includes((searchQuery || '').toLowerCase()));
 
     return (
         <div className="animate-fade space-y-6">
@@ -49,10 +50,11 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '' }) => 
 
                 <div className="card">
                     <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Quick Protocols</h3>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                         <ProtocolButton icon={<CheckCircle />} label="Mark Attendance" onClick={() => onNavigate('attendance')} />
                         <ProtocolButton icon={<FileText />} label="Generate Report" onClick={() => generateStudentReport(students)} />
                         <ProtocolButton icon={<Download />} label="Download Registry" onClick={() => generateRegistryExport(students)} />
+                        <ProtocolButton icon={<Users />} label="Member Directory" onClick={() => onNavigate('students')} />
                         <ProtocolButton icon={<Activity />} label="Analytics" onClick={() => onNavigate('reports')} />
                         <ProtocolButton icon={<Users />} label="Leave Gateway" onClick={() => onNavigate('leave')} />
                     </div>
@@ -123,6 +125,8 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '' }) => 
                     </table>
                 </div>
             </div>
+
+            <ClassSchedule />
 
             <div className="card">
                 <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>The Team Members</h3>

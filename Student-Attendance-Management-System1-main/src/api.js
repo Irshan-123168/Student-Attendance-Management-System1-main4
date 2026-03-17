@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:9008/api';
+const API_BASE_URL = 'http://localhost:9017/api';
 
 // Helper to detect any network/connection error regardless of browser wording
 function isNetworkError(error) {
@@ -30,7 +30,7 @@ export const api = {
         } catch (error) {
             console.error('Login error:', error);
             if (isNetworkError(error)) {
-                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9008.');
+                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9017.');
             }
             throw error;
         }
@@ -51,7 +51,7 @@ export const api = {
         } catch (error) {
             console.error('Forgot password error:', error);
             if (isNetworkError(error)) {
-                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9008.');
+                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9017.');
             }
             throw error;
         }
@@ -72,7 +72,7 @@ export const api = {
         } catch (error) {
             console.error('Registration error:', error);
             if (isNetworkError(error)) {
-                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9008.');
+                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9017.');
             }
             throw error;
         }
@@ -92,6 +92,29 @@ export const api = {
             return await response.json();
         } catch (error) {
             console.error('Delete account error:', error);
+            throw error;
+        }
+    },
+
+    async updatePassword(userId, oldPassword, newPassword) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/auth/update-password/${userId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ oldPassword, newPassword })
+            });
+
+            if (!response.ok) {
+                const error = await response.text();
+                throw new Error(error || 'Failed to update password');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Update password error:', error);
+            if (isNetworkError(error)) {
+                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9017.');
+            }
             throw error;
         }
     },

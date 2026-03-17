@@ -56,9 +56,9 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                 overflow: 'hidden'
             }}
         >
-            {/* Background Orbs */}
-            <div style={{ position: 'absolute', width: '500px', height: '500px', background: 'rgba(255,255,255,0.1)', borderRadius: '50%', top: '-250px', right: '-100px', filter: 'blur(80px)' }}></div>
-            <div style={{ position: 'absolute', width: '400px', height: '400px', background: 'rgba(255,255,255,0.1)', borderRadius: '50%', bottom: '-200px', left: '-100px', filter: 'blur(80px)' }}></div>
+            {/* Background Orbs - Subtle for Light Theme */}
+            <div style={{ position: 'absolute', width: '500px', height: '500px', background: 'rgba(79, 70, 229, 0.05)', borderRadius: '50%', top: '-250px', right: '-100px', filter: 'blur(80px)' }}></div>
+            <div style={{ position: 'absolute', width: '400px', height: '400px', background: 'rgba(124, 58, 237, 0.05)', borderRadius: '50%', bottom: '-200px', left: '-100px', filter: 'blur(80px)' }}></div>
 
             <motion.div 
                 initial={{ opacity: 0, y: 30 }}
@@ -68,10 +68,10 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                     maxWidth: '450px', 
                     width: '100%', 
                     padding: '3rem', 
-                    background: 'rgba(255, 255, 255, 0.9)', 
-                    backdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(255, 255, 255, 0.5)',
-                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+                    background: 'white', 
+                    borderRadius: 'var(--radius-xl)',
+                    border: '1px solid var(--border-color)',
+                    boxShadow: 'var(--shadow-xl)'
                 }}
             >
                 <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>

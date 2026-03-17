@@ -63,9 +63,10 @@ const RegisterPage = ({ onRegister, onSwitchToLogin, onBackToHome }) => {
                     maxWidth: '650px', 
                     width: '100%', 
                     padding: '3rem', 
-                    background: 'rgba(255, 255, 255, 0.9)', 
-                    backdropFilter: 'blur(20px)',
-                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' 
+                    background: 'white', 
+                    borderRadius: 'var(--radius-xl)',
+                    border: '1px solid var(--border-color)',
+                    boxShadow: 'var(--shadow-xl)' 
                 }}
             >
                 <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
