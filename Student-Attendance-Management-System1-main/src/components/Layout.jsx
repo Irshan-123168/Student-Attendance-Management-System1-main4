@@ -23,20 +23,7 @@ import {
 
 const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccount, searchQuery, setSearchQuery }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [currentSlide, setCurrentSlide] = useState(0);
     const role = user?.role || 'STUDENT';
-
-    const slides = [
-        "Welcome to the Institutional Command Terminal",
-        "Global Security Protocols Engaged"
-    ];
-
-    React.useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentSlide((prev) => (prev + 1) % slides.length);
-        }, 3500);
-        return () => clearInterval(timer);
-    }, []);
 
     const navItems = {
         ADMIN: [
@@ -227,20 +214,7 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
                         />
                     </div>
 
-                    <div style={{ flex: 1, display: 'flex', justifyContent: 'center', overflow: 'hidden' }} className="hidden lg:flex">
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={currentSlide}
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                exit={{ y: -20, opacity: 0 }}
-                                transition={{ duration: 0.5 }}
-                                style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--primary-color)', whiteSpace: 'nowrap' }}
-                            >
-                                {slides[currentSlide]}
-                            </motion.div>
-                        </AnimatePresence>
-                    </div>
+                    <div style={{ flex: 1 }} className="hidden lg:flex"></div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
                         <div style={{ position: 'relative' }}>
