@@ -92,6 +92,18 @@ body {
     transition: all var(--transition-base);
 }
 
+@media (max-width: 1024px) {
+    .sidebar {
+        position: fixed;
+        left: -100%;
+        box-shadow: none;
+    }
+    .sidebar.mobile-active {
+        left: 0;
+        box-shadow: var(--shadow-2xl);
+    }
+}
+
 .brand-logo {
     padding: 2rem;
     display: flex;

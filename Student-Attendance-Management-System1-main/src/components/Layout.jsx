@@ -28,7 +28,6 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
 
     const slides = [
         "Welcome to the Institutional Command Terminal",
-        "Synchronizing Active Registry Nodes...",
         "Global Security Protocols Engaged"
     ];
 
@@ -78,13 +77,53 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
     return (
         <div className="app-container">
             {/* Mobile Toggle */}
-            <button 
-                className="lg:hidden" 
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                style={{ position: 'fixed', top: '20px', left: '20px', zIndex: 60, padding: '10px', background: 'white', borderRadius: '10px', border: '1px solid var(--border-color)' }}
-            >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            <div className="lg:hidden" style={{ position: 'fixed', top: '20px', left: '20px', zIndex: 60 }}>
+                {/* Offset Gradient Shadow */}
+                <div style={{ position: 'absolute', top: 6, left: 6, width: '100%', height: '100%', background: 'var(--primary-gradient)', borderRadius: '14px', zIndex: -1 }}></div>
+                
+                <button 
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    style={{ 
+                        position: 'relative',
+                        padding: '12px', 
+                        background: 'white', 
+                        borderRadius: '14px', 
+                        border: '1px solid var(--border-color)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        outline: 'none',
+                        color: 'black'
+                    }}
+                >
+                    <AnimatePresence mode="wait">
+                        {isMobileMenuOpen ? (
+                            <motion.div
+                                key="close"
+                                initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
+                                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                                exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
+                                transition={{ duration: 0.2 }}
+                                style={{ display: 'flex' }}
+                            >
+                                <X size={24} strokeWidth={2.5} />
+                            </motion.div>
+                        ) : (
+                            <motion.div
+                                key="menu"
+                                initial={{ opacity: 0, rotate: 90, scale: 0.5 }}
+                                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                                exit={{ opacity: 0, rotate: -90, scale: 0.5 }}
+                                transition={{ duration: 0.2 }}
+                                style={{ display: 'flex' }}
+                            >
+                                <Menu size={24} strokeWidth={2.5} />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </button>
+            </div>
 
             {/* Sidebar */}
             <aside className={`sidebar ${isMobileMenuOpen ? 'mobile-active' : ''}`}>
