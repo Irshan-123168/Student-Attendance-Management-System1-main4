@@ -133,6 +133,20 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
                             placeholder="Search Node..." 
                             value={searchQuery || ''}
                             onChange={(e) => setSearchQuery(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' && searchQuery.trim()) {
+                                    const query = searchQuery.toLowerCase();
+                                    if (query.includes('leave') || query.includes('request') || query.includes('application')) {
+                                        setActiveTab('leave');
+                                    } else if (query.includes('attendance') || query.includes('mark')) {
+                                        setActiveTab('attendance');
+                                    } else if (query.includes('report') || query.includes('system')) {
+                                        setActiveTab('reports');
+                                    } else {
+                                        setActiveTab(role === 'STUDENT' ? 'student-dashboard' : 'students');
+                                    }
+                                }
+                            }}
                         />
                     </div>
 

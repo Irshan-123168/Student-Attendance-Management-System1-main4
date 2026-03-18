@@ -160,6 +160,13 @@ function App() {
         setCurrentUser(null);
     };
 
+    const handleNavigate = (tab) => {
+        if (tab === 'students' && !directoryActive) {
+            handleRefreshDirectory();
+        }
+        setActiveTab(tab);
+    };
+
     const handleDeleteAccount = async () => {
         if (!currentUser || !currentUser.id) {
             alert('Unable to delete account: User information not found.');
@@ -231,7 +238,7 @@ function App() {
         <div className={settings.darkMode ? 'dark' : ''}>
             <Layout
                 activeTab={activeTab}
-                setActiveTab={setActiveTab}
+                setActiveTab={handleNavigate}
                 logout={logout}
                 user={currentUser}
                 onDeleteAccount={handleDeleteAccount}
@@ -243,19 +250,19 @@ function App() {
                     onLogin={() => {}} 
                     onRegister={() => {}} 
                     onDashboard={() => {
-                        if (userRole === 'Admin') setActiveTab('admin-dashboard');
-                        else if (userRole === 'HOD') setActiveTab('hod-dashboard');
-                        else if (userRole === 'Student') setActiveTab('student-dashboard');
-                        else setActiveTab('staff-dashboard');
+                        if (userRole === 'Admin') handleNavigate('admin-dashboard');
+                        else if (userRole === 'HOD') handleNavigate('hod-dashboard');
+                        else if (userRole === 'Student') handleNavigate('student-dashboard');
+                        else handleNavigate('staff-dashboard');
                     }} 
                     isAuthenticated={true} 
                     hideNavbar={true}
                 />
             )}
-            {activeTab === 'admin-dashboard' && <AdminDashboard user={currentUser} users={users} students={students} onNavigate={(tab) => setActiveTab(tab)} searchQuery={searchQuery} />}
-            {activeTab === 'hod-dashboard' && <HodDashboard user={currentUser} onNavigate={(tab) => setActiveTab(tab)} students={students} onUpdateStudent={handleUpdateStudent} searchQuery={searchQuery} />}
-            {activeTab === 'staff-dashboard' && <StaffDashboard user={currentUser} onNavigateToAttendance={(tab) => setActiveTab(tab)} students={students} searchQuery={searchQuery} />}
-            {activeTab === 'student-dashboard' && <StudentDashboard user={currentUser} students={students} onStatusChange={handleStatusChange} onNavigate={(tab) => setActiveTab(tab)} searchQuery={searchQuery} />}
+            {activeTab === 'admin-dashboard' && <AdminDashboard user={currentUser} users={users} students={students} onNavigate={handleNavigate} searchQuery={searchQuery} />}
+            {activeTab === 'hod-dashboard' && <HodDashboard user={currentUser} onNavigate={handleNavigate} students={students} onUpdateStudent={handleUpdateStudent} searchQuery={searchQuery} />}
+            {activeTab === 'staff-dashboard' && <StaffDashboard user={currentUser} onNavigateToAttendance={handleNavigate} students={students} searchQuery={searchQuery} />}
+            {activeTab === 'student-dashboard' && <StudentDashboard user={currentUser} students={students} onStatusChange={handleStatusChange} onNavigate={handleNavigate} searchQuery={searchQuery} />}
             {(activeTab === 'dashboard' || activeTab === 'analytics') && <Dashboard students={students} searchQuery={searchQuery} isSearching={isSearching} />}
             {activeTab === 'reports' && <ReportPage records={students} />}
             {(activeTab === 'attendance' || activeTab === 'quick-mark' || activeTab === 'attenditics' || activeTab === 'staff-attendance') && (

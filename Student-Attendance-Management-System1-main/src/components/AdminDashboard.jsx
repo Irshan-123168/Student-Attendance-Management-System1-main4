@@ -43,6 +43,13 @@ const AdminDashboard = ({ user, users = [], students = [], onNavigate, searchQue
           students.reduce((acc, s) => acc + (s.presentCount || 0) + (s.absentCount || 0) || 1, 0)) * 100) 
         : 0;
 
+    const filteredStudents = students.filter(s => 
+        searchQuery && (
+            (s.name || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
+            (s.roll || '').toLowerCase().includes(searchQuery.toLowerCase())
+        )
+    );
+
     return (
         <div className="animate-fade space-y-6">
             <header>
@@ -111,6 +118,61 @@ const AdminDashboard = ({ user, users = [], students = [], onNavigate, searchQue
             </div>
 
             <ClassSchedule />
+
+            {searchQuery && (
+                <div className="card animate-in slide-in-from-bottom-4 duration-500">
+                    <h3 style={{ marginBottom: '1.5rem', fontWeight: 700, color: 'var(--primary-color)' }}>Global Registry Search Results</h3>
+                    <div className="overflow-x-auto">
+                        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                            <thead>
+                                <tr style={{ borderBottom: '2px solid var(--border-color)', textAlign: 'left' }}>
+                                    <th style={{ padding: '1rem', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase' }}>Learner Identity</th>
+                                    <th style={{ padding: '1rem', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase' }}>Status</th>
+                                    <th style={{ padding: '1rem', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase' }}>Attendance</th>
+                                    <th style={{ padding: '1rem' }}></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredStudents.length > 0 ? (
+                                    filteredStudents.map((student, i) => {
+                                        const total = (student.presentCount || 0) + (student.absentCount || 0);
+                                        const percentage = total > 0 ? ((student.presentCount / total) * 100).toFixed(1) : '0.0';
+                                        
+                                        return (
+                                            <tr key={student.id || i} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                                                <td style={{ padding: '1rem' }}>
+                                                    <div style={{ fontWeight: 700 }}>{student.name}</div>
+                                                    <div style={{ fontSize: '0.7rem', color: 'var(--text-light)' }}>{student.roll}</div>
+                                                </td>
+                                                <td style={{ padding: '1rem' }}>
+                                                    <span className={`badge badge-${student.status === 'Present' ? 'success' : student.status === 'Absent' ? 'danger' : 'warning'}`}>
+                                                        {student.status || 'Pending'}
+                                                    </span>
+                                                </td>
+                                                <td style={{ padding: '1rem' }}>
+                                                    <div style={{ fontWeight: 800, color: 'var(--primary-color)' }}>{percentage}%</div>
+                                                </td>
+                                                <td style={{ padding: '1rem', textAlign: 'right' }}>
+                                                    <button 
+                                                        onClick={() => onNavigate('students')}
+                                                        className="text-xs font-bold text-indigo-600 underline"
+                                                    >
+                                                        Visit Node
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
+                                ) : (
+                                    <tr>
+                                        <td colSpan="4" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-light)' }}>Node identification failed. No records found.</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            )}
 
             <div className="card">
                 <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>The Team Members</h3>

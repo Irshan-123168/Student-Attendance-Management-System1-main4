@@ -86,7 +86,7 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '' }) => 
                         </thead>
                         <tbody>
                             {filteredStudents.length > 0 ? (
-                                filteredStudents.slice(0, 5).map((student, i) => {
+                                filteredStudents.map((student, i) => {
                                     const total = (student.presentCount || 0) + (student.absentCount || 0);
                                     const percentage = total > 0 ? ((student.presentCount / total) * 100).toFixed(1) : '0.0';
                                     

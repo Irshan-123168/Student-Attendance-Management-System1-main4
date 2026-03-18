@@ -5,17 +5,19 @@ import { api } from '../api';
 
 const PortalSettings = ({ user, settings, setSettings, onDeleteAccount }) => {
     const [isUpdatingKey, setIsUpdatingKey] = useState(false);
+    const [currentKey, setCurrentKey] = useState('');
     const [newKey, setNewKey] = useState('');
     const [status, setStatus] = useState({ type: '', message: '' });
 
     const handleUpdateKey = async (e) => {
         e.preventDefault();
-        if (!newKey) return;
+        if (!newKey || !currentKey) return;
         
         try {
-            await api.updatePassword(user.id, newKey);
+            await api.updatePassword(user.id, currentKey, newKey);
             setStatus({ type: 'success', message: 'Access Key updated successfully' });
             setNewKey('');
+            setCurrentKey('');
             setTimeout(() => {
                 setIsUpdatingKey(false);
                 setStatus({ type: '', message: '' });
@@ -131,6 +133,18 @@ const PortalSettings = ({ user, settings, setSettings, onDeleteAccount }) => {
                             </div>
                             
                             <form className="space-y-4" onSubmit={handleUpdateKey}>
+                                <div className="form-group" style={{ marginBottom: '1rem' }}>
+                                    <label className="form-label">Current Access Key</label>
+                                    <input 
+                                        type="password" 
+                                        className="form-input" 
+                                        placeholder="Enter current PIN..." 
+                                        value={currentKey}
+                                        onChange={(e) => setCurrentKey(e.target.value)}
+                                        required 
+                                    />
+                                </div>
+
                                 <div className="form-group">
                                     <label className="form-label">New Access Key</label>
                                     <input 
