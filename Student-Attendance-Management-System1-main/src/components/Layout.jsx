@@ -146,7 +146,13 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
                                         setActiveTab('curriculum');
                                     } else if (query.includes('dashboard')) {
                                         setActiveTab('dashboard');
-                                    } else if (query.includes('home') || query.includes('terminal')) {
+                                    } else if (query.includes('profile') || query.includes('identity') || query.includes('account')) {
+                                        setActiveTab('profile');
+                                    } else if (query.includes('setting') || query.includes('config')) {
+                                        setActiveTab('settings');
+                                    } else if (query.includes('schedule') || query.includes('routine')) {
+                                        setActiveTab('schedule');
+                                    } else if (query.includes('home') || query.includes('terminal') || query.includes('overview')) {
                                         if (role === 'ADMIN') setActiveTab('admin-dashboard');
                                         else if (role === 'HOD') setActiveTab('hod-dashboard');
                                         else if (role === 'STUDENT') setActiveTab('student-dashboard');
