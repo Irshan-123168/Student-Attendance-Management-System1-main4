@@ -23,7 +23,21 @@ import {
 
 const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccount, searchQuery, setSearchQuery }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [currentSlide, setCurrentSlide] = useState(0);
     const role = user?.role || 'STUDENT';
+
+    const slides = [
+        "Welcome to the Institutional Command Terminal",
+        "Synchronizing Active Registry Nodes...",
+        "Global Security Protocols Engaged"
+    ];
+
+    React.useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % slides.length);
+        }, 3500);
+        return () => clearInterval(timer);
+    }, []);
 
     const navItems = {
         ADMIN: [
@@ -138,31 +152,55 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
                                     const query = searchQuery.toLowerCase();
                                     if (query.includes('leave') || query.includes('request') || query.includes('application')) {
                                         setActiveTab('leave');
+                                        setSearchQuery('');
                                     } else if (query.includes('attendance') || query.includes('mark')) {
                                         setActiveTab('attendance');
+                                        setSearchQuery('');
                                     } else if (query.includes('report') || query.includes('system') || query.includes('analytic')) {
                                         setActiveTab('reports');
+                                        setSearchQuery('');
                                     } else if (query.includes('curricul')) {
                                         setActiveTab('curriculum');
+                                        setSearchQuery('');
                                     } else if (query.includes('dashboard')) {
                                         setActiveTab('dashboard');
+                                        setSearchQuery('');
                                     } else if (query.includes('profile') || query.includes('identity') || query.includes('account')) {
                                         setActiveTab('profile');
+                                        setSearchQuery('');
                                     } else if (query.includes('setting') || query.includes('config')) {
                                         setActiveTab('settings');
+                                        setSearchQuery('');
                                     } else if (query.includes('schedule') || query.includes('routine')) {
                                         setActiveTab('schedule');
+                                        setSearchQuery('');
                                     } else if (query.includes('home') || query.includes('terminal') || query.includes('overview')) {
                                         if (role === 'ADMIN') setActiveTab('admin-dashboard');
                                         else if (role === 'HOD') setActiveTab('hod-dashboard');
                                         else if (role === 'STUDENT') setActiveTab('student-dashboard');
                                         else setActiveTab('staff-dashboard');
+                                        setSearchQuery('');
                                     } else {
                                         setActiveTab(role === 'STUDENT' ? 'student-dashboard' : 'students');
                                     }
                                 }
                             }}
                         />
+                    </div>
+
+                    <div style={{ flex: 1, display: 'flex', justifyContent: 'center', overflow: 'hidden' }} className="hidden lg:flex">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={currentSlide}
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                exit={{ y: -20, opacity: 0 }}
+                                transition={{ duration: 0.5 }}
+                                style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--primary-color)', whiteSpace: 'nowrap' }}
+                            >
+                                {slides[currentSlide]}
+                            </motion.div>
+                        </AnimatePresence>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
