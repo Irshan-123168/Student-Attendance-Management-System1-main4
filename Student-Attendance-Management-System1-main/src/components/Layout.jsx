@@ -140,8 +140,17 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
                                         setActiveTab('leave');
                                     } else if (query.includes('attendance') || query.includes('mark')) {
                                         setActiveTab('attendance');
-                                    } else if (query.includes('report') || query.includes('system')) {
+                                    } else if (query.includes('report') || query.includes('system') || query.includes('analytic')) {
                                         setActiveTab('reports');
+                                    } else if (query.includes('curricul')) {
+                                        setActiveTab('curriculum');
+                                    } else if (query.includes('dashboard')) {
+                                        setActiveTab('dashboard');
+                                    } else if (query.includes('home') || query.includes('terminal')) {
+                                        if (role === 'ADMIN') setActiveTab('admin-dashboard');
+                                        else if (role === 'HOD') setActiveTab('hod-dashboard');
+                                        else if (role === 'STUDENT') setActiveTab('student-dashboard');
+                                        else setActiveTab('staff-dashboard');
                                     } else {
                                         setActiveTab(role === 'STUDENT' ? 'student-dashboard' : 'students');
                                     }
