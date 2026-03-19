@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 
 const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccount, searchQuery, setSearchQuery }) => {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const role = user?.role || 'STUDENT';
 
     const navItems = {
@@ -63,13 +63,13 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
 
     return (
         <div className="app-container">
-            {/* Mobile Toggle */}
-            <div className="lg:hidden" style={{ position: 'fixed', top: '20px', left: '20px', zIndex: 60 }}>
+            {/* Sidebar Toggle Button (Visible on all screens) */}
+            <div style={{ position: 'fixed', top: '20px', left: '20px', zIndex: 60 }}>
                 {/* Offset Gradient Shadow */}
                 <div style={{ position: 'absolute', top: 6, left: 6, width: '100%', height: '100%', background: 'var(--primary-gradient)', borderRadius: '14px', zIndex: -1 }}></div>
                 
                 <button 
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                     style={{ 
                         position: 'relative',
                         padding: '12px', 
@@ -85,7 +85,7 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
                     }}
                 >
                     <AnimatePresence mode="wait">
-                        {isMobileMenuOpen ? (
+                        {isSidebarOpen ? (
                             <motion.div
                                 key="close"
                                 initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
@@ -113,9 +113,9 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
             </div>
 
             {/* Sidebar */}
-            <aside className={`sidebar ${isMobileMenuOpen ? 'mobile-active' : ''}`}>
-                <div className="brand-logo">
-                    <div style={{ width: '40px', height: '40px', background: 'var(--primary-gradient)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+            <aside className={`sidebar ${!isSidebarOpen ? 'closed' : 'mobile-active'}`}>
+                <div className="brand-logo" style={{ paddingLeft: '80px' }}>
+                    <div style={{ width: '40px', height: '40px', background: 'var(--primary-gradient)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', minWidth: '40px' }}>
                         <Activity size={24} />
                     </div>
                     <span>AttendFlow</span>
@@ -128,7 +128,10 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
                             <button
                                 key={item.id}
                                 className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
-                                onClick={() => { setActiveTab(item.id); setIsMobileMenuOpen(false); }}
+                                onClick={() => { 
+                                    setActiveTab(item.id); 
+                                    if (window.innerWidth <= 1024) setIsSidebarOpen(false); 
+                                }}
                             >
                                 {item.icon}
                                 {item.label}
@@ -163,7 +166,13 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
             {/* Main Content Area */}
             <main style={{ flex: 1, display: 'flex', flexDirection: 'column', width: '100%' }}>
                 {/* Header */}
-                <header className="top-header">
+                <header 
+                    className="top-header" 
+                    style={{ 
+                        paddingLeft: !isSidebarOpen ? '80px' : '2rem', 
+                        transition: 'padding 0.4s cubic-bezier(0.4, 0, 0.2, 1)' 
+                    }}
+                >
                     <div style={{ position: 'relative', width: '300px' }} className="hidden md:block">
                         <Search style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-light)' }} size={18} />
                         <input 
@@ -178,34 +187,25 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
                                     const query = searchQuery.toLowerCase();
                                     if (query.includes('leave') || query.includes('request') || query.includes('application')) {
                                         setActiveTab('leave');
-                                        setSearchQuery('');
                                     } else if (query.includes('attendance') || query.includes('mark')) {
                                         setActiveTab('attendance');
-                                        setSearchQuery('');
                                     } else if (query.includes('report') || query.includes('system') || query.includes('analytic')) {
                                         setActiveTab('reports');
-                                        setSearchQuery('');
                                     } else if (query.includes('curricul')) {
                                         setActiveTab('curriculum');
-                                        setSearchQuery('');
                                     } else if (query.includes('dashboard')) {
                                         setActiveTab('dashboard');
-                                        setSearchQuery('');
                                     } else if (query.includes('profile') || query.includes('identity') || query.includes('account')) {
                                         setActiveTab('profile');
-                                        setSearchQuery('');
                                     } else if (query.includes('setting') || query.includes('config')) {
                                         setActiveTab('settings');
-                                        setSearchQuery('');
                                     } else if (query.includes('schedule') || query.includes('routine')) {
                                         setActiveTab('schedule');
-                                        setSearchQuery('');
                                     } else if (query.includes('home') || query.includes('terminal') || query.includes('overview')) {
                                         if (role === 'ADMIN') setActiveTab('admin-dashboard');
                                         else if (role === 'HOD') setActiveTab('hod-dashboard');
                                         else if (role === 'STUDENT') setActiveTab('student-dashboard');
                                         else setActiveTab('staff-dashboard');
-                                        setSearchQuery('');
                                     } else {
                                         setActiveTab(role === 'STUDENT' ? 'student-dashboard' : 'students');
                                     }
