@@ -75,7 +75,12 @@ const StudentDashboard = ({ user, students = [], onNavigate, searchQuery = '' })
                     <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Registry Actions</h3>
                     <div className="space-y-3">
                         <ActionButton icon={<Download />} label="Download Registry" color="#6366f1" onClick={() => generateRegistryExport(students)} />
-                        <ActionButton icon={<FileText />} label="Download Syllabus" color="#ec4899" onClick={() => window.open('https://dtek.karnataka.gov.in/52/c-20-syllabus/en', '_blank')} />
+                        <ActionButton icon={<FileText />} label="Syllabus C-25 (PDF)" color="#ec4899" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_1_4_ComputerScience&Engineering.pdf', '_blank')} />
+                        <ActionButton icon={<FileText />} label="Syllabus C-20 (Web)" color="#8b5cf6" onClick={() => window.open('https://dtek.karnataka.gov.in/52/c-20-syllabus/en', '_blank')} />
+                        <ActionButton icon={<FileText />} label="Syllabus EEE C-25 (PDF)" color="#f97316" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_EE_1_4_Electrical&ElectronicsEngineering.pdf', '_blank')} />
+                        <ActionButton icon={<FileText />} label="Syllabus ME C-25 (PDF)" color="#14b8a6" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_ME_1_4_MechanicalEngineering.pdf', '_blank')} />
+                        <ActionButton icon={<FileText />} label="Syllabus MT C-25 (PDF)" color="#a855f7" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_MT_1_4_MetallurgicalEngineering.pdf', '_blank')} />
+                        <ActionButton icon={<FileText />} label="Syllabus CE C-25 (PDF)" color="#0ea5e9" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_CE_1_4_CivilEngineering.pdf', '_blank')} />
                         <ActionButton icon={<FileText />} label="Generate Report" color="#f59e0b" onClick={() => generateStudentReport(students)} />
                         <ActionButton icon={<UserCheck />} label="Update Identity" color="#10b981" onClick={() => onNavigate('profile')} />
                     </div>
