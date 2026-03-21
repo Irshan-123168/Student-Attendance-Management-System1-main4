@@ -1,10 +1,17 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Activity, Users, CheckCircle, Clock, Download, FileText, UserPlus } from 'lucide-react';
 import { generateStudentReport, generateRegistryExport, generateMasterReport } from '../utils/exportUtils';
 import ClassSchedule from './ClassSchedule';
 
 const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQuery = '' }) => {
+    const [showRegistryPopup, setShowRegistryPopup] = useState(false);
+
+    const handleFinalizeRegistry = () => {
+        setShowRegistryPopup(true);
+        setTimeout(() => setShowRegistryPopup(false), 3500);
+    };
+
     // Dynamic Stats
     const totalStudents = students.length;
     const pendingActions = students.filter(s => s.status === 'Pending').length;
@@ -41,6 +48,14 @@ const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQue
                     <p style={{ color: 'var(--text-secondary)' }}>Faculty Dashboard & Management Terminal</p>
                 </div>
                 <div style={{ display: 'flex', gap: '1rem' }}>
+                    <button 
+                         onClick={handleFinalizeRegistry}
+                        className="btn btn-secondary"
+                        style={{ height: '48px', padding: '0 1.5rem', fontWeight: 700, borderColor: 'var(--success-color)', color: 'var(--success-color)' }}
+                    >
+                        <CheckCircle size={18} />
+                        Finalize Registry
+                    </button>
                     <button 
                         onClick={() => generateMasterReport(students)}
                         className="btn btn-secondary"
@@ -138,6 +153,86 @@ const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQue
                     )}
                 </div>
             </div>
+
+            {/* Finalize Log Registry Success Popup */}
+            <AnimatePresence>
+                {showRegistryPopup && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{
+                            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+                            background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(6px)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            zIndex: 200, padding: '1rem'
+                        }}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.7, opacity: 0, y: 40 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.8, opacity: 0, y: 20 }}
+                            transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+                            style={{
+                                background: 'var(--bg-primary)',
+                                borderRadius: '24px',
+                                padding: '3rem 2.5rem',
+                                maxWidth: '420px',
+                                width: '100%',
+                                textAlign: 'center',
+                                boxShadow: '0 25px 60px rgba(16,185,129,0.25), 0 0 0 1px rgba(16,185,129,0.15)',
+                                border: '1px solid rgba(16,185,129,0.3)'
+                            }}
+                        >
+                            <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                transition={{ delay: 0.15, type: 'spring', stiffness: 400, damping: 20 }}
+                                style={{
+                                    width: '80px', height: '80px',
+                                    background: 'linear-gradient(135deg, #10b981, #059669)',
+                                    borderRadius: '50%',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    margin: '0 auto 1.5rem',
+                                    boxShadow: '0 8px 32px rgba(16,185,129,0.4)'
+                                }}
+                            >
+                                <CheckCircle size={40} color="white" />
+                            </motion.div>
+                            <motion.h3
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.25 }}
+                                style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '0.75rem', color: '#10b981' }}
+                            >
+                                Registry Finalized!
+                            </motion.h3>
+                            <motion.p
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.35 }}
+                                style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-secondary)', lineHeight: 1.6 }}
+                            >
+                                Student Registry Successfully Updated
+                            </motion.p>
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.45 }}
+                                style={{ marginTop: '2rem' }}
+                            >
+                                <button
+                                    onClick={() => setShowRegistryPopup(false)}
+                                    className="btn btn-primary"
+                                    style={{ padding: '0.75rem 2rem', fontWeight: 700, background: 'linear-gradient(135deg, #10b981, #059669)', border: 'none' }}
+                                >
+                                    <CheckCircle size={16} /> Close
+                                </button>
+                            </motion.div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };
@@ -164,14 +259,21 @@ const ActivityItem = ({ label, time, status }) => (
     </div>
 );
 
-const ActionButton = ({ icon, label, onClick }) => (
+const ActionButton = ({ icon, label, onClick, highlight }) => (
     <button 
         onClick={onClick}
         className="btn btn-secondary" 
-        style={{ height: 'auto', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center' }}
+        style={{
+            height: 'auto', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center',
+            ...(highlight ? {
+                background: 'linear-gradient(135deg, rgba(16,185,129,0.12), rgba(5,150,105,0.08))',
+                borderColor: 'rgba(16,185,129,0.5)',
+                boxShadow: '0 0 16px rgba(16,185,129,0.15)'
+            } : {})
+        }}
     >
-        <span style={{ color: 'var(--primary-color)' }}>{icon}</span>
-        <span style={{ fontWeight: 700, fontSize: '0.8125rem' }}>{label}</span>
+        <span style={{ color: highlight ? '#10b981' : 'var(--primary-color)' }}>{icon}</span>
+        <span style={{ fontWeight: 700, fontSize: '0.8125rem', color: highlight ? '#10b981' : 'inherit' }}>{label}</span>
     </button>
 );
 
