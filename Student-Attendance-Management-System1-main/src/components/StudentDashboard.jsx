@@ -1,12 +1,38 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Activity, Clock, UserCheck, Calendar, FileText, PieChart, Download, CheckCircle } from 'lucide-react';
+import { Activity, Clock, UserCheck, Calendar, FileText, PieChart, Download, CheckCircle, Eye, Lock, Send, XCircle } from 'lucide-react';
 import { generateStudentReport, generateRegistryExport } from '../utils/exportUtils';
 import ClassSchedule from './ClassSchedule';
 import { api } from '../api';
 
-const StudentDashboard = ({ user, students = [], onNavigate, searchQuery = '' }) => {
+const StudentDashboard = ({ user, students = [], onNavigate, searchQuery = '', settings, setSettings }) => {
     const [showRegistryPopup, setShowRegistryPopup] = useState(false);
+    const [isUpdatingKey, setIsUpdatingKey] = useState(false);
+    const [oldKey, setOldKey] = useState('');
+    const [newKey, setNewKey] = useState('');
+    const [status, setStatus] = useState({ type: '', message: '' });
+
+    const handleUpdateKey = async (e) => {
+        e.preventDefault();
+        if (!oldKey || !newKey) return;
+        
+        try {
+            await api.updatePassword(user.id, oldKey, newKey);
+            setStatus({ type: 'success', message: 'Access Key updated successfully' });
+            setOldKey('');
+            setNewKey('');
+            setTimeout(() => {
+                setIsUpdatingKey(false);
+                setStatus({ type: '', message: '' });
+            }, 2000);
+        } catch (error) {
+            setStatus({ type: 'error', message: error.message });
+        }
+    };
+
+    const toggleDarkMode = () => {
+        setSettings(prev => ({ ...prev, darkMode: !prev.darkMode }));
+    };
 
     const handleFinalizeRegistry = () => {
         setShowRegistryPopup(true);
@@ -91,6 +117,19 @@ const StudentDashboard = ({ user, students = [], onNavigate, searchQuery = '' })
                         <ActionButton icon={<FileText />} label="Syllabus CE C-25 (PDF)" color="#0ea5e9" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_CE_1_4_CivilEngineering.pdf', '_blank')} />
                         <ActionButton icon={<FileText />} label="Generate Report" color="#f59e0b" onClick={() => generateStudentReport(students)} />
                         <ActionButton icon={<UserCheck />} label="Update Identity" color="#10b981" onClick={() => onNavigate('profile')} />
+                        <ActionButton 
+                            icon={<Eye size={20} />} 
+                            label="Dark Interface" 
+                            color={settings?.darkMode ? "#10b981" : "#6366f1"}
+                            onClick={toggleDarkMode} 
+                            highlight={settings?.darkMode} 
+                        />
+                        <ActionButton 
+                            icon={<Lock size={20} />} 
+                            label="Update Access Key" 
+                            color="#f59e0b"
+                            onClick={() => setIsUpdatingKey(true)} 
+                        />
                     </div>
                 </div>
             </div>
@@ -211,6 +250,75 @@ const StudentDashboard = ({ user, students = [], onNavigate, searchQuery = '' })
                             </motion.div>
                         </motion.div>
                     </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Access Key Update Modal */}
+            <AnimatePresence>
+                {isUpdatingKey && (
+                    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(5px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '1rem' }}>
+                        <motion.div 
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            className="card" 
+                            style={{ maxWidth: '400px', width: '100%', padding: '2.5rem' }}
+                        >
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+                                <h3 style={{ fontWeight: 800, fontSize: '1.25rem' }}>Access Key Protocol</h3>
+                                <button onClick={() => setIsUpdatingKey(false)} style={{ background: 'none', border: 'none', color: 'var(--text-light)', cursor: 'pointer' }}>
+                                    <XCircle size={24} />
+                                </button>
+                            </div>
+                            
+                            <form className="space-y-4" onSubmit={handleUpdateKey}>
+                                <div className="form-group">
+                                    <label className="form-label">Old Access Key</label>
+                                    <input 
+                                        type="password" 
+                                        className="form-input" 
+                                        placeholder="Enter current PIN..." 
+                                        value={oldKey}
+                                        onChange={(e) => setOldKey(e.target.value)}
+                                        required 
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">New Access Key</label>
+                                    <input 
+                                        type="password" 
+                                        className="form-input" 
+                                        placeholder="Enter new 6-digit PIN..." 
+                                        value={newKey}
+                                        onChange={(e) => setNewKey(e.target.value)}
+                                        required 
+                                    />
+                                </div>
+                                
+                                {status.message && (
+                                    <div style={{ 
+                                        padding: '0.75rem', 
+                                        borderRadius: '8px', 
+                                        background: status.type === 'success' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+                                        color: status.type === 'success' ? 'var(--success-color)' : 'var(--error-color)',
+                                        fontSize: '0.875rem',
+                                        fontWeight: 700,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '0.5rem'
+                                    }}>
+                                        {status.type === 'success' ? <CheckCircle size={16} /> : <XCircle size={16} />}
+                                        {status.message}
+                                    </div>
+                                )}
+
+                                <button type="submit" className="btn btn-primary w-full" style={{ height: '52px', marginTop: '1rem' }}>
+                                    <Send size={18} />
+                                    Synchronize Key
+                                </button>
+                            </form>
+                        </motion.div>
+                    </div>
                 )}
             </AnimatePresence>
         </div>

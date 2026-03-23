@@ -40,6 +40,7 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
             { id: 'leave', label: 'Leave Gateway', icon: <ClipboardList size={20} /> },
             { id: 'curriculum', label: 'Curriculum', icon: <Book size={20} /> },
             { id: 'reports', label: 'Analytics', icon: <Activity size={20} /> },
+            { id: 'settings', label: 'Settings', icon: <Settings size={20} /> },
             { id: 'profile', label: 'My Identity', icon: <User size={20} /> },
         ],
         TEACHER: [
@@ -48,6 +49,7 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
             { id: 'leave', label: 'Leave Requests', icon: <ClipboardList size={20} /> },
             { id: 'curriculum', label: 'Curriculum Hub', icon: <Book size={20} /> },
             { id: 'reports', label: 'Class Analytics', icon: <FileBarChart size={20} /> },
+            { id: 'settings', label: 'Settings', icon: <Settings size={20} /> },
             { id: 'profile', label: 'Account Settings', icon: <User size={20} /> },
         ],
         STUDENT: [
@@ -55,6 +57,7 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
             { id: 'schedule', label: 'Academic Routine', icon: <Calendar size={20} /> },
             { id: 'curriculum', label: 'Curriculum', icon: <Book size={20} /> },
             { id: 'leave', label: 'Leave Application', icon: <ClipboardList size={20} /> },
+            { id: 'settings', label: 'Settings', icon: <Settings size={20} /> },
             { id: 'profile', label: 'My Profile', icon: <User size={20} /> },
         ]
     };

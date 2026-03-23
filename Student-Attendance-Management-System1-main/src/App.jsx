@@ -49,7 +49,7 @@ function App() {
         };
         if (saved) {
             const parsed = JSON.parse(saved);
-            return { ...parsed, darkMode: false };
+            return { ...parsed };
         }
         return defaultSettings;
     });
@@ -259,10 +259,10 @@ function App() {
                     hideNavbar={true}
                 />
             )}
-            {activeTab === 'admin-dashboard' && <AdminDashboard user={currentUser} users={users} students={students} onNavigate={handleNavigate} searchQuery={searchQuery} />}
-            {activeTab === 'hod-dashboard' && <HodDashboard user={currentUser} onNavigate={handleNavigate} students={students} onUpdateStudent={handleUpdateStudent} searchQuery={searchQuery} />}
-            {activeTab === 'staff-dashboard' && <StaffDashboard user={currentUser} onNavigateToAttendance={handleNavigate} students={students} searchQuery={searchQuery} />}
-            {activeTab === 'student-dashboard' && <StudentDashboard user={currentUser} students={students} onStatusChange={handleStatusChange} onNavigate={handleNavigate} searchQuery={searchQuery} />}
+            {activeTab === 'admin-dashboard' && <AdminDashboard user={currentUser} users={users} students={students} onNavigate={handleNavigate} searchQuery={searchQuery} settings={settings} setSettings={setSettings} />}
+            {activeTab === 'hod-dashboard' && <HodDashboard user={currentUser} onNavigate={handleNavigate} students={students} onUpdateStudent={handleUpdateStudent} searchQuery={searchQuery} settings={settings} setSettings={setSettings} />}
+            {activeTab === 'staff-dashboard' && <StaffDashboard user={currentUser} onNavigateToAttendance={handleNavigate} students={students} searchQuery={searchQuery} settings={settings} setSettings={setSettings} />}
+            {activeTab === 'student-dashboard' && <StudentDashboard user={currentUser} students={students} onStatusChange={handleStatusChange} onNavigate={handleNavigate} searchQuery={searchQuery} settings={settings} setSettings={setSettings} />}
             {(activeTab === 'dashboard' || activeTab === 'analytics') && <Dashboard students={students} searchQuery={searchQuery} isSearching={isSearching} />}
             {activeTab === 'reports' && <ReportPage records={students} />}
             {(activeTab === 'attendance' || activeTab === 'quick-mark' || activeTab === 'attenditics' || activeTab === 'staff-attendance') && (

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Users, FileText, Settings, Activity, Download, User, Lock, XCircle, Send, CheckCircle, ClipboardCheck } from 'lucide-react';
+import { Shield, Users, FileText, Settings, Activity, Download, User, Lock, XCircle, Send, CheckCircle, ClipboardCheck, Eye } from 'lucide-react';
 import { generateStudentReport, generateRegistryExport } from '../utils/exportUtils';
 import { api } from '../api';
 import ClassSchedule from './ClassSchedule';
@@ -81,7 +81,7 @@ const AdminDashboard = ({ user, users = [], students = [], onNavigate, searchQue
                             <QuickLink label="Generate Report" desc="Full Ledger" onClick={() => generateStudentReport(students)} />
                             <QuickLink label="Security Audit" desc="Verified Trace" onClick={() => onNavigate('reports')} />
                             <QuickLink label="System Config" desc="Portal settings" onClick={() => onNavigate('settings')} />
-                             <QuickLink label="Finalize Log Registry" desc="Commit && Confirm Registry" onClick={handleFinalizeRegistry} highlight />
+                             <QuickLink label="Dark Interface" desc="Toggle visual mode" onClick={() => setSettings(prev => ({ ...prev, darkMode: !prev.darkMode }))} highlight={settings?.darkMode} />
                             <QuickLink label="Syllabus C-25 (PDF)" desc="DTEK C-25 Draft" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_1_4_ComputerScience&Engineering.pdf', '_blank')} />
                             <QuickLink label="Syllabus C-20 (Web)" desc="C-20 Web Portal" onClick={() => window.open('https://dtek.karnataka.gov.in/52/c-20-syllabus/en', '_blank')} />
                             <QuickLink label="Syllabus EEE C-25 (PDF)" desc="EEE C-25 Draft" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_EE_1_4_Electrical&ElectronicsEngineering.pdf', '_blank')} />
