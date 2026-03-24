@@ -10,6 +10,7 @@ import AttendancePanel from './components/AttendancePanel';
 import Dashboard from './components/Dashboard';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
+import RegisterSuccess from './components/RegisterSuccess';
 import AdminDashboard from './components/AdminDashboard';
 import HodDashboard from './components/HodDashboard';
 import StaffDashboard from './components/StaffDashboard';
@@ -155,8 +156,7 @@ function App() {
     };
 
     const handleRegisterSuccess = () => {
-        alert('Account created successfully! Please sign in.');
-        setAuthView('login');
+        setAuthView('register-success');
     };
 
     const logout = () => {
@@ -223,20 +223,30 @@ function App() {
                     isAuthenticated={false}
                 />
             );
+        } else if (authView === 'login') {
+            return (
+                <LoginPage
+                    onLogin={handleLoginSuccess}
+                    onSwitchToRegister={() => setAuthView('register')}
+                    onBackToHome={() => setAuthView('home')}
+                />
+            );
+        } else if (authView === 'register') {
+            return (
+                <RegisterPage
+                    onRegister={handleRegisterSuccess}
+                    onSwitchToLogin={() => setAuthView('login')}
+                    onBackToHome={() => setAuthView('home')}
+                />
+            );
+        } else if (authView === 'register-success') {
+            return (
+                <RegisterSuccess 
+                    onContinue={() => setAuthView('login')}
+                />
+            );
         }
-        return authView === 'login' ? (
-            <LoginPage
-                onLogin={handleLoginSuccess}
-                onSwitchToRegister={() => setAuthView('register')}
-                onBackToHome={() => setAuthView('home')}
-            />
-        ) : (
-            <RegisterPage
-                onRegister={handleRegisterSuccess}
-                onSwitchToLogin={() => setAuthView('login')}
-                onBackToHome={() => setAuthView('home')}
-            />
-        );
+        return null;
     }
 
     return (
