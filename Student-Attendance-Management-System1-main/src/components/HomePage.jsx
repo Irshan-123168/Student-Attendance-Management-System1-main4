@@ -342,7 +342,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                                 position: 'relative'
                             }}
                         >
-                            <img src="/src/assets/classroom_session.jpg" alt="Active Learning Session" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src="/src/assets/classroom_session.png" alt="Active Learning Session" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'rgba(255,255,255,0.9)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
                                 <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Smart Classrooms</span>
                             </div>
@@ -365,7 +365,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                                 position: 'relative'
                             }}
                         >
-                            <img src="/src/assets/faculty_meeting.jpg" alt="Faculty Collaboration" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src="/src/assets/faculty_meeting.png" alt="Faculty Collaboration" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'rgba(255,255,255,0.9)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
                                 <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Faculty Hub</span>
                             </div>
