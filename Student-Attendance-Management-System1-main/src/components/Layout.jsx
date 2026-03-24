@@ -220,6 +220,28 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
                     <div style={{ flex: 1 }} className="hidden lg:flex"></div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                        <button 
+                            onClick={onDeleteAccount}
+                            style={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                gap: '0.5rem', 
+                                padding: '0.5rem 1rem', 
+                                background: 'rgba(239, 68, 68, 0.1)', 
+                                color: '#ef4444', 
+                                border: '1px solid rgba(239, 68, 68, 0.2)', 
+                                borderRadius: '10px',
+                                fontSize: '0.75rem',
+                                fontWeight: 800,
+                                cursor: 'pointer',
+                                transition: 'all 0.2s'
+                            }}
+                            onMouseOver={(e) => { e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)'; }}
+                            onMouseOut={(e) => { e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'; }}
+                        >
+                            <Trash2 size={16} />
+                            <span className="hidden md:inline">Delete Account</span>
+                        </button>
                         <div style={{ position: 'relative' }}>
                             <Bell size={22} className="text-gray-400" />
                             <div style={{ position: 'absolute', top: '-2px', right: '-2px', width: '10px', height: '10px', background: 'var(--error-color)', border: '2px solid white', borderRadius: '50%' }}></div>
