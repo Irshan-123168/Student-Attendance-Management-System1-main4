@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Users, FileText, Settings, Activity, Download, User, Lock, XCircle, Send, CheckCircle, ClipboardCheck, Eye } from 'lucide-react';
+import { Shield, Users, FileText, Settings, Activity, Download, User, Lock, XCircle, Send, CheckCircle, ClipboardCheck, Eye, Trash2 } from 'lucide-react';
 import { generateStudentReport, generateRegistryExport } from '../utils/exportUtils';
 import { api } from '../api';
 import ClassSchedule from './ClassSchedule';
 
-const AdminDashboard = ({ user, users = [], students = [], onNavigate, searchQuery = '' }) => {
+const AdminDashboard = ({ user, users = [], students = [], onNavigate, searchQuery = '', settings, setSettings, onDeleteAccount }) => {
     const [isUpdatingKey, setIsUpdatingKey] = useState(false);
     const [oldKey, setOldKey] = useState('');
     const [newKey, setNewKey] = useState('');
@@ -126,6 +126,17 @@ const AdminDashboard = ({ user, users = [], students = [], onNavigate, searchQue
                                 <span style={{ fontWeight: 600 }}>Update Access Key</span>
                             </div>
                             <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-light)' }}>PIN</span>
+                        </button>
+
+                        <button 
+                            onClick={onDeleteAccount}
+                            className="btn btn-secondary w-full" style={{ justifyContent: 'space-between', padding: '1.25rem', borderStyle: 'dashed', marginTop: '1rem', color: '#ef4444', borderColor: 'rgba(239, 68, 68, 0.3)' }}
+                        >
+                            <div className="flex gap-3">
+                                <Trash2 size={18} />
+                                <span style={{ fontWeight: 600 }}>Delete Account</span>
+                            </div>
+                            <span style={{ fontSize: '0.75rem', fontWeight: 800, opacity: 0.6 }}>VOID</span>
                         </button>
                     </div>
                 </div>

@@ -274,10 +274,10 @@ function App() {
                     hideNavbar={true}
                 />
             )}
-            {activeTab === 'admin-dashboard' && <AdminDashboard user={currentUser} users={users} students={students} onNavigate={handleNavigate} searchQuery={searchQuery} settings={settings} setSettings={setSettings} />}
-            {activeTab === 'hod-dashboard' && <HodDashboard user={currentUser} onNavigate={handleNavigate} students={students} onUpdateStudent={handleUpdateStudent} searchQuery={searchQuery} settings={settings} setSettings={setSettings} />}
-            {activeTab === 'staff-dashboard' && <StaffDashboard user={currentUser} onNavigateToAttendance={handleNavigate} students={students} searchQuery={searchQuery} settings={settings} setSettings={setSettings} />}
-            {activeTab === 'student-dashboard' && <StudentDashboard user={currentUser} students={students} onStatusChange={handleStatusChange} onNavigate={handleNavigate} searchQuery={searchQuery} settings={settings} setSettings={setSettings} />}
+            {activeTab === 'admin-dashboard' && <AdminDashboard user={currentUser} users={users} students={students} onNavigate={handleNavigate} searchQuery={searchQuery} settings={settings} setSettings={setSettings} onDeleteAccount={handleDeleteAccount} />}
+            {activeTab === 'hod-dashboard' && <HodDashboard user={currentUser} onNavigate={handleNavigate} students={students} onUpdateStudent={handleUpdateStudent} searchQuery={searchQuery} settings={settings} setSettings={setSettings} onDeleteAccount={handleDeleteAccount} />}
+            {activeTab === 'staff-dashboard' && <StaffDashboard user={currentUser} onNavigateToAttendance={handleNavigate} students={students} searchQuery={searchQuery} settings={settings} setSettings={setSettings} onDeleteAccount={handleDeleteAccount} />}
+            {activeTab === 'student-dashboard' && <StudentDashboard user={currentUser} students={students} onStatusChange={handleStatusChange} onNavigate={handleNavigate} searchQuery={searchQuery} settings={settings} setSettings={setSettings} onDeleteAccount={handleDeleteAccount} />}
             {(activeTab === 'dashboard' || activeTab === 'analytics') && <Dashboard students={students} searchQuery={searchQuery} isSearching={isSearching} />}
             {activeTab === 'reports' && <ReportPage records={students} />}
             {(activeTab === 'attendance' || activeTab === 'quick-mark' || activeTab === 'attenditics' || activeTab === 'staff-attendance') && (

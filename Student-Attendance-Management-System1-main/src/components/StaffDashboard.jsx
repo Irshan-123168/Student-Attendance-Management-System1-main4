@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Activity, Users, CheckCircle, Clock, Download, FileText, UserPlus, Lock, Eye, Send, XCircle } from 'lucide-react';
+import { Activity, Users, CheckCircle, Clock, Download, FileText, UserPlus, Lock, Eye, Send, XCircle, Trash2 } from 'lucide-react';
 import { api } from '../api';
 import { generateStudentReport, generateRegistryExport, generateMasterReport } from '../utils/exportUtils';
 import ClassSchedule from './ClassSchedule';
 
-const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQuery = '', settings, setSettings }) => {
+const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQuery = '', settings, setSettings, onDeleteAccount }) => {
     const [showRegistryPopup, setShowRegistryPopup] = useState(false);
     const [isUpdatingKey, setIsUpdatingKey] = useState(false);
     const [oldKey, setOldKey] = useState('');
@@ -142,6 +142,12 @@ const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQue
                             icon={<Lock size={20} />} 
                             label="Update Access Key" 
                             onClick={() => setIsUpdatingKey(true)} 
+                        />
+                         <ActionButton 
+                            icon={<Trash2 size={20} />} 
+                            label="Delete Account" 
+                            onClick={onDeleteAccount} 
+                            isDanger
                         />
                         <ActionButton icon={<FileText />} label="Syllabus C-25 (PDF)" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_1_4_ComputerScience&Engineering.pdf', '_blank')} />
                         <ActionButton icon={<FileText />} label="Syllabus C-20 (Web)" onClick={() => window.open('https://dtek.karnataka.gov.in/52/c-20-syllabus/en', '_blank')} />
@@ -366,7 +372,7 @@ const ActivityItem = ({ label, time, status }) => (
     </div>
 );
 
-const ActionButton = ({ icon, label, onClick, highlight }) => (
+const ActionButton = ({ icon, label, onClick, highlight, isDanger }) => (
     <button 
         onClick={onClick}
         className="btn btn-secondary" 
@@ -376,10 +382,14 @@ const ActionButton = ({ icon, label, onClick, highlight }) => (
                 background: 'linear-gradient(135deg, rgba(16,185,129,0.12), rgba(5,150,105,0.08))',
                 borderColor: 'rgba(16,185,129,0.5)',
                 boxShadow: '0 0 16px rgba(16,185,129,0.15)'
+            } : {}),
+            ...(isDanger ? {
+                borderColor: 'rgba(239, 68, 68, 0.3)',
+                color: '#ef4444'
             } : {})
         }}
     >
-        <span style={{ color: highlight ? '#10b981' : 'var(--primary-color)' }}>{icon}</span>
+        <span style={{ color: highlight ? '#10b981' : isDanger ? '#ef4444' : 'var(--primary-color)' }}>{icon}</span>
         <span style={{ fontWeight: 700, fontSize: '0.8125rem', color: highlight ? '#10b981' : 'inherit' }}>{label}</span>
     </button>
 );

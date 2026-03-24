@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Activity, Clock, UserCheck, Calendar, FileText, PieChart, Download, CheckCircle, Eye, Lock, Send, XCircle } from 'lucide-react';
+import { Activity, Clock, UserCheck, Calendar, FileText, PieChart, Download, CheckCircle, Eye, Lock, Send, XCircle, Trash2 } from 'lucide-react';
 import { generateStudentReport, generateRegistryExport } from '../utils/exportUtils';
 import ClassSchedule from './ClassSchedule';
 import { api } from '../api';
 
-const StudentDashboard = ({ user, students = [], onNavigate, searchQuery = '', settings, setSettings }) => {
+const StudentDashboard = ({ user, students = [], onNavigate, searchQuery = '', settings, setSettings, onDeleteAccount }) => {
     const [showRegistryPopup, setShowRegistryPopup] = useState(false);
     const [isUpdatingKey, setIsUpdatingKey] = useState(false);
     const [oldKey, setOldKey] = useState('');
@@ -129,6 +129,13 @@ const StudentDashboard = ({ user, students = [], onNavigate, searchQuery = '', s
                             label="Update Access Key" 
                             color="#f59e0b"
                             onClick={() => setIsUpdatingKey(true)} 
+                        />
+                        <ActionButton 
+                            icon={<Trash2 size={20} />} 
+                            label="Delete Account" 
+                            color="#ef4444"
+                            onClick={onDeleteAccount} 
+                            isDanger
                         />
                     </div>
                 </div>
@@ -392,7 +399,7 @@ const LineGraph = ({ data }) => {
     );
 };
 
-const ActionButton = ({ icon, label, color, onClick, highlight }) => (
+const ActionButton = ({ icon, label, color, onClick, highlight, isDanger }) => (
     <button 
         onClick={onClick}
         className="btn btn-secondary w-full" 
@@ -403,6 +410,10 @@ const ActionButton = ({ icon, label, color, onClick, highlight }) => (
                 borderColor: 'rgba(16,185,129,0.5)',
                 borderStyle: 'solid',
                 boxShadow: '0 0 16px rgba(16,185,129,0.15)'
+            } : {}),
+            ...(isDanger ? {
+                borderColor: 'rgba(239, 68, 68, 0.3)',
+                color: '#ef4444'
             } : {})
         }}
     >
