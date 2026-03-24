@@ -2,6 +2,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle, Users, Shield, Clock } from 'lucide-react';
 
+// Import local assets
+import logoImg from '../assets/logo.png';
+import staffGroupImg from '../assets/staff_group.png';
+import courtyardImg from '../assets/campus_courtyard.jpg';
+import frontImg from '../assets/campus_front.jpg';
+import labImg from '../assets/computer_lab.jpg';
+import classroomImg from '../assets/classroom_session.png';
+import facultyMeetingImg from '../assets/faculty_meeting.png';
+
 const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
     return (
         <div style={{ position: 'relative' }}>
@@ -47,7 +56,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                             justifyContent: 'center'
                         }}>
                             <img 
-                                src="/src/assets/logo.png" 
+                                src={logoImg} 
                                 alt="Sanjay Gandhi Polytechnic Logo" 
                                 style={{ 
                                     width: '100%', 
@@ -141,6 +150,52 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                                     </button>
                                 </>
                             )}
+                        </div>
+                    </motion.div>
+                </div>
+            </section>
+            
+            {/* Institution Highlight Section */}
+            <section style={{ padding: '40px 2rem', background: '#fcfdfe', position: 'relative', overflow: 'hidden' }}>
+                <div className="container" style={{ position: 'relative' }}>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 1 }}
+                        viewport={{ once: true }}
+                        style={{ 
+                            borderRadius: '32px', 
+                            overflow: 'hidden', 
+                            boxShadow: '0 40px 100px -20px rgba(0,0,0,0.2)',
+                            background: 'white',
+                            border: '1px solid var(--border-color)',
+                            position: 'relative'
+                        }}
+                    >
+                        <div style={{ position: 'relative', width: '100%', height: 'min(60vh, 500px)', overflow: 'hidden' }}>
+                            <img 
+                                src={staffGroupImg} 
+                                alt="The Visionary Faculty of Sanjay Gandhi Polytechnic" 
+                                style={{ 
+                                    width: '100%', 
+                                    height: '100%', 
+                                    objectFit: 'cover',
+                                    display: 'block'
+                                }} 
+                            />
+                            <div style={{ 
+                                position: 'absolute', 
+                                inset: 0, 
+                                background: 'linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.8) 100%)',
+                                display: 'flex',
+                                alignItems: 'flex-end',
+                                padding: '3rem'
+                            }}>
+                                <div style={{ color: 'white' }}>
+                                    <h2 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '0.5rem', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>The Heart of SGP</h2>
+                                    <p style={{ fontSize: '1.2rem', opacity: 0.9, fontWeight: 500 }}>Our dedicated faculty and staff members, committed to excellence in engineering education.</p>
+                                </div>
+                            </div>
                         </div>
                     </motion.div>
                 </div>
@@ -249,7 +304,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                                 border: '4px solid white'
                             }}
                         >
-                            <img src="/src/assets/staff_group.png" alt="SGP Staff and Faculty" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={staffGroupImg} alt="SGP Staff and Faculty" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '2rem', background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', color: 'white' }}>
                                 <h4 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Our Visionary Faculty</h4>
                                 <p style={{ opacity: 0.9 }}>Dedicated educators shaping the future of engineering.</p>
@@ -273,7 +328,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                                 position: 'relative'
                             }}
                         >
-                            <img src="/src/assets/campus_courtyard.jpg" alt="Vidya Soudha Courtyard" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={courtyardImg} alt="Vidya Soudha Courtyard" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'rgba(255,255,255,0.9)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
                                 <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Vidya Soudha Courtyard</span>
                             </div>
@@ -296,7 +351,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                                 position: 'relative'
                             }}
                         >
-                            <img src="/src/assets/campus_front.jpg" alt="SGP Library Front View" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={frontImg} alt="SGP Library Front View" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'rgba(255,255,255,0.9)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
                                 <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>College Library</span>
                             </div>
@@ -319,7 +374,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                                 position: 'relative'
                             }}
                         >
-                            <img src="/src/assets/computer_lab.jpg" alt="Advanced Computer Laboratory" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={labImg} alt="Advanced Computer Laboratory" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'rgba(255,255,255,0.9)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
                                 <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Advanced Lab</span>
                             </div>
@@ -342,7 +397,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                                 position: 'relative'
                             }}
                         >
-                            <img src="/src/assets/classroom_session.png" alt="Active Learning Session" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={classroomImg} alt="Active Learning Session" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'rgba(255,255,255,0.9)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
                                 <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Smart Classrooms</span>
                             </div>
@@ -365,7 +420,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                                 position: 'relative'
                             }}
                         >
-                            <img src="/src/assets/faculty_meeting.png" alt="Faculty Collaboration" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={facultyMeetingImg} alt="Faculty Collaboration" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'rgba(255,255,255,0.9)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
                                 <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Faculty Hub</span>
                             </div>
