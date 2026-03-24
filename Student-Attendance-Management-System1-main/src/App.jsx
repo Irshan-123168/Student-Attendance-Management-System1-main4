@@ -154,6 +154,11 @@ function App() {
         }
     };
 
+    const handleRegisterSuccess = () => {
+        alert('Account created successfully! Please sign in.');
+        setAuthView('login');
+    };
+
     const logout = () => {
         setIsAuthenticated(false);
         setAuthView('login');
@@ -227,7 +232,7 @@ function App() {
             />
         ) : (
             <RegisterPage
-                onRegister={handleLoginSuccess}
+                onRegister={handleRegisterSuccess}
                 onSwitchToLogin={() => setAuthView('login')}
                 onBackToHome={() => setAuthView('home')}
             />
