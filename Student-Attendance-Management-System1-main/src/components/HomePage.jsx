@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle, Users, Shield, Clock } from 'lucide-react';
+import { ArrowRight, CheckCircle, Users, Shield, Clock, MapPin, Phone, Mail } from 'lucide-react';
 
 // Import local assets
 import logoImg from '../assets/logo.png';
@@ -423,6 +423,73 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                             <img src={facultyMeetingImg} alt="Faculty Collaboration" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'rgba(255,255,255,0.9)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
                                 <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Faculty Hub</span>
+                            </div>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
+
+            {/* About Us & Contact Section */}
+            <section style={{ padding: '100px 2rem', background: '#fcfdfe', borderTop: '1px solid var(--border-color)' }}>
+                <div className="container">
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'flex-start' }}>
+                        {/* About Us Info */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8 }}
+                            viewport={{ once: true }}
+                        >
+                            <h2 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '1.5rem' }}>About Us</h2>
+                            <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', lineHeight: 1.8, marginBottom: '2rem' }}>
+                                Sanjay Gandhi Polytechnic is a premier institution dedicated to excellence in technical education. 
+                                Our state-of-the-art infrastructure and experienced faculty foster an environment that encourages 
+                                innovation and growth, preparing our students for global leadership in engineering.
+                            </p>
+                            <div style={{ background: 'var(--primary-gradient)', height: '4px', width: '80px', borderRadius: '2px' }}></div>
+                        </motion.div>
+
+                        {/* Contact Address */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8 }}
+                            viewport={{ once: true }}
+                            style={{ background: 'white', padding: '3rem', borderRadius: '32px', boxShadow: '0 20px 50px rgba(0,0,0,0.05)', border: '1px solid var(--border-color)' }}
+                        >
+                            <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '2rem' }}>Reach Us</h3>
+                            
+                            <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                <div style={{ minWidth: '50px', height: '50px', background: '#eff6ff', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary-color)' }}>
+                                    <MapPin size={24} />
+                                </div>
+                                <div style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                                    <strong style={{ display: 'block', color: 'var(--text-primary)', marginBottom: '0.25rem' }}>Location</strong>
+                                    "Vidya Soudha", Sanjay Gandhinagar,<br />
+                                    Ballari - 583104,<br />
+                                    Karnataka State
+                                </div>
+                            </div>
+
+                            <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                <div style={{ minWidth: '50px', height: '50px', background: '#fef2f2', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ef4444' }}>
+                                    <Phone size={24} />
+                                </div>
+                                <div style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                                    <strong style={{ display: 'block', color: 'var(--text-primary)', marginBottom: '0.25rem' }}>Phones</strong>
+                                    Landline: 08392 266331 / 267833<br />
+                                    Mobile: 9008066235 / 8197778607
+                                </div>
+                            </div>
+
+                            <div style={{ display: 'flex', gap: '1.5rem' }}>
+                                <div style={{ minWidth: '50px', height: '50px', background: '#f0fdf4', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#22c55e' }}>
+                                    <Mail size={24} />
+                                </div>
+                                <div style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                                    <strong style={{ display: 'block', color: 'var(--text-primary)', marginBottom: '0.25rem' }}>Email</strong>
+                                    sgpbellary@gmail.com
+                                </div>
                             </div>
                         </motion.div>
                     </div>
