@@ -211,6 +211,111 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                 </div>
             </section>
 
+            {/* Campus Highlights Gallery */}
+            <section style={{ padding: '80px 2rem', background: '#fcfdfe', overflow: 'hidden' }}>
+                <div className="container">
+                    <motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true }}
+                        style={{ textAlign: 'center', marginBottom: '60px' }}
+                    >
+                        <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>Campus Highlights</h2>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '700px', margin: '0 auto' }}>Explore the state-of-the-art facilities and vibrant community at Sanjay Gandhi Polytechnic.</p>
+                    </motion.div>
+
+                    <div style={{ 
+                        display: 'grid', 
+                        gridTemplateColumns: 'repeat(12, 1fr)', 
+                        gap: '1.5rem',
+                        maxWidth: '1200px',
+                        margin: '0 auto'
+                    }}>
+                        {/* Featured Large Image - Group Photo */}
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            whileHover={{ scale: 1.02 }}
+                            transition={{ duration: 0.5 }}
+                            viewport={{ once: true }}
+                            style={{ 
+                                gridColumn: 'span 12',
+                                height: '400px',
+                                borderRadius: '24px',
+                                overflow: 'hidden',
+                                position: 'relative',
+                                boxShadow: '0 20px 40px -10px rgba(0,0,0,0.1)',
+                                border: '4px solid white'
+                            }}
+                        >
+                            <img src="/src/assets/staff_group.png" alt="SGP Staff and Faculty" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '2rem', background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', color: 'white' }}>
+                                <h4 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Our Visionary Faculty</h4>
+                                <p style={{ opacity: 0.9 }}>Dedicated educators shaping the future of engineering.</p>
+                            </div>
+                        </motion.div>
+
+                        {/* Courtyard */}
+                        <motion.div 
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            whileHover={{ y: -10 }}
+                            transition={{ delay: 0.1 }}
+                            viewport={{ once: true }}
+                            style={{ 
+                                gridColumn: 'span 4',
+                                height: '300px',
+                                borderRadius: '20px',
+                                overflow: 'hidden',
+                                boxShadow: '0 15px 30px -5px rgba(0,0,0,0.08)',
+                                border: '1px solid rgba(0,0,0,0.05)'
+                            }}
+                        >
+                            <img src="/src/assets/campus_courtyard.jpg" alt="Vidya Soudha Courtyard" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        </motion.div>
+
+                        {/* Campus Front */}
+                        <motion.div 
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            whileHover={{ y: -10 }}
+                            transition={{ delay: 0.2 }}
+                            viewport={{ once: true }}
+                            style={{ 
+                                gridColumn: 'span 4',
+                                height: '300px',
+                                borderRadius: '20px',
+                                overflow: 'hidden',
+                                boxShadow: '0 15px 30px -5px rgba(0,0,0,0.08)',
+                                border: '1px solid rgba(0,0,0,0.05)'
+                            }}
+                        >
+                            <img src="/src/assets/campus_front.jpg" alt="SGP Library Front View" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        </motion.div>
+
+                        {/* Computer Lab */}
+                        <motion.div 
+                            initial={{ opacity: 0, x: 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            whileHover={{ y: -10 }}
+                            transition={{ delay: 0.3 }}
+                            viewport={{ once: true }}
+                            style={{ 
+                                gridColumn: 'span 4',
+                                height: '300px',
+                                borderRadius: '20px',
+                                overflow: 'hidden',
+                                boxShadow: '0 15px 30px -5px rgba(0,0,0,0.08)',
+                                border: '1px solid rgba(0,0,0,0.05)'
+                            }}
+                        >
+                            <img src="/src/assets/computer_lab.jpg" alt="Advanced Computer Laboratory" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
+
             {/* Features Section */}
             <section style={{ padding: '100px 2rem', background: '#f8fafc' }}>
                 <div className="container">
