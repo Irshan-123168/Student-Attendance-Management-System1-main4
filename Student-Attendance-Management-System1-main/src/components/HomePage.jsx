@@ -256,7 +256,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                             </div>
                         </motion.div>
 
-                        {/* Courtyard */}
+                        {/* Courtyard - Large Side */}
                         <motion.div 
                             initial={{ opacity: 0, x: -30 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -264,40 +264,48 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                             transition={{ delay: 0.1 }}
                             viewport={{ once: true }}
                             style={{ 
-                                gridColumn: 'span 4',
-                                height: '300px',
+                                gridColumn: 'span 8',
+                                height: '350px',
                                 borderRadius: '20px',
                                 overflow: 'hidden',
                                 boxShadow: '0 15px 30px -5px rgba(0,0,0,0.08)',
-                                border: '1px solid rgba(0,0,0,0.05)'
+                                border: '1px solid rgba(0,0,0,0.05)',
+                                position: 'relative'
                             }}
                         >
                             <img src="/src/assets/campus_courtyard.jpg" alt="Vidya Soudha Courtyard" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'rgba(255,255,255,0.9)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+                                <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Vidya Soudha Courtyard</span>
+                            </div>
                         </motion.div>
 
-                        {/* Campus Front */}
+                        {/* Front View */}
                         <motion.div 
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, x: 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
                             whileHover={{ y: -10 }}
                             transition={{ delay: 0.2 }}
                             viewport={{ once: true }}
                             style={{ 
                                 gridColumn: 'span 4',
-                                height: '300px',
+                                height: '350px',
                                 borderRadius: '20px',
                                 overflow: 'hidden',
                                 boxShadow: '0 15px 30px -5px rgba(0,0,0,0.08)',
-                                border: '1px solid rgba(0,0,0,0.05)'
+                                border: '1px solid rgba(0,0,0,0.05)',
+                                position: 'relative'
                             }}
                         >
                             <img src="/src/assets/campus_front.jpg" alt="SGP Library Front View" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'rgba(255,255,255,0.9)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+                                <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>College Library</span>
+                            </div>
                         </motion.div>
 
                         {/* Computer Lab */}
                         <motion.div 
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             whileHover={{ y: -10 }}
                             transition={{ delay: 0.3 }}
                             viewport={{ once: true }}
@@ -307,10 +315,60 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                                 borderRadius: '20px',
                                 overflow: 'hidden',
                                 boxShadow: '0 15px 30px -5px rgba(0,0,0,0.08)',
-                                border: '1px solid rgba(0,0,0,0.05)'
+                                border: '1px solid rgba(0,0,0,0.05)',
+                                position: 'relative'
                             }}
                         >
                             <img src="/src/assets/computer_lab.jpg" alt="Advanced Computer Laboratory" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'rgba(255,255,255,0.9)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+                                <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Advanced Lab</span>
+                            </div>
+                        </motion.div>
+
+                        {/* Classroom Session */}
+                        <motion.div 
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            whileHover={{ y: -10 }}
+                            transition={{ delay: 0.4 }}
+                            viewport={{ once: true }}
+                            style={{ 
+                                gridColumn: 'span 4',
+                                height: '300px',
+                                borderRadius: '20px',
+                                overflow: 'hidden',
+                                boxShadow: '0 15px 30px -5px rgba(0,0,0,0.08)',
+                                border: '1px solid rgba(0,0,0,0.05)',
+                                position: 'relative'
+                            }}
+                        >
+                            <img src="/src/assets/classroom_session.jpg" alt="Active Learning Session" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'rgba(255,255,255,0.9)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+                                <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Smart Classrooms</span>
+                            </div>
+                        </motion.div>
+
+                        {/* Faculty Meeting */}
+                        <motion.div 
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            whileHover={{ y: -10 }}
+                            transition={{ delay: 0.5 }}
+                            viewport={{ once: true }}
+                            style={{ 
+                                gridColumn: 'span 4',
+                                height: '300px',
+                                borderRadius: '20px',
+                                overflow: 'hidden',
+                                boxShadow: '0 15px 30px -5px rgba(0,0,0,0.08)',
+                                border: '1px solid rgba(0,0,0,0.05)',
+                                position: 'relative'
+                            }}
+                        >
+                            <img src="/src/assets/faculty_meeting.jpg" alt="Faculty Collaboration" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'rgba(255,255,255,0.9)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+                                <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Faculty Hub</span>
+                            </div>
                         </motion.div>
                     </div>
                 </div>
