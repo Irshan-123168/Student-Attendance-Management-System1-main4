@@ -22,7 +22,11 @@ A **premium, modern, and interactive Student Attendance Management System** buil
 
 ## 📸 Screenshots
 
-> *(Add your project screenshots here for better presentation)*
+> <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/f4b1dd6c-668b-429c-ba0e-b630c724a521" />
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/2f63131c-262b-43b1-9ddd-cb73d3321c48" />
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/d1469834-fdb3-4a1c-866a-e15e4c234d0e" />
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/e8efee7c-4e8c-4095-bde6-51fa249febf2" />
+*(Add your project screenshots here for better presentation)*
 
 ---
 
@@ -61,7 +65,7 @@ cd backend
 mvn spring-boot:run
 ```
 
-👉 Default Backend URL: http://localhost:8080
+👉 Default Backend URL: http://localhost:8080 but it is currently running in the 9040 Port Number
 
 ---
 
@@ -148,6 +152,7 @@ spring.jpa.show-sql=true
 
 * Run **frontend + backend together**
 * Make sure backend runs on **port 8080**
+* Default Is Port Number Is 8080 But It Is Currently Running In The Port Number 9040
 * Update API URLs in frontend if needed
 
 ---
