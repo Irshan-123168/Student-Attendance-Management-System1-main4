@@ -12,6 +12,10 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
     const [recoveryMessage, setRecoveryMessage] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [agreed, setAgreed] = useState(false);
+    const [cookiesAgreed, setCookiesAgreed] = useState(false);
+    const [showTermsModal, setShowTermsModal] = useState(false);
+    const [modalTab, setModalTab] = useState('terms'); // 'terms' or 'cookies'
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -155,6 +159,50 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                             </div>
                         </div>
 
+                        <div className="form-group" style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                                <div style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '20px' }}>
+                                    <input 
+                                        type="checkbox" 
+                                        id="terms-checkbox"
+                                        checked={agreed}
+                                        onChange={(e) => setAgreed(e.target.checked)}
+                                        style={{ 
+                                            width: '18px', 
+                                            height: '18px', 
+                                            cursor: 'pointer',
+                                            accentColor: 'var(--primary-color)',
+                                            borderRadius: '4px'
+                                        }}
+                                    />
+                                </div>
+                                <label htmlFor="terms-checkbox" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', cursor: 'pointer', lineHeight: '1.4', fontWeight: 500 }}>
+                                    I agree to the <button type="button" onClick={() => { setModalTab('terms'); setShowTermsModal(true); }} style={{ background: 'none', border: 'none', color: 'var(--primary-color)', fontWeight: 700, padding: 0, textDecoration: 'underline', cursor: 'pointer', fontSize: '0.85rem' }}>Terms and Conditions</button>
+                                </label>
+                            </div>
+
+                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                                <div style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '20px' }}>
+                                    <input 
+                                        type="checkbox" 
+                                        id="cookies-checkbox"
+                                        checked={cookiesAgreed}
+                                        onChange={(e) => setCookiesAgreed(e.target.checked)}
+                                        style={{ 
+                                            width: '18px', 
+                                            height: '18px', 
+                                            cursor: 'pointer',
+                                            accentColor: 'var(--primary-color)',
+                                            borderRadius: '4px'
+                                        }}
+                                    />
+                                </div>
+                                <label htmlFor="cookies-checkbox" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', cursor: 'pointer', lineHeight: '1.4', fontWeight: 500 }}>
+                                    I accept the <button type="button" onClick={() => { setModalTab('cookies'); setShowTermsModal(true); }} style={{ background: 'none', border: 'none', color: 'var(--primary-color)', fontWeight: 700, padding: 0, textDecoration: 'underline', cursor: 'pointer', fontSize: '0.85rem' }}>Cookie Usage Policy</button>
+                                </label>
+                            </div>
+                        </div>
+
                         {error && (
                             <div style={{ padding: '0.75rem', background: '#fee2e2', border: '1px solid #fca5a5', borderRadius: '8px', color: '#991b1b', fontSize: '0.875rem', fontWeight: 600, textAlign: 'center' }}>
                                 {error}
@@ -164,8 +212,15 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                         <button 
                             type="submit" 
                             className="btn btn-primary w-full" 
-                            style={{ height: '52px', fontSize: '1rem', marginTop: '1rem' }}
-                            disabled={isLoading}
+                            style={{ 
+                                height: '52px', 
+                                fontSize: '1rem', 
+                                marginTop: '1.5rem',
+                                opacity: agreed && cookiesAgreed ? 1 : 0.6,
+                                cursor: agreed && cookiesAgreed ? 'pointer' : 'not-allowed',
+                                transition: 'all 0.3s ease'
+                            }}
+                            disabled={isLoading || !agreed || !cookiesAgreed}
                         >
                             {isLoading ? 'Authenticating...' : 'Sign In'}
                             {!isLoading && <ArrowRight size={18} />}
@@ -237,6 +292,76 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                     </button>
                 </div>
             </motion.div>
+
+            {/* Terms and Conditions Modal */}
+            {showTermsModal && (
+                <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '1rem' }}>
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="card"
+                        style={{ maxWidth: '500px', width: '100%', padding: '2.5rem', background: 'white', position: 'relative', maxHeight: '80vh', overflowY: 'auto' }}
+                    >
+                        <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', borderBottom: '1px solid #e5e7eb' }}>
+                            <button 
+                                onClick={() => setModalTab('terms')}
+                                style={{ 
+                                    padding: '0.5rem 0', 
+                                    background: 'none', 
+                                    border: 'none', 
+                                    borderBottom: modalTab === 'terms' ? '2px solid var(--primary-color)' : 'none',
+                                    color: modalTab === 'terms' ? 'var(--primary-color)' : 'var(--text-secondary)',
+                                    fontWeight: 700,
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                Terms & Conditions
+                            </button>
+                            <button 
+                                onClick={() => setModalTab('cookies')}
+                                style={{ 
+                                    padding: '0.5rem 0', 
+                                    background: 'none', 
+                                    border: 'none', 
+                                    borderBottom: modalTab === 'cookies' ? '2px solid var(--primary-color)' : 'none',
+                                    color: modalTab === 'cookies' ? 'var(--primary-color)' : 'var(--text-secondary)',
+                                    fontWeight: 700,
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                Cookie Policy
+                            </button>
+                        </div>
+
+                        {modalTab === 'terms' ? (
+                            <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '2rem' }}>
+                                <p style={{ marginBottom: '1rem' }}><strong>1. Use of Service:</strong> You agree to use the Student Attendance Management System for institutional purposes only.</p>
+                                <p style={{ marginBottom: '1rem' }}><strong>2. Account Security:</strong> You are responsible for maintaining the confidentiality of your access key and account.</p>
+                                <p style={{ marginBottom: '1rem' }}><strong>3. Data Privacy:</strong> Your attendance data will be stored securely and used for academic reporting and student tracking.</p>
+                                <p style={{ marginBottom: '1rem' }}><strong>4. Respectful Conduct:</strong> Users must interact with the system in a respectful and professional manner at all times.</p>
+                                <p style={{ marginBottom: '1rem' }}><strong>5. System Integrity:</strong> Any attempt to bypass security measures or manipulate attendance records is strictly prohibited and subject to disciplinary action.</p>
+                            </div>
+                        ) : (
+                            <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '2rem' }}>
+                                <p style={{ marginBottom: '1rem' }}><strong>1. Essential Cookies:</strong> These cookies are necessary for the basic functionality of the system, including session management and authentication.</p>
+                                <p style={{ marginBottom: '1rem' }}><strong>2. Performance Monitoring:</strong> We use minimal cookies to ensure the system performs efficiently and to identify any technical issues.</p>
+                                <p style={{ marginBottom: '1rem' }}><strong>3. Security:</strong> Cookies are used to prevent unauthorized access and protect user data from malicious activities.</p>
+                                <p style={{ marginBottom: '1rem' }}><strong>4. Local Storage:</strong> The application may use local storage to remember your preferences and enhance your user experience.</p>
+                                <div style={{ background: '#f9fafb', padding: '1rem', borderRadius: '8px', borderLeft: '4px solid var(--primary-color)', marginTop: '1rem' }}>
+                                    <p style={{ margin: 0, fontStyle: 'italic' }}>By clicking "I Accept" on the login page, you consent to our use of these essential cookies to provide you with a secure portal experience.</p>
+                                </div>
+                            </div>
+                        )}
+                        <button 
+                            onClick={() => setShowTermsModal(false)}
+                            className="btn btn-primary w-full"
+                            style={{ height: '48px' }}
+                        >
+                            I Understand
+                        </button>
+                    </motion.div>
+                </div>
+            )}
         </div>
     );
 };
