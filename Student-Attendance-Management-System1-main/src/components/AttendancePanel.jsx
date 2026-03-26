@@ -15,12 +15,45 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
     const branches = ['CSE', 'EEE', 'MEC', 'CE', 'MT'];
     const semesters = ['1', '2', '3', '4', '5', '6'];
     const sections = ['A', 'B', 'C', 'D'];
+    const branchNames = {
+        'CSE': 'Computer Science',
+        'EEE': 'Electrical & Electronics',
+        'MEC': 'Mechanical',
+        'CE': 'Civil',
+        'MT': 'Metallurgical'
+    };
+
     const subjects = {
-        'CSE': ['FOC', 'PMS', 'Java', 'Full Stack', 'Cyber Security'],
-        'EEE': ['Basic Electrical', 'Electrical Circuits', 'Power Systems', 'Control Systems'],
-        'MEC': ['Mechanics', 'Thermodynamics', 'Thermal Engg', 'Workshop'],
-        'CE': ['Building Materials', 'Surveying', 'Structural Analysis', 'Environmental'],
-        'MT': ['Intro Metallurgy', 'Physical Metallurgy', 'Extractive', 'Corrosion']
+        'CSE': [
+            'Engineering Maths', 'IT Skills', 'Digital Logic', 
+            'Python Programming', 'Computer Networks', 'Database Management', 
+            'Java Programming', 'Full Stack Development', 'Cyber Security',
+            'Operating Systems', 'Software Engineering', 'Cloud Computing'
+        ],
+        'EEE': [
+            'Engineering Maths', 'Basic Electrical', 'Electrical Circuits', 
+            'Power Systems', 'Control Systems', 'Electric Motors', 
+            'Transformers & Alternators', 'Power Electronics', 'Industrial Automation', 
+            'Renewable Energy', 'Transmission & Distribution', 'Switchgear & Protection'
+        ],
+        'MEC': [
+            'Engineering Maths', 'Mechanical Concepts', 'Thermodynamics', 
+            'Fluid Mechanics', 'Mechanics of Materials', 'Machine Tool Tech', 
+            'Manufacturing Processes', 'CAD/CAM', 'CNC Machining', 
+            'Robotics', 'Heat Transfer', 'Automobile Engineering'
+        ],
+        'CE': [
+            'Engineering Maths', 'Essential English', 'Construction Materials', 
+            'Surveying', 'Concrete Tech', 'Structure Analysis', 
+            'Geotechnical Engg', 'Hydraulics', 'Transportation Engg', 
+            'Quantity Surveying', 'Environmental Engg', 'Design of Structures'
+        ],
+        'MT': [
+            'Engineering Maths', 'Environmental Sustainability', 'Concepts of Metallurgy', 
+            'Material Science', 'Extractive Metallurgy', 'Physical Metallurgy', 
+            'Heat Treatment', 'Mechanical Metallurgy', 'Foundry Technology', 
+            'Welding Technology', 'Corrosion Engineering', 'Material Testing'
+        ]
     };
 
     const handleEditStart = (s) => {
@@ -91,7 +124,7 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
                             }}
                             style={{ fontWeight: 700 }}
                         >
-                            {branches.map(b => <option key={b} value={b}>{b} Engineering</option>)}
+                            {branches.map(b => <option key={b} value={b}>{branchNames[b]} Engineering</option>)}
                         </select>
                     </div>
                     <div>
