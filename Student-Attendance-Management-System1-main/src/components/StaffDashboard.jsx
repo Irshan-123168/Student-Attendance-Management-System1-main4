@@ -11,6 +11,7 @@ const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQue
     const [oldKey, setOldKey] = useState('');
     const [newKey, setNewKey] = useState('');
     const [status, setStatus] = useState({ type: '', message: '' });
+    const [selectedSection, setSelectedSection] = useState('All');
 
     const handleUpdateKey = async (e) => {
         e.preventDefault();
@@ -41,10 +42,11 @@ const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQue
 
     // Dynamic Stats
     const totalStudents = students.length;
-    const pendingActions = students.filter(s => s.status === 'Pending').length;
+    const filteredBySection = students.filter(s => selectedSection === 'All' || s.section === selectedSection);
+    const pendingActions = filteredBySection.filter(s => s.status === 'Pending').length;
     
     // Derived activity log from actual student status updates
-    const recentActivity = students
+    const recentActivity = filteredBySection
         .filter(s => s.status && s.time !== '-')
         .slice(0, 3)
         .map(s => ({
@@ -107,6 +109,32 @@ const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQue
                 <DashboardCard icon={<Users />} title="Total Students" value={totalStudents || "..."} color="#10b981" />
                 <DashboardCard icon={<CheckCircle />} title="Avg Attendance" value={`${avgAttendance}%`} color="#10b981" />
                 <DashboardCard icon={<Clock />} title="Pending Records" value={pendingActions} color="#f59e0b" />
+            </div>
+
+            <div className="card" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1.5rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}>
+                <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase' }}>Section Filter:</span>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    {['All', 'A', 'B', 'C', 'D'].map(s => (
+                        <button 
+                            key={s}
+                            onClick={() => setSelectedSection(s)}
+                            style={{
+                                padding: '0.5rem 1.25rem',
+                                borderRadius: '10px',
+                                border: '1px solid var(--border-color)',
+                                background: selectedSection === s ? 'var(--primary-gradient)' : 'white',
+                                color: selectedSection === s ? 'white' : 'var(--text-primary)',
+                                fontWeight: 800,
+                                fontSize: '0.75rem',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s',
+                                boxShadow: selectedSection === s ? '0 4px 12px rgba(79, 70, 229, 0.2)' : 'none'
+                            }}
+                        >
+                            {s === 'All' ? 'View All' : `Section ${s}`}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

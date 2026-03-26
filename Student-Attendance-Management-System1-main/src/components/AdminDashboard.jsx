@@ -11,6 +11,7 @@ const AdminDashboard = ({ user, users = [], students = [], onNavigate, searchQue
     const [newKey, setNewKey] = useState('');
     const [status, setStatus] = useState({ type: '', message: '' });
     const [showRegistryPopup, setShowRegistryPopup] = useState(false);
+    const [selectedSection, setSelectedSection] = useState('All');
 
     const handleFinalizeRegistry = () => {
         setShowRegistryPopup(true);
@@ -49,12 +50,14 @@ const AdminDashboard = ({ user, users = [], students = [], onNavigate, searchQue
           students.reduce((acc, s) => acc + (s.presentCount || 0) + (s.absentCount || 0) || 1, 0)) * 100) 
         : 0;
 
-    const filteredStudents = students.filter(s => 
-        searchQuery && (
+    const filteredStudents = students.filter(s => {
+        const matchesQuery = !searchQuery || (
             (s.name || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
             (s.roll || '').toLowerCase().includes(searchQuery.toLowerCase())
-        )
-    );
+        );
+        const matchesSection = selectedSection === 'All' || s.section === selectedSection;
+        return matchesQuery && (searchQuery ? matchesQuery : matchesSection);
+    });
 
     return (
         <div className="animate-fade space-y-6">
@@ -68,6 +71,32 @@ const AdminDashboard = ({ user, users = [], students = [], onNavigate, searchQue
                 <AdminCard icon={<Shield />} title="Total Students" value={students.length || "0"} color="#10b981" />
                 <AdminCard icon={<Activity />} title="Global Attendance" value={`${globalAttendance}%`} color="#10b981" />
                 <AdminCard icon={<FileText />} title="Active Records" value={students.filter(s => s.status !== 'Pending').length} color="#f59e0b" />
+            </div>
+
+            <div className="card" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1.5rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}>
+                <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase' }}>Section Registry Filter:</span>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    {['All', 'A', 'B', 'C', 'D'].map(s => (
+                        <button 
+                            key={s}
+                            onClick={() => setSelectedSection(s)}
+                            style={{
+                                padding: '0.5rem 1.25rem',
+                                borderRadius: '10px',
+                                border: '1px solid var(--border-color)',
+                                background: selectedSection === s ? 'var(--primary-gradient)' : 'white',
+                                color: selectedSection === s ? 'white' : 'var(--text-primary)',
+                                fontWeight: 800,
+                                fontSize: '0.75rem',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s',
+                                boxShadow: selectedSection === s ? '0 4px 12px rgba(79, 70, 229, 0.2)' : 'none'
+                            }}
+                        >
+                            {s === 'All' ? 'Full Hub' : `Section ${s}`}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

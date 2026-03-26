@@ -142,12 +142,12 @@ export const api = {
         }
     },
 
-    async updateStudentStatus(id, status, time, branch, semester, subject) {
+    async updateStudentStatus(id, status, time, branch, semester, section, subject) {
         try {
             const response = await fetch(`${API_BASE_URL}/students/${id}/status`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status, time, branch, semester, subject })
+                body: JSON.stringify({ status, time, branch, semester, section, subject })
             });
             if (!response.ok) throw new Error('Failed to update status');
             return response.json();

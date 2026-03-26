@@ -9,10 +9,12 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
     // Attendance Session State
     const [selectedBranch, setSelectedBranch] = React.useState('CSE');
     const [selectedSem, setSelectedSem] = React.useState('1');
+    const [selectedSection, setSelectedSection] = React.useState('A');
     const [selectedSubject, setSelectedSubject] = React.useState('FOC');
 
     const branches = ['CSE', 'EEE', 'MEC', 'CE', 'MT'];
     const semesters = ['1', '2', '3', '4', '5', '6'];
+    const sections = ['A', 'B', 'C', 'D'];
     const subjects = {
         'CSE': ['FOC', 'PMS', 'Java', 'Full Stack', 'Cyber Security'],
         'EEE': ['Basic Electrical', 'Electrical Circuits', 'Power Systems', 'Control Systems'],
@@ -30,6 +32,7 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
             status: s.status,
             branch: s.branch || selectedBranch,
             semester: s.semester || selectedSem,
+            section: s.section || selectedSection,
             subject: s.subject || selectedSubject
         });
     };
@@ -38,14 +41,14 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
         if (onUpdateStudent) {
             await onUpdateStudent(editingStudent, editForm);
         } else if (updateStatus) {
-            await updateStatus(editingStudent, editForm.status, editForm.branch, editForm.semester, editForm.subject);
+            await updateStatus(editingStudent, editForm.status, editForm.branch, editForm.semester, editForm.section, editForm.subject);
         }
         setEditingStudent(null);
     };
 
     const handleQuickStatusUpdate = async (id, status) => {
         if (updateStatus) {
-            await updateStatus(id, status, selectedBranch, selectedSem, selectedSubject);
+            await updateStatus(id, status, selectedBranch, selectedSem, selectedSection, selectedSubject);
         }
     };
 
@@ -103,6 +106,32 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
                         </select>
                     </div>
                     <div>
+                        <label style={{ display: 'block', fontSize: '0.7rem', fontWeight: 900, color: 'var(--text-light)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Section Protocol</label>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                            {sections.map(s => (
+                                <button 
+                                    key={s}
+                                    onClick={() => setSelectedSection(s)}
+                                    style={{
+                                        flex: 1,
+                                        height: '42px',
+                                        borderRadius: '8px',
+                                        border: '1px solid var(--border-color)',
+                                        background: selectedSection === s ? 'var(--primary-gradient)' : 'white',
+                                        color: selectedSection === s ? 'white' : 'var(--text-primary)',
+                                        fontWeight: 800,
+                                        fontSize: '0.85rem',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s',
+                                        boxShadow: selectedSection === s ? 'var(--shadow-md)' : 'none'
+                                    }}
+                                >
+                                    {s}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                    <div>
                         <label style={{ display: 'block', fontSize: '0.7rem', fontWeight: 900, color: 'var(--text-light)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Active Subject</label>
                         <select 
                             className="form-input" 
@@ -116,7 +145,7 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
                 </div>
                 <div style={{ marginTop: '1rem', fontSize: '0.75rem', color: 'var(--primary-color)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <div style={{ width: '8px', height: '8px', background: 'var(--primary-color)', borderRadius: '50%', animation: 'pulse 1s infinite' }}></div>
-                    Live Session: {selectedBranch} / SEM-0{selectedSem} / {selectedSubject}
+                    Live Session: {selectedBranch} / SEM-0{selectedSem}-{selectedSection} / {selectedSubject}
                 </div>
             </div>
 
@@ -291,6 +320,17 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
                                         </select>
                                     </div>
                                     <div>
+                                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-light)', marginBottom: '0.5rem' }}>SECTION</label>
+                                        <select 
+                                            className="form-input" value={editForm.section || 'A'} 
+                                            onChange={(e) => setEditForm({...editForm, section: e.target.value})}
+                                        >
+                                            {sections.map(s => <option key={s} value={s}>{s}</option>)}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
                                         <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-light)', marginBottom: '0.5rem' }}>SEMESTER</label>
                                         <select 
                                             className="form-input" value={editForm.semester} 
@@ -299,15 +339,15 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
                                             {semesters.map(s => <option key={s} value={s}>{s}</option>)}
                                         </select>
                                     </div>
-                                </div>
-                                <div>
-                                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-light)', marginBottom: '0.5rem' }}>SUBJECT</label>
-                                    <select 
-                                        className="form-input" value={editForm.subject} 
-                                        onChange={(e) => setEditForm({...editForm, subject: e.target.value})}
-                                    >
-                                        {subjects[editForm.branch || 'CSE'].map(s => <option key={s} value={s}>{s}</option>)}
-                                    </select>
+                                    <div>
+                                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-light)', marginBottom: '0.5rem' }}>SUBJECT</label>
+                                        <select 
+                                            className="form-input" value={editForm.subject} 
+                                            onChange={(e) => setEditForm({...editForm, subject: e.target.value})}
+                                        >
+                                            {subjects[editForm.branch || 'CSE'].map(s => <option key={s} value={s}>{s}</option>)}
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 

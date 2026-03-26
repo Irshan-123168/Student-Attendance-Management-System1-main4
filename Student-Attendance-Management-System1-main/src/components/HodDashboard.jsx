@@ -11,6 +11,7 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '', setti
     const [oldKey, setOldKey] = useState('');
     const [newKey, setNewKey] = useState('');
     const [status, setStatus] = useState({ type: '', message: '' });
+    const [selectedSection, setSelectedSection] = useState('All');
 
     const handleUpdateKey = async (e) => {
         e.preventDefault();
@@ -41,11 +42,13 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '', setti
 
     // Dynamic Analysis
     const totalStudents = students.length;
+    const filteredBySection = students.filter(s => selectedSection === 'All' || s.section === selectedSection);
+    
     const presentRate = totalStudents > 0 
-        ? Math.round((students.filter(s => s.status === 'Present').length / totalStudents) * 100) 
+        ? Math.round((filteredBySection.filter(s => s.status === 'Present').length / (filteredBySection.length || 1)) * 100) 
         : 0;
 
-    const filteredStudents = students.filter(s => 
+    const filteredStudents = filteredBySection.filter(s => 
         (s.name || '').toLowerCase().includes((searchQuery || '').toLowerCase()) || 
         (s.roll || '').toLowerCase().includes((searchQuery || '').toLowerCase())
     );
@@ -67,9 +70,35 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '', setti
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <HODMetricCard icon={<Users />} title="Identified Learners" value={totalStudents} color="#6366f1" />
+                <HODMetricCard icon={<Users />} title="Identified Learners" value={filteredBySection.length} color="#6366f1" />
                 <HODMetricCard icon={<TrendingUp />} title="Presence Rate" value={`${presentRate}%`} color="#10b981" />
-                <HODMetricCard icon={<AlertTriangle />} title="Action Required" value={students.filter(s => s.status === 'Absent').length} color="#ef4444" />
+                <HODMetricCard icon={<AlertTriangle />} title="Action Required" value={filteredBySection.filter(s => s.status === 'Absent').length} color="#ef4444" />
+            </div>
+
+            <div className="card" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1.5rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}>
+                <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase' }}>Dept Section Filter:</span>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    {['All', 'A', 'B', 'C', 'D'].map(s => (
+                        <button 
+                            key={s}
+                            onClick={() => setSelectedSection(s)}
+                            style={{
+                                padding: '0.5rem 1.25rem',
+                                borderRadius: '10px',
+                                border: '1px solid var(--border-color)',
+                                background: selectedSection === s ? 'var(--primary-gradient)' : 'white',
+                                color: selectedSection === s ? 'white' : 'var(--text-primary)',
+                                fontWeight: 800,
+                                fontSize: '0.75rem',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s',
+                                boxShadow: selectedSection === s ? '0 4px 12px rgba(79, 70, 229, 0.2)' : 'none'
+                            }}
+                        >
+                            {s === 'All' ? 'Complete Dept' : `Section ${s}`}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
