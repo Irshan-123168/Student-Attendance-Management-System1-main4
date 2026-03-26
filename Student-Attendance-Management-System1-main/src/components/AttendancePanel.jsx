@@ -25,31 +25,31 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
 
     const subjects = {
         'CSE': [
-            'Engineering Maths', 'IT Skills', 'Digital Logic', 
+            'FOC', 'Engineering Maths', 'IT Skills', 'Digital Logic', 
             'Python Programming', 'Computer Networks', 'Database Management', 
             'Java Programming', 'Full Stack Development', 'Cyber Security',
             'Operating Systems', 'Software Engineering', 'Cloud Computing'
         ],
         'EEE': [
-            'Engineering Maths', 'Basic Electrical', 'Electrical Circuits', 
+            'FOC', 'Engineering Maths', 'Basic Electrical', 'Electrical Circuits', 
             'Power Systems', 'Control Systems', 'Electric Motors', 
             'Transformers & Alternators', 'Power Electronics', 'Industrial Automation', 
             'Renewable Energy', 'Transmission & Distribution', 'Switchgear & Protection'
         ],
         'MEC': [
-            'Engineering Maths', 'Mechanical Concepts', 'Thermodynamics', 
+            'FOC', 'Engineering Maths', 'Mechanical Concepts', 'Thermodynamics', 
             'Fluid Mechanics', 'Mechanics of Materials', 'Machine Tool Tech', 
             'Manufacturing Processes', 'CAD/CAM', 'CNC Machining', 
             'Robotics', 'Heat Transfer', 'Automobile Engineering'
         ],
         'CE': [
-            'Engineering Maths', 'Essential English', 'Construction Materials', 
+            'FOC', 'Engineering Maths', 'Essential English', 'Construction Materials', 
             'Surveying', 'Concrete Tech', 'Structure Analysis', 
             'Geotechnical Engg', 'Hydraulics', 'Transportation Engg', 
             'Quantity Surveying', 'Environmental Engg', 'Design of Structures'
         ],
         'MT': [
-            'Engineering Maths', 'Environmental Sustainability', 'Concepts of Metallurgy', 
+            'FOC', 'Engineering Maths', 'Environmental Sustainability', 'Concepts of Metallurgy', 
             'Material Science', 'Extractive Metallurgy', 'Physical Metallurgy', 
             'Heat Treatment', 'Mechanical Metallurgy', 'Foundry Technology', 
             'Welding Technology', 'Corrosion Engineering', 'Material Testing'

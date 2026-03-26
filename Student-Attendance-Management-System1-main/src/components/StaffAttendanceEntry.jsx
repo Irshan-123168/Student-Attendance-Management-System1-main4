@@ -30,10 +30,10 @@ const StaffAttendanceEntry = ({ user }) => {
     const semesters = ['1', '2', '3', '4', '5', '6'];
     const subjects = {
         'CSE': ['FOC', 'PMS', 'Java', 'Full Stack', 'Cyber Security'],
-        'EEE': ['Basic Electrical', 'Electrical Circuits', 'Power Systems', 'Control Systems'],
-        'MEC': ['Mechanics', 'Thermodynamics', 'Thermal Engg', 'Workshop'],
-        'CE': ['Building Materials', 'Surveying', 'Structural Analysis', 'Environmental'],
-        'MT': ['Intro Metallurgy', 'Physical Metallurgy', 'Extractive', 'Corrosion']
+        'EEE': ['FOC', 'Basic Electrical', 'Electrical Circuits', 'Power Systems', 'Control Systems'],
+        'MEC': ['FOC', 'Mechanics', 'Thermodynamics', 'Thermal Engg', 'Workshop'],
+        'CE': ['FOC', 'Building Materials', 'Surveying', 'Structural Analysis', 'Environmental'],
+        'MT': ['FOC', 'Intro Metallurgy', 'Physical Metallurgy', 'Extractive', 'Corrosion']
     };
 
     useEffect(() => {
