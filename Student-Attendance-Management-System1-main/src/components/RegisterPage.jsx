@@ -132,7 +132,7 @@ const RegisterPage = ({ onRegister, onSwitchToLogin, onBackToHome }) => {
                             onChange={(e) => setRole(e.target.value)}
                         >
                             <option value="STUDENT">Student</option>
-                            <option value="TEACHER">Staff Member</option>
+                            <option value="TEACHER">Faculty</option>
                             <option value="HOD">HOD</option>
                             <option value="ADMIN">System Admin</option>
                         </select>

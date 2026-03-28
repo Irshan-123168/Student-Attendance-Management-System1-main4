@@ -29,7 +29,7 @@ import { api } from './api';
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [authView, setAuthView] = useState('home');
-    const [userRole, setUserRole] = useState('Teacher');
+    const [userRole, setUserRole] = useState('Faculty');
     const [currentUser, setCurrentUser] = useState(null);
     const [activeTab, setActiveTab] = useState('dashboard');
     const [students, setStudents] = useState([]);
@@ -151,7 +151,7 @@ function App() {
             setUserRole('Student');
             setActiveTab('student-dashboard');
         } else {
-            setUserRole('Teacher');
+            setUserRole('Faculty');
             setActiveTab('staff-dashboard');
         }
     };

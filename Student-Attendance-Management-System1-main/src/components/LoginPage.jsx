@@ -102,7 +102,7 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                                 style={{ background: 'white' }}
                             >
                                 <option value="STUDENT">Institutional Learner</option>
-                                <option value="TEACHER">Staff Faculty</option>
+                                <option value="TEACHER">Faculty</option>
                                 <option value="HOD">Department Head</option>
                                 <option value="ADMIN">System Administrator</option>
                             </select>

@@ -193,7 +193,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                             }}>
                                 <div style={{ color: 'white' }}>
                                     <h2 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '0.5rem', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>The Heart of SGP</h2>
-                                    <p style={{ fontSize: '1.2rem', opacity: 0.9, fontWeight: 500 }}>Our dedicated faculty and staff members, committed to excellence in engineering education.</p>
+                                    <p style={{ fontSize: '1.2rem', opacity: 0.9, fontWeight: 500 }}>Our dedicated faculty members, committed to excellence in engineering education.</p>
                                 </div>
                             </div>
                         </div>
@@ -304,7 +304,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                                 border: '4px solid white'
                             }}
                         >
-                            <img src={staffGroupImg} alt="SGP Staff and Faculty" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={staffGroupImg} alt="SGP Faculty" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '2rem', background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', color: 'white' }}>
                                 <h4 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Our Visionary Faculty</h4>
                                 <p style={{ opacity: 0.9 }}>Dedicated educators shaping the future of engineering.</p>
@@ -518,7 +518,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                         <FeatureCard 
                             icon={<Users className="text-indigo-600" />} 
                             title="Global Directory" 
-                            desc="A centralized hub for all staff and member identities across the entire campus." 
+                            desc="A centralized hub for all faculty and member identities across the entire campus." 
                         />
                     </div>
                 </div>
