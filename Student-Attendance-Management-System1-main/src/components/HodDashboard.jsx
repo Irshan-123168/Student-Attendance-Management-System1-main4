@@ -114,7 +114,7 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '', setti
                 <div className="card">
                     <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Quick Protocols</h3>
                     <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                        <ProtocolButton icon={<CheckCircle />} label="Mark Attendance" onClick={() => onNavigate('attendance')} />
+                        <ProtocolButton icon={<CheckCircle />} label="Faculty Attendance Entry" onClick={() => onNavigate('faculty-attendance')} />
                         <ProtocolButton icon={<FileText />} label="Generate Report" onClick={() => generateStudentReport(students)} />
                         <ProtocolButton icon={<Download />} label="Download Registry" onClick={() => generateRegistryExport(students)} />
                         <ProtocolButton icon={<Users />} label="Member Directory" onClick={() => onNavigate('students')} />
@@ -159,7 +159,7 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '', setti
                             Finalize Registry
                         </button>
                         <button 
-                            onClick={() => onNavigate('attendance')}
+                            onClick={() => onNavigate('faculty-attendance')}
                             className="btn btn-primary"
                             style={{ padding: '0.5rem 1rem', fontSize: '0.8rem' }}
                         >

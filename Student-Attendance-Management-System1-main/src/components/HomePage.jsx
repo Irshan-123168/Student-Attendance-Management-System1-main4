@@ -4,7 +4,7 @@ import { ArrowRight, CheckCircle, Users, Shield, Clock, MapPin, Phone, Mail } fr
 
 // Import local assets
 import logoImg from '../assets/logo.png';
-import staffGroupImg from '../assets/staff_group.png';
+import facultyGroupImg from '../assets/staff_group.png';
 import courtyardImg from '../assets/campus_courtyard.jpg';
 import frontImg from '../assets/campus_front.jpg';
 import labImg from '../assets/computer_lab.jpg';
@@ -174,7 +174,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                     >
                         <div style={{ position: 'relative', width: '100%', height: 'min(60vh, 500px)', overflow: 'hidden' }}>
                             <img 
-                                src={staffGroupImg} 
+                                src={facultyGroupImg} 
                                 alt="The Visionary Faculty of Sanjay Gandhi Polytechnic" 
                                 style={{ 
                                     width: '100%', 
@@ -304,7 +304,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                                 border: '4px solid white'
                             }}
                         >
-                            <img src={staffGroupImg} alt="SGP Faculty" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={facultyGroupImg} alt="SGP Faculty" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '2rem', background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', color: 'white' }}>
                                 <h4 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Our Visionary Faculty</h4>
                                 <p style={{ opacity: 0.9 }}>Dedicated educators shaping the future of engineering.</p>

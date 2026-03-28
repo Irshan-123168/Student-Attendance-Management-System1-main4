@@ -5,7 +5,7 @@ import { api } from '../api';
 import { generateStudentReport, generateRegistryExport, generateMasterReport } from '../utils/exportUtils';
 import ClassSchedule from './ClassSchedule';
 
-const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQuery = '', settings, setSettings, onDeleteAccount }) => {
+const FacultyDashboard = ({ user, students = [], onNavigateToAttendance, searchQuery = '', settings, setSettings, onDeleteAccount }) => {
     const [showRegistryPopup, setShowRegistryPopup] = useState(false);
     const [isUpdatingKey, setIsUpdatingKey] = useState(false);
     const [oldKey, setOldKey] = useState('');
@@ -155,7 +155,7 @@ const StaffDashboard = ({ user, students = [], onNavigateToAttendance, searchQue
                     <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Session Protocols</h3>
                     <div className="grid grid-cols-2 gap-4">
                         <ActionButton icon={<Users />} label="Student Registry" onClick={() => onNavigateToAttendance('students')} />
-                        <ActionButton icon={<CheckCircle />} label="Mark Attendance" onClick={() => onNavigateToAttendance('attendance')} />
+                        <ActionButton icon={<CheckCircle />} label="Faculty Attendance Entry" onClick={() => onNavigateToAttendance('faculty-attendance')} />
                         <ActionButton icon={<UserPlus size={20} />} label="Member Directory" onClick={() => onNavigateToAttendance('students')} />
                         <ActionButton icon={<Download />} label="Download Registry" onClick={() => generateRegistryExport(students)} />
                         <ActionButton icon={<FileText />} label="Generate Report" onClick={() => generateStudentReport(students)} />
@@ -422,4 +422,4 @@ const ActionButton = ({ icon, label, onClick, highlight, isDanger }) => (
     </button>
 );
 
-export default StaffDashboard;
+export default FacultyDashboard;

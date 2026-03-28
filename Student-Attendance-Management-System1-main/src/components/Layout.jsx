@@ -44,8 +44,8 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
             { id: 'profile', label: 'My Identity', icon: <User size={20} /> },
         ],
         TEACHER: [
-            { id: 'staff-dashboard', label: 'Dashboard', icon: <Home size={20} /> },
-            { id: 'attendance', label: 'Mark Attendance', icon: <UserCheck size={20} /> },
+            { id: 'faculty-dashboard', label: 'Faculty Dashboard', icon: <Home size={20} /> },
+            { id: 'faculty-attendance', label: 'Faculty Attendance Entry', icon: <UserCheck size={20} /> },
             { id: 'leave', label: 'Leave Requests', icon: <ClipboardList size={20} /> },
             { id: 'curriculum', label: 'Curriculum Hub', icon: <Book size={20} /> },
             { id: 'reports', label: 'Class Analytics', icon: <FileBarChart size={20} /> },
@@ -190,14 +190,17 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
                                     const query = searchQuery.toLowerCase();
                                     if (query.includes('leave') || query.includes('request') || query.includes('application')) {
                                         setActiveTab('leave');
-                                    } else if (query.includes('attendance') || query.includes('mark')) {
-                                        setActiveTab('attendance');
+                                    } else if (query.includes('attendance') || query.includes('mark') || query.includes('absent') || query.includes('entry')) {
+                                        setActiveTab('faculty-attendance');
                                     } else if (query.includes('report') || query.includes('system') || query.includes('analytic')) {
                                         setActiveTab('reports');
                                     } else if (query.includes('curricul')) {
                                         setActiveTab('curriculum');
-                                    } else if (query.includes('dashboard')) {
-                                        setActiveTab('dashboard');
+                                    } else if (query.includes('dashboard') || query.includes('stats') || query.includes('metric')) {
+                                        if (role === 'TEACHER') setActiveTab('faculty-dashboard');
+                                        else if (role === 'ADMIN') setActiveTab('admin-dashboard');
+                                        else if (role === 'HOD') setActiveTab('hod-dashboard');
+                                        else setActiveTab('student-dashboard');
                                     } else if (query.includes('profile') || query.includes('identity') || query.includes('account')) {
                                         setActiveTab('profile');
                                     } else if (query.includes('setting') || query.includes('config')) {
@@ -208,7 +211,7 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
                                         if (role === 'ADMIN') setActiveTab('admin-dashboard');
                                         else if (role === 'HOD') setActiveTab('hod-dashboard');
                                         else if (role === 'STUDENT') setActiveTab('student-dashboard');
-                                        else setActiveTab('staff-dashboard');
+                                        else setActiveTab('faculty-dashboard');
                                     } else {
                                         setActiveTab(role === 'STUDENT' ? 'student-dashboard' : 'students');
                                     }

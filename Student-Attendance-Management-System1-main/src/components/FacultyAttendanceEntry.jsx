@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { api } from '../api';
 
-const StaffAttendanceEntry = ({ user }) => {
+const FacultyAttendanceEntry = ({ user }) => {
     const [students, setStudents] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedBranch, setSelectedBranch] = React.useState('CSE');
@@ -87,7 +87,7 @@ const StaffAttendanceEntry = ({ user }) => {
         <div className="animate-fade space-y-8">
             <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                 <div>
-                    <h2 style={{ fontSize: '2rem', fontWeight: 800 }}>Attendance Terminal</h2>
+                    <h2 style={{ fontSize: '2rem', fontWeight: 800 }}>Faculty Attendance Terminal</h2>
                     <p style={{ color: 'var(--text-secondary)' }}>Live synchronization of node presence for {activeDate}</p>
                 </div>
                 <div style={{ display: 'flex', gap: '1rem' }}>
@@ -252,4 +252,4 @@ const StatusToggle = ({ label, active, onClick, color }) => (
     </button>
 );
 
-export default StaffAttendanceEntry;
+export default FacultyAttendanceEntry;

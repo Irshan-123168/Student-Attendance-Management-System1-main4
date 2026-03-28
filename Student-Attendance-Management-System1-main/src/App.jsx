@@ -13,12 +13,12 @@ import RegisterPage from './components/RegisterPage';
 import RegisterSuccess from './components/RegisterSuccess';
 import AdminDashboard from './components/AdminDashboard';
 import HodDashboard from './components/HodDashboard';
-import StaffDashboard from './components/StaffDashboard';
+import FacultyDashboard from './components/FacultyDashboard';
 import StudentDashboard from './components/StudentDashboard';
 import ReportPage from './components/ReportPage';
 import PortalSettings from './components/PortalSettings';
 import MemberDirectory from './components/MemberDirectory';
-import StaffAttendanceEntry from './components/StaffAttendanceEntry';
+import FacultyAttendanceEntry from './components/FacultyAttendanceEntry';
 import SchedulePage from './components/SchedulePage';
 import LeaveGateway from './components/LeaveGateway';
 import ProfilePage from './components/ProfilePage';
@@ -152,7 +152,7 @@ function App() {
             setActiveTab('student-dashboard');
         } else {
             setUserRole('Faculty');
-            setActiveTab('staff-dashboard');
+            setActiveTab('faculty-dashboard');
         }
     };
 
@@ -269,7 +269,7 @@ function App() {
                         if (userRole === 'Admin') handleNavigate('admin-dashboard');
                         else if (userRole === 'HOD') handleNavigate('hod-dashboard');
                         else if (userRole === 'Student') handleNavigate('student-dashboard');
-                        else handleNavigate('staff-dashboard');
+                        else handleNavigate('faculty-dashboard');
                     }} 
                     isAuthenticated={true} 
                     hideNavbar={true}
@@ -277,11 +277,11 @@ function App() {
             )}
             {activeTab === 'admin-dashboard' && <AdminDashboard user={currentUser} users={users} students={students} onNavigate={handleNavigate} searchQuery={searchQuery} settings={settings} setSettings={setSettings} onDeleteAccount={handleDeleteAccount} />}
             {activeTab === 'hod-dashboard' && <HodDashboard user={currentUser} onNavigate={handleNavigate} students={students} onUpdateStudent={handleUpdateStudent} searchQuery={searchQuery} settings={settings} setSettings={setSettings} onDeleteAccount={handleDeleteAccount} />}
-            {activeTab === 'staff-dashboard' && <StaffDashboard user={currentUser} onNavigateToAttendance={handleNavigate} students={students} searchQuery={searchQuery} settings={settings} setSettings={setSettings} onDeleteAccount={handleDeleteAccount} />}
+            {activeTab === 'faculty-dashboard' && <FacultyDashboard user={currentUser} onNavigateToAttendance={handleNavigate} students={students} searchQuery={searchQuery} settings={settings} setSettings={setSettings} onDeleteAccount={handleDeleteAccount} />}
             {activeTab === 'student-dashboard' && <StudentDashboard user={currentUser} students={students} onStatusChange={handleStatusChange} onNavigate={handleNavigate} searchQuery={searchQuery} settings={settings} setSettings={setSettings} onDeleteAccount={handleDeleteAccount} />}
             {(activeTab === 'dashboard' || activeTab === 'analytics') && <Dashboard students={students} searchQuery={searchQuery} isSearching={isSearching} />}
             {activeTab === 'reports' && <ReportPage records={students} />}
-            {(activeTab === 'attendance' || activeTab === 'quick-mark' || activeTab === 'attenditics' || activeTab === 'staff-attendance') && (
+            {(activeTab === 'attendance' || activeTab === 'quick-mark' || activeTab === 'attenditics' || activeTab === 'faculty-attendance') && (
                 <div className="max-w-5xl mx-auto">
                     <AttendancePanel
                         students={students}
@@ -310,7 +310,7 @@ function App() {
 
             {activeTab === 'curriculum' && <CurriculumHub />}
 
-            {['students', 'admissions', 'staff-management', 'employees'].includes(activeTab) && (
+            {['students', 'admissions', 'faculty-management', 'employees'].includes(activeTab) && (
                 directoryActive ? (
                     <MemberDirectory students={students} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
                 ) : (
