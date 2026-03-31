@@ -1,9 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle, Users, Shield, Clock, MapPin, Phone, Mail, Globe, ExternalLink, BookOpen, GraduationCap, Building2, Briefcase } from 'lucide-react';
+import { ArrowRight, CheckCircle, Users, Shield, Clock, MapPin, Phone, Mail, Globe } from 'lucide-react';
 
 // Import local assets
 import logoImg from '../assets/logo.png';
+import brandingBadgesImg from '../assets/branding_badges.png';
 import facultyGroupImg from '../assets/staff_group.png';
 import courtyardImg from '../assets/campus_courtyard.jpg';
 import frontImg from '../assets/campus_front.jpg';
@@ -44,7 +45,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                             width: 'min(90%, 500px)', 
                             height: 'auto', 
                             aspectRatio: '3/1',
-                            marginBottom: '3.5rem',
+                            marginBottom: '1rem',
                             padding: '1.5rem',
                             background: 'white',
                             backdropFilter: 'blur(10px)',
@@ -65,6 +66,34 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                                 }} 
                             />
                         </div>
+
+                        {/* Branding Badges - NBA, Anniversary, etc. */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.3 }}
+                            style={{ 
+                                marginBottom: '3.5rem', 
+                                background: 'rgba(255, 255, 255, 0.15)',
+                                padding: '12px 24px',
+                                borderRadius: '16px',
+                                backdropFilter: 'blur(10px)',
+                                border: '1px solid rgba(255, 255, 255, 0.2)',
+                                display: 'flex',
+                                justifyContent: 'center'
+                            }}
+                        >
+                            <img 
+                                src={brandingBadgesImg} 
+                                alt="NBA Accreditation & Anniversary Branding" 
+                                style={{ 
+                                    height: '60px', 
+                                    width: 'auto', 
+                                    objectFit: 'contain',
+                                    filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.1))'
+                                }} 
+                            />
+                        </motion.div>
 
                         <h1 style={{ 
                             fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', 
@@ -553,56 +582,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                 </div>
             </section>
 
-            {/* Institutional Quick Links Section */}
-            <section style={{ padding: '80px 2rem', background: 'white' }}>
-                <div className="container">
-                    <motion.div 
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true }}
-                        style={{ textAlign: 'center', marginBottom: '50px' }}
-                    >
-                        <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>Institutional Resources</h2>
-                        <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '700px', margin: '0 auto' }}>
-                            Access official portals and resources from the Sanjay Gandhi Polytechnic main website.
-                        </p>
-                    </motion.div>
 
-                    <div style={{ 
-                        display: 'grid', 
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
-                        gap: '2rem',
-                        maxWidth: '1200px',
-                        margin: '0 auto'
-                    }}>
-                        <QuickLinkCard 
-                            icon={<Building2 size={28} />}
-                            title="About Institution"
-                            desc="Learn about our history, visionary trust, and academic excellence."
-                            link="https://sgpbellary.com/about_sgp.php"
-                        />
-                        <QuickLinkCard 
-                            icon={<BookOpen size={28} />}
-                            title="Courses Offered"
-                            desc="Explore our specialized diploma programs in various engineering branches."
-                            link="https://sgpbellary.com/departments.php"
-                        />
-                        <QuickLinkCard 
-                            icon={<GraduationCap size={28} />}
-                            title="Admissions"
-                            desc="Information regarding eligibility, application process, and fee structure."
-                            link="https://sgpbellary.com/admission_procedure.php"
-                        />
-                        <QuickLinkCard 
-                            icon={<Briefcase size={28} />}
-                            title="Placement Cell"
-                            desc="Our dedicated training and placement hub for career opportunities."
-                            link="https://sgpbellary.com/traning_placement.php"
-                        />
-                    </div>
-                </div>
-            </section>
 
             {/* Trust Section */}
             <section style={{ padding: '60px 2rem', background: '#f8fafc', borderTop: '1px solid var(--border-color)' }}>
@@ -615,105 +595,12 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                 </div>
             </section>
 
-            {/* Footer */}
-            <footer style={{ padding: '60px 2rem 30px', background: 'var(--text-primary)', color: 'white' }}>
-                <div className="container">
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '3rem', marginBottom: '40px' }}>
-                        <div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-                                <div style={{ width: '40px', height: '40px', background: 'white', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: '4px' }}>
-                                    <img src={logoImg} alt="Logo" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
-                                </div>
-                                <span style={{ fontSize: '1.5rem', fontWeight: 800 }}>AttendFlow</span>
-                            </div>
-                            <p style={{ opacity: 0.7, lineHeight: 1.6, fontSize: '0.95rem' }}>
-                                An advanced attendance management ecosystem designed specifically for Sanjay Gandhi Polytechnic, ensuring accuracy and transparency.
-                            </p>
-                        </div>
-                        
-                        <div>
-                            <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1.5rem' }}>Quick Links</h4>
-                            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                                <li><FooterLink href="https://sgpbellary.com/" label="SGP Official Site" /></li>
-                                <li><FooterLink href="https://sgpbellary.com/administrative_body.php" label="Administration" /></li>
-                                <li><FooterLink href="https://sgpbellary.com/egovernance.php" label="E-Governance" /></li>
-                                <li><FooterLink href="https://sgpbellary.com/contact_us.php" label="Connect With Us" /></li>
-                            </ul>
-                        </div>
 
-                        <div>
-                            <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1.5rem' }}>Legal</h4>
-                            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                                <li><a href="#" style={{ color: 'white', opacity: 0.7, textDecoration: 'none', fontSize: '0.95rem' }}>Privacy Policy</a></li>
-                                <li><a href="#" style={{ color: 'white', opacity: 0.7, textDecoration: 'none', fontSize: '0.95rem' }}>Terms of Service</a></li>
-                                <li><a href="#" style={{ color: 'white', opacity: 0.7, textDecoration: 'none', fontSize: '0.95rem' }}>Cookie Policy</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-                        <p style={{ opacity: 0.5, fontSize: '0.85rem' }}>
-                            © 2026 Sanjay Gandhi Polytechnic. All rights reserved.
-                        </p>
-                        <div style={{ display: 'flex', gap: '1.5rem', opacity: 0.5, fontSize: '0.85rem' }}>
-                            <span>Managed by T.E.H.R.D Trust</span>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
     );
 };
 
-const QuickLinkCard = ({ icon, title, desc, link }) => (
-    <motion.a 
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
-        whileHover={{ translateY: -10, boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}
-        style={{ 
-            padding: '2.5rem', 
-            background: 'white', 
-            borderRadius: '24px', 
-            border: '1px solid var(--border-color)',
-            textDecoration: 'none',
-            display: 'block',
-            transition: 'all 0.3s ease'
-        }}
-    >
-        <div style={{ width: '56px', height: '56px', background: '#eff6ff', color: 'var(--primary-color)', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
-            {icon}
-        </div>
-        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.75rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            {title}
-            <ExternalLink size={16} style={{ opacity: 0.4 }} />
-        </h3>
-        <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6, fontSize: '0.95rem' }}>{desc}</p>
-    </motion.a>
-);
 
-const FooterLink = ({ href, label }) => (
-    <a 
-        href={href} 
-        target="_blank" 
-        rel="noopener noreferrer"
-        style={{ 
-            color: 'white', 
-            opacity: 0.7, 
-            textDecoration: 'none', 
-            fontSize: '0.95rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            transition: 'opacity 0.2s ease'
-        }}
-        onMouseOver={(e) => e.currentTarget.style.opacity = 1}
-        onMouseOut={(e) => e.currentTarget.style.opacity = 0.7}
-    >
-        {label}
-        <ExternalLink size={12} />
-    </a>
-);
 
 const FeatureCard = ({ icon, title, desc }) => (
     <motion.div 
