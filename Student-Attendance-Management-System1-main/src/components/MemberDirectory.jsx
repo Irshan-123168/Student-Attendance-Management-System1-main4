@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Filter, Users, ShieldCheck, Mail, Smartphone, ChevronRight } from 'lucide-react';
+import { Search, Filter, Users, ShieldCheck, Mail, Smartphone, ChevronRight, MoreVertical, Trash2, User } from 'lucide-react';
 
 const MemberDirectory = ({ students, searchQuery, setSearchQuery }) => {
     const [activeSector, setActiveSector] = useState('All');
+    const [activeMenuId, setActiveMenuId] = useState(null);
     
     const filteredStudents = (students || []).filter(s => {
         const matchesQuery = (s.name || '').toLowerCase().includes((searchQuery || '').toLowerCase()) || 
@@ -16,7 +17,7 @@ const MemberDirectory = ({ students, searchQuery, setSearchQuery }) => {
     const sectors = ['All', ...new Set((students || []).map(s => s.studentClass))];
 
     return (
-        <div className="animate-fade space-y-8">
+        <div className="animate-fade space-y-8" onClick={() => setActiveMenuId(null)}>
             <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                     <h2 style={{ fontSize: '2rem', fontWeight: 800 }}>Member Directory</h2>
@@ -42,7 +43,7 @@ const MemberDirectory = ({ students, searchQuery, setSearchQuery }) => {
                 {sectors.map(sector => (
                     <button
                         key={sector}
-                        onClick={() => setActiveSector(sector)}
+                        onClick={(e) => { e.stopPropagation(); setActiveSector(sector); }}
                         style={{
                             padding: '0.75rem 1.5rem', borderRadius: '12px', border: '1px solid var(--border-color)',
                             background: activeSector === sector ? 'var(--primary-gradient)' : 'white',
@@ -61,7 +62,7 @@ const MemberDirectory = ({ students, searchQuery, setSearchQuery }) => {
                 <AnimatePresence>
                     {filteredStudents.map((s, idx) => (
                         <motion.div 
-                            key={s.id}
+                            key={s.id || idx}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95 }}
@@ -69,7 +70,48 @@ const MemberDirectory = ({ students, searchQuery, setSearchQuery }) => {
                             className="card"
                             style={{ padding: '1.5rem', position: 'relative' }}
                         >
-                            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
+                            {/* Action Menu (Three Dots) */}
+                            <div style={{ position: 'absolute', top: '1.5rem', right: '1rem' }}>
+                                <button 
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setActiveMenuId(activeMenuId === s.id ? null : s.id);
+                                    }}
+                                    style={{ background: 'none', border: 'none', color: 'var(--text-light)', cursor: 'pointer', padding: '4px', borderRadius: '8px', display: 'flex', alignItems: 'center' }}
+                                    onMouseOver={(e) => e.currentTarget.style.background = 'var(--bg-secondary)'}
+                                    onMouseOut={(e) => e.currentTarget.style.background = 'none'}
+                                >
+                                    <MoreVertical size={20} />
+                                </button>
+                                
+                                <AnimatePresence>
+                                    {activeMenuId === s.id && (
+                                        <motion.div
+                                            initial={{ opacity: 0, scale: 0.9, y: -10 }}
+                                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                                            exit={{ opacity: 0, scale: 0.9, y: -10 }}
+                                            style={{ 
+                                                position: 'absolute', top: '100%', right: 0, width: '180px', 
+                                                background: 'white', borderRadius: '12px', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)',
+                                                border: '1px solid var(--border-color)', zIndex: 10, padding: '0.5rem'
+                                            }}
+                                        >
+                                            <button className="menu-item-btn" style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem', background: 'none', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                                                <User size={16} color="var(--primary-color)" /> View Profile
+                                            </button>
+                                            <button className="menu-item-btn" style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem', background: 'none', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                                                <Smartphone size={16} color="var(--success-color)" /> Send Alert
+                                            </button>
+                                            <div style={{ height: '1px', background: 'var(--border-color)', margin: '0.5rem 0' }}></div>
+                                            <button className="menu-item-btn" style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem', background: 'none', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 700, color: '#ef4444' }}>
+                                                <Trash2 size={16} /> Delete Registry
+                                            </button>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+
+                            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', paddingRight: '2rem' }}>
                                 <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary-color)' }}>
                                     <Users size={28} />
                                 </div>
@@ -77,7 +119,7 @@ const MemberDirectory = ({ students, searchQuery, setSearchQuery }) => {
                                     <h4 style={{ fontWeight: 800, fontSize: '1.1rem' }}>{s.name}</h4>
                                     <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-light)', letterSpacing: '0.05em' }}>ID: {s.roll}</p>
                                 </div>
-                                <div style={{ color: 'var(--success-color)' }}>
+                                <div style={{ color: 'var(--success-color)', display: activeMenuId === s.id ? 'none' : 'block' }}>
                                     <ShieldCheck size={20} />
                                 </div>
                             </div>

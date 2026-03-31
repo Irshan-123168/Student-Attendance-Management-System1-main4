@@ -106,24 +106,25 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                                 style={{ background: 'white' }}
                             >
                                 <option value="STUDENT">Institutional Learner</option>
-                                <option value="TEACHER">Faculty</option>
-                                <option value="HOD">Department Head</option>
-                                <option value="ADMIN">System Administrator</option>
+                                <option value="TEACHER">Institutional Faculty</option>
+                                <option value="HOD">Departmental Head (HOD)</option>
+                                <option value="ADMIN">System Superintendent (Admin)</option>
                             </select>
                         </div>
 
                         <div className="form-group">
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                                <label className="form-label" style={{ marginBottom: 0 }}>Username Or Email Address</label>
+                                <label className="form-label" style={{ marginBottom: 0 }}>Username or Institutional Email</label>
                                 <button 
                                     type="button" 
                                     onClick={() => {
                                         setRecoveryType('username');
                                         setError('');
+                                        setRecoveryMessage('');
                                     }}
-                                    style={{ background: 'none', border: 'none', color: 'var(--primary-color)', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}
+                                    style={{ background: 'none', border: 'none', color: 'var(--primary-color)', fontSize: '0.75rem', fontWeight: 800, cursor: 'pointer', textDecoration: 'underline' }}
                                 >
-                                    Forgot Username?
+                                    Recover Username?
                                 </button>
                             </div>
                             <div style={{ position: 'relative' }}>
@@ -132,7 +133,7 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                                     type="text"
                                     className="form-input"
                                     style={{ paddingLeft: '3rem' }}
-                                    placeholder="Username Or Email Address"
+                                    placeholder="Enter Username or Email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
@@ -245,14 +246,14 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                 ) : (
                     <form onSubmit={handleRecovery} className="space-y-5">
                         <div className="form-group">
-                            <label className="form-label">Email Address</label>
+                            <label className="form-label">Recovery Identification (Email)</label>
                             <div style={{ position: 'relative' }}>
                                 <Mail size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-light)' }} />
                                 <input 
                                     type="email"
                                     className="form-input"
                                     style={{ paddingLeft: '3rem' }}
-                                    placeholder="Enter your registered email"
+                                    placeholder="Enter your registered email address"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
