@@ -4,7 +4,6 @@ import { ArrowRight, CheckCircle, Users, Shield, Clock, MapPin, Phone, Mail, Glo
 
 // Import local assets
 import logoImg from '../assets/logo.png';
-import brandingBannerImg from '../assets/branding_banner.png';
 import facultyGroupImg from '../assets/staff_group.png';
 import courtyardImg from '../assets/campus_courtyard.jpg';
 import frontImg from '../assets/campus_front.jpg';
