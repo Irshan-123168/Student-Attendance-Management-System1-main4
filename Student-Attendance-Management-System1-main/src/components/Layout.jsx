@@ -27,7 +27,7 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
     const role = user?.role || 'STUDENT';
 
     const notifications = [
-        { id: 1, title: 'New Attendance Registry', time: '2 mins ago', type: 'info', description: 'Faculty added new records for CSE-A' },
+        { id: 1, title: 'New Attendance Registry', time: '2 mins ago', type: 'info', description: 'Faculty added new records for DCS-A' },
         { id: 2, title: 'Leave Approval', time: '1 hour ago', type: 'success', description: 'HOD approved your leave application' },
         { id: 3, title: 'System Maintenance', time: '5 hours ago', type: 'warning', description: 'DB sync scheduled at 02:00 UTC' }
     ];

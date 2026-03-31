@@ -7,48 +7,48 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
     const [editForm, setEditForm] = React.useState({ name: '', roll: '', studentClass: '', status: '', branch: '', semester: '', subject: '' });
     
     // Attendance Session State
-    const [selectedBranch, setSelectedBranch] = React.useState('CSE');
+    const [selectedBranch, setSelectedBranch] = React.useState('DCS');
     const [selectedSem, setSelectedSem] = React.useState('1');
     const [selectedSection, setSelectedSection] = React.useState('A');
     const [selectedSubject, setSelectedSubject] = React.useState('FOC');
 
-    const branches = ['CSE', 'EEE', 'MEC', 'CE', 'MT'];
+    const branches = ['DCS', 'DEEE', 'DME', 'DCE', 'DMT'];
     const semesters = ['1', '2', '3', '4', '5', '6'];
     const sections = ['A', 'B', 'C', 'D'];
     const branchNames = {
-        'CSE': 'Computer Science',
-        'EEE': 'Electrical & Electronics',
-        'MEC': 'Mechanical',
-        'CE': 'Civil',
-        'MT': 'Metallurgical'
+        'DCS': 'Computer Science',
+        'DEEE': 'Electrical & Electronics',
+        'DME': 'Mechanical',
+        'DCE': 'Civil',
+        'DMT': 'Metallurgical'
     };
 
     const subjects = {
-        'CSE': [
+        'DCS': [
             'FOC', 'Engineering Maths', 'IT Skills', 'Digital Logic', 
             'Python Programming', 'Computer Networks', 'Database Management', 
             'Java Programming', 'Full Stack Development', 'Cyber Security',
             'Operating Systems', 'Software Engineering', 'Cloud Computing'
         ],
-        'EEE': [
+        'DEEE': [
             'FOC', 'Engineering Maths', 'Basic Electrical', 'Electrical Circuits', 
             'Power Systems', 'Control Systems', 'Electric Motors', 
             'Transformers & Alternators', 'Power Electronics', 'Industrial Automation', 
             'Renewable Energy', 'Transmission & Distribution', 'Switchgear & Protection'
         ],
-        'MEC': [
+        'DME': [
             'FOC', 'Engineering Maths', 'Mechanical Concepts', 'Thermodynamics', 
             'Fluid Mechanics', 'Mechanics of Materials', 'Machine Tool Tech', 
             'Manufacturing Processes', 'CAD/CAM', 'CNC Machining', 
             'Robotics', 'Heat Transfer', 'Automobile Engineering'
         ],
-        'CE': [
+        'DCE': [
             'FOC', 'Engineering Maths', 'Essential English', 'Construction Materials', 
             'Surveying', 'Concrete Tech', 'Structure Analysis', 
             'Geotechnical Engg', 'Hydraulics', 'Transportation Engg', 
             'Quantity Surveying', 'Environmental Engg', 'Design of Structures'
         ],
-        'MT': [
+        'DMT': [
             'FOC', 'Engineering Maths', 'Environmental Sustainability', 'Concepts of Metallurgy', 
             'Material Science', 'Extractive Metallurgy', 'Physical Metallurgy', 
             'Heat Treatment', 'Mechanical Metallurgy', 'Foundry Technology', 
@@ -124,7 +124,7 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
                             }}
                             style={{ fontWeight: 700 }}
                         >
-                            {branches.map(b => <option key={b} value={b}>{branchNames[b]} Engineering</option>)}
+                            {branches.map(b => <option key={b} value={b}>{branchNames[b]} Diploma</option>)}
                         </select>
                     </div>
                     <div>
@@ -378,7 +378,7 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
                                             className="form-input" value={editForm.subject} 
                                             onChange={(e) => setEditForm({...editForm, subject: e.target.value})}
                                         >
-                                            {subjects[editForm.branch || 'CSE'].map(s => <option key={s} value={s}>{s}</option>)}
+                                            {subjects[editForm.branch || 'DCS'].map(s => <option key={s} value={s}>{s}</option>)}
                                         </select>
                                     </div>
                                 </div>

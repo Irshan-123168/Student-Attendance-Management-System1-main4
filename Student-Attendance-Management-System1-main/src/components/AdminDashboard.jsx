@@ -111,12 +111,12 @@ const AdminDashboard = ({ user, users = [], students = [], onNavigate, searchQue
                             <QuickLink label="Security Audit" desc="Verified Trace" onClick={() => onNavigate('reports')} />
                             <QuickLink label="System Config" desc="Portal settings" onClick={() => onNavigate('settings')} />
                              <QuickLink label="Dark Interface" desc="Toggle visual mode" onClick={() => setSettings(prev => ({ ...prev, darkMode: !prev.darkMode }))} highlight={settings?.darkMode} />
-                            <QuickLink label="Syllabus C-25 (PDF)" desc="DTEK C-25 Draft" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_1_4_ComputerScience&Engineering.pdf', '_blank')} />
+                            <QuickLink label="Syllabus DCS C-25 (PDF)" desc="DTEK DCS C-25 Draft" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_1_4_ComputerScience&Engineering.pdf', '_blank')} />
                             <QuickLink label="Syllabus C-20 (Web)" desc="C-20 Web Portal" onClick={() => window.open('https://dtek.karnataka.gov.in/52/c-20-syllabus/en', '_blank')} />
-                            <QuickLink label="Syllabus EEE C-25 (PDF)" desc="EEE C-25 Draft" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_EE_1_4_Electrical&ElectronicsEngineering.pdf', '_blank')} />
-                            <QuickLink label="Syllabus ME C-25 (PDF)" desc="Mechanical C-25 Draft" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_ME_1_4_MechanicalEngineering.pdf', '_blank')} />
-                            <QuickLink label="Syllabus MT C-25 (PDF)" desc="Metallurgical C-25 Draft" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_MT_1_4_MetallurgicalEngineering.pdf', '_blank')} />
-                            <QuickLink label="Syllabus CE C-25 (PDF)" desc="Civil Engg C-25 Draft" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_CE_1_4_CivilEngineering.pdf', '_blank')} />
+                            <QuickLink label="Syllabus DEEE C-25 (PDF)" desc="DEEE C-25 Draft" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_EE_1_4_Electrical&ElectronicsEngineering.pdf', '_blank')} />
+                            <QuickLink label="Syllabus DME C-25 (PDF)" desc="Mechanical DME C-25 Draft" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_ME_1_4_MechanicalEngineering.pdf', '_blank')} />
+                            <QuickLink label="Syllabus DMT C-25 (PDF)" desc="Metallurgical DMT C-25 Draft" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_MT_1_4_MetallurgicalEngineering.pdf', '_blank')} />
+                            <QuickLink label="Syllabus DCE C-25 (PDF)" desc="Civil DCE C-25 Draft" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_CE_1_4_CivilEngineering.pdf', '_blank')} />
                         </div>
                     </div>
                     

@@ -19,21 +19,21 @@ import { api } from '../api';
 const FacultyAttendanceEntry = ({ user }) => {
     const [students, setStudents] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [selectedBranch, setSelectedBranch] = React.useState('CSE');
+    const [selectedBranch, setSelectedBranch] = React.useState('DCS');
     const [selectedSem, setSelectedSem] = React.useState('1');
     const [selectedSubject, setSelectedSubject] = React.useState('FOC');
     const [isSaving, setIsSaving] = useState(false);
     const [saveSuccess, setSaveSuccess] = useState(false);
     const [activeDate, setActiveDate] = useState(new Date().toISOString().split('T')[0]);
 
-    const branches = ['CSE', 'EEE', 'MEC', 'CE', 'MT'];
+    const branches = ['DCS', 'DEEE', 'DME', 'DCE', 'DMT'];
     const semesters = ['1', '2', '3', '4', '5', '6'];
     const subjects = {
-        'CSE': ['FOC', 'PMS', 'Java', 'Full Stack', 'Cyber Security'],
-        'EEE': ['FOC', 'Basic Electrical', 'Electrical Circuits', 'Power Systems', 'Control Systems'],
-        'MEC': ['FOC', 'Mechanics', 'Thermodynamics', 'Thermal Engg', 'Workshop'],
-        'CE': ['FOC', 'Building Materials', 'Surveying', 'Structural Analysis', 'Environmental'],
-        'MT': ['FOC', 'Intro Metallurgy', 'Physical Metallurgy', 'Extractive', 'Corrosion']
+        'DCS': ['FOC', 'PMS', 'Java', 'Full Stack', 'Cyber Security'],
+        'DEEE': ['FOC', 'Basic Electrical', 'Electrical Circuits', 'Power Systems', 'Control Systems'],
+        'DME': ['FOC', 'Mechanics', 'Thermodynamics', 'Thermal Engg', 'Workshop'],
+        'DCE': ['FOC', 'Building Materials', 'Surveying', 'Structural Analysis', 'Environmental'],
+        'DMT': ['FOC', 'Intro Metallurgy', 'Physical Metallurgy', 'Extractive', 'Corrosion']
     };
 
     useEffect(() => {
@@ -122,7 +122,7 @@ const FacultyAttendanceEntry = ({ user }) => {
                             }}
                             style={{ fontWeight: 700 }}
                         >
-                            {branches.map(b => <option key={b} value={b}>{b} Engineering</option>)}
+                            {branches.map(b => <option key={b} value={b}>{b} Diploma</option>)}
                         </select>
                     </div>
                     <div>

@@ -105,9 +105,9 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '', setti
                 <div className="card">
                     <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Node Activity Stream</h3>
                     <div className="space-y-4">
-                        <DeptActivityItem msg="CSE Seminar attendance sync completed" time="15m ago" type="INFO" />
+                        <DeptActivityItem msg="DCS Seminar attendance sync completed" time="15m ago" type="INFO" />
                         <DeptActivityItem msg="High absence alert in Node: SEM-04-B" time="2h ago" type="WARNING" />
-                        <DeptActivityItem msg="Faculty authorization updated for MECH-01" time="4h ago" type="SUCCESS" />
+                        <DeptActivityItem msg="Faculty authorization updated for DME-01" time="4h ago" type="SUCCESS" />
                     </div>
                 </div>
 
@@ -137,12 +137,12 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '', setti
                             onClick={onDeleteAccount} 
                             isDanger
                         />
-                        <ProtocolButton icon={<FileText />} label="Syllabus C-25 (PDF)" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_1_4_ComputerScience&Engineering.pdf', '_blank')} />
+                        <ProtocolButton icon={<FileText />} label="Syllabus DCS C-25 (PDF)" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_1_4_ComputerScience&Engineering.pdf', '_blank')} />
                         <ProtocolButton icon={<FileText />} label="Syllabus C-20 (Web)" onClick={() => window.open('https://dtek.karnataka.gov.in/52/c-20-syllabus/en', '_blank')} />
-                        <ProtocolButton icon={<FileText />} label="Syllabus EEE C-25 (PDF)" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_EE_1_4_Electrical&ElectronicsEngineering.pdf', '_blank')} />
-                        <ProtocolButton icon={<FileText />} label="Syllabus ME C-25 (PDF)" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_ME_1_4_MechanicalEngineering.pdf', '_blank')} />
-                        <ProtocolButton icon={<FileText />} label="Syllabus MT C-25 (PDF)" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_MT_1_4_MetallurgicalEngineering.pdf', '_blank')} />
-                        <ProtocolButton icon={<FileText />} label="Syllabus CE C-25 (PDF)" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_CE_1_4_CivilEngineering.pdf', '_blank')} />
+                        <ProtocolButton icon={<FileText />} label="Syllabus DEEE C-25 (PDF)" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_EE_1_4_Electrical&ElectronicsEngineering.pdf', '_blank')} />
+                        <ProtocolButton icon={<FileText />} label="Syllabus DME C-25 (PDF)" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_ME_1_4_MechanicalEngineering.pdf', '_blank')} />
+                        <ProtocolButton icon={<FileText />} label="Syllabus DMT C-25 (PDF)" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_MT_1_4_MetallurgicalEngineering.pdf', '_blank')} />
+                        <ProtocolButton icon={<FileText />} label="Syllabus DCE C-25 (PDF)" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_CE_1_4_CivilEngineering.pdf', '_blank')} />
                     </div>
                 </div>
             </div>
@@ -192,7 +192,7 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '', setti
                                                 <div style={{ fontSize: '0.7rem', color: 'var(--text-light)' }}>{student.roll}</div>
                                             </td>
                                             <td style={{ padding: '1rem' }}>
-                                                <div style={{ fontSize: '0.8rem', fontWeight: 700 }}>{student.branch || 'CSE'}</div>
+                                                <div style={{ fontSize: '0.8rem', fontWeight: 700 }}>{student.branch || 'DCS'}</div>
                                                 <div style={{ fontSize: '0.7rem', color: 'var(--text-light)' }}>SEM-0{student.semester || '1'}</div>
                                             </td>
                                             <td style={{ padding: '1rem', fontSize: '0.85rem', fontWeight: 600 }}>{student.subject || '-'}</td>
