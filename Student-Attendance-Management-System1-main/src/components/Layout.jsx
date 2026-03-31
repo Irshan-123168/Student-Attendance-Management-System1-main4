@@ -23,7 +23,14 @@ import {
 
 const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccount, searchQuery, setSearchQuery }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [showNotifications, setShowNotifications] = useState(false);
     const role = user?.role || 'STUDENT';
+
+    const notifications = [
+        { id: 1, title: 'New Attendance Registry', time: '2 mins ago', type: 'info', description: 'Faculty added new records for CSE-A' },
+        { id: 2, title: 'Leave Approval', time: '1 hour ago', type: 'success', description: 'HOD approved your leave application' },
+        { id: 3, title: 'System Maintenance', time: '5 hours ago', type: 'warning', description: 'DB sync scheduled at 02:00 UTC' }
+    ];
 
     const navItems = {
         ADMIN: [
@@ -246,12 +253,66 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
                             <span className="hidden md:inline">Delete Account</span>
                         </button>
                         <div style={{ position: 'relative' }}>
-                            <Bell size={22} className="text-gray-400" />
-                            <div style={{ position: 'absolute', top: '-2px', right: '-2px', width: '10px', height: '10px', background: 'var(--error-color)', border: '2px solid white', borderRadius: '50%' }}></div>
+                            <button 
+                                onClick={() => setShowNotifications(!showNotifications)}
+                                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', borderRadius: '10px', transition: 'all 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                onMouseOver={(e) => e.currentTarget.style.background = 'var(--bg-secondary)'}
+                                onMouseOut={(e) => e.currentTarget.style.background = 'none'}
+                            >
+                                <Bell size={22} className={showNotifications ? 'text-indigo-600' : 'text-gray-400'} />
+                                <div style={{ position: 'absolute', top: '6px', right: '6px', width: '10px', height: '10px', background: 'var(--error-color)', border: '2px solid white', borderRadius: '50%' }}></div>
+                            </button>
+
+                            <AnimatePresence>
+                                {showNotifications && (
+                                    <motion.div 
+                                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                        style={{ 
+                                            position: 'absolute', top: '120%', right: 0, width: '320px', 
+                                            background: 'white', borderRadius: '16px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)',
+                                            border: '1px solid var(--border-color)', zIndex: 100, padding: '1.25rem'
+                                        }}
+                                    >
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                                            <h4 style={{ fontWeight: 800, fontSize: '1rem' }}>System Alerts</h4>
+                                            <span style={{ fontSize: '0.75rem', color: 'var(--primary-color)', fontWeight: 700 }}>Mark all read</span>
+                                        </div>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                            {notifications.map(n => (
+                                                <div key={n.id} style={{ padding: '0.75rem', borderRadius: '12px', background: 'var(--bg-secondary)', cursor: 'pointer' }}>
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
+                                                        <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: 'var(--text-primary)' }}>{n.title}</span>
+                                                        <span style={{ fontSize: '0.7rem', color: 'var(--text-light)', fontWeight: 600 }}>{n.time}</span>
+                                                    </div>
+                                                    <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 500, lineHeight: 1.4 }}>{n.description}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <button 
+                                            onClick={() => { setActiveTab('reports'); setShowNotifications(false); }}
+                                            style={{ width: '100%', marginTop: '1rem', padding: '0.75rem', background: 'var(--primary-light)', color: 'var(--primary-color)', border: 'none', borderRadius: '10px', fontSize: '0.8125rem', fontWeight: 700, cursor: 'pointer' }}
+                                        >
+                                            View Performance Analytics
+                                        </button>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
-                        <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'var(--bg-secondary)', overflow: 'hidden', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <button 
+                            onClick={() => setActiveTab('profile')}
+                            style={{ 
+                                width: '44px', height: '44px', borderRadius: '12px', background: 'var(--bg-secondary)', 
+                                border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', 
+                                justifyContent: 'center', cursor: 'pointer', outline: 'none',
+                                transition: 'all 0.2s'
+                            }}
+                            onMouseOver={(e) => { e.currentTarget.style.borderColor = 'var(--primary-color)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                            onMouseOut={(e) => { e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.transform = 'translateY(0)'; }}
+                        >
                             <User size={24} className="text-gray-400" />
-                        </div>
+                        </button>
                     </div>
                 </header>
 
