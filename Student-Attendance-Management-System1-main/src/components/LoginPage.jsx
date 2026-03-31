@@ -8,7 +8,7 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('STUDENT');
     const [showPassword, setShowPassword] = useState(false);
-    const [isForgotMode, setIsForgotMode] = useState(false);
+    const [recoveryType, setRecoveryType] = useState(null); // null, 'password', 'username'
     const [recoveryMessage, setRecoveryMessage] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -32,14 +32,18 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
         }
     };
 
-    const handleForgotPassword = async (e) => {
+    const handleRecovery = async (e) => {
         e.preventDefault();
         setError('');
         setRecoveryMessage('');
         setIsLoading(true);
         try {
-            const result = await api.forgotPassword(email);
-            setRecoveryMessage(result.message || 'If your email is registered, you will receive your credentials shortly.');
+            const result = recoveryType === 'password' 
+                ? await api.forgotPassword(email)
+                : await api.forgotUsername(email);
+            setRecoveryMessage(result.message || (recoveryType === 'password' 
+                ? 'Your access key has been sent to your email.' 
+                : 'Your username has been sent to your email.'));
         } catch (err) {
             setError(err.message || 'Recovery request failed.');
         } finally {
@@ -84,14 +88,14 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                         <img src="/src/assets/logo.png" alt="Sanjay Gandhi Polytechnic Logo" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
                     </div>
                     <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
-                        {isForgotMode ? 'Recover Access' : 'Welcome Back'}
+                        {recoveryType ? (recoveryType === 'password' ? 'Recover Access' : 'Recover Username') : 'Welcome Back'}
                     </h2>
                     <p style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>
-                        {isForgotMode ? 'Enter your email to retrieve your key' : 'Sign in to access your portal'}
+                        {recoveryType ? `Enter your registered email to retrieve your ${recoveryType}` : 'Sign in to access your portal'}
                     </p>
                 </div>
 
-                {!isForgotMode ? (
+                {!recoveryType ? (
                     <form onSubmit={handleLogin} className="space-y-5">
                         <div className="form-group">
                             <label className="form-label">Role Configuration</label>
@@ -109,14 +113,26 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                         </div>
 
                         <div className="form-group">
-                            <label className="form-label">Email Address</label>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                                <label className="form-label" style={{ marginBottom: 0 }}>Username Or Email Address</label>
+                                <button 
+                                    type="button" 
+                                    onClick={() => {
+                                        setRecoveryType('username');
+                                        setError('');
+                                    }}
+                                    style={{ background: 'none', border: 'none', color: 'var(--primary-color)', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}
+                                >
+                                    Forgot Username?
+                                </button>
+                            </div>
                             <div style={{ position: 'relative' }}>
                                 <Mail size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-light)' }} />
                                 <input 
-                                    type="email"
+                                    type="text"
                                     className="form-input"
                                     style={{ paddingLeft: '3rem' }}
-                                    placeholder="Enter your email"
+                                    placeholder="Username Or Email Address"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
@@ -130,7 +146,7 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                                 <button 
                                     type="button" 
                                     onClick={() => {
-                                        setIsForgotMode(true);
+                                        setRecoveryType('password');
                                         setError('');
                                     }}
                                     style={{ background: 'none', border: 'none', color: 'var(--primary-color)', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}
@@ -227,7 +243,7 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                         </button>
                     </form>
                 ) : (
-                    <form onSubmit={handleForgotPassword} className="space-y-5">
+                    <form onSubmit={handleRecovery} className="space-y-5">
                         <div className="form-group">
                             <label className="form-label">Email Address</label>
                             <div style={{ position: 'relative' }}>
@@ -262,14 +278,14 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                             style={{ height: '52px', fontSize: '1rem', marginTop: '1rem' }}
                             disabled={isLoading}
                         >
-                            {isLoading ? 'Sending Access Key...' : 'Request Credentials'}
+                            {isLoading ? 'Processing...' : (recoveryType === 'password' ? 'Request Access Key' : 'Request Username')}
                             {!isLoading && <ArrowRight size={18} />}
                         </button>
 
                         <button 
                             type="button" 
                             onClick={() => {
-                                setIsForgotMode(false);
+                                setRecoveryType(null);
                                 setError('');
                                 setRecoveryMessage('');
                             }}

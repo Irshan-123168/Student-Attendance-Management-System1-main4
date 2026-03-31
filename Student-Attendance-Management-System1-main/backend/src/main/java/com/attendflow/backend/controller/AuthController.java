@@ -62,7 +62,13 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User loginRequest) {
-        Optional<User> userOpt = userRepository.findByEmail(loginRequest.getEmail());
+        String identifier = loginRequest.getEmail(); // frontend sends username or email in the 'email' field
+        Optional<User> userOpt = userRepository.findByEmail(identifier);
+        
+        if (!userOpt.isPresent()) {
+            userOpt = userRepository.findByUsername(identifier);
+        }
+
         if (userOpt.isPresent() && userOpt.get().getPassword().equals(loginRequest.getPassword())) {
             return ResponseEntity.ok(userOpt.get());
         }
@@ -85,13 +91,36 @@ public class AuthController {
                         "SGPB Admin Core";
 
                 emailService.sendEmail(email, subject, body);
-                return ResponseEntity.ok().body(java.util.Map.of("message", "Reset link sent to " + email));
+                return ResponseEntity.ok().body(java.util.Map.of("message", "Access Key sent to " + email));
             } catch (Exception e) {
                 return ResponseEntity.internalServerError().body("Failed to send email: " + e.getMessage());
             }
         }
         return ResponseEntity.status(404).body("Error: Identity not found in institutional registry.");
+    }
 
+    @PostMapping("/forgot-username")
+    public ResponseEntity<?> forgotUsername(@RequestBody java.util.Map<String, String> request) {
+        String email = request.get("email");
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            try {
+                String subject = "Username Recovery - Sanjay Gandhi Polytechnic";
+                String body = "Dear Student/Staff,\n\n" +
+                        "A request has been initiated to recover your username for the AttendanceFlow Portal.\n\n" +
+                        "Your Registered Username is: " + user.getUsername() + "\n\n" +
+                        "If you did not initiate this request, please contact the IT department immediately.\n\n" +
+                        "Regards,\n" +
+                        "SGPB Admin Core";
+
+                emailService.sendEmail(email, subject, body);
+                return ResponseEntity.ok().body(java.util.Map.of("message", "Username sent to " + email));
+            } catch (Exception e) {
+                return ResponseEntity.internalServerError().body("Failed to send email: " + e.getMessage());
+            }
+        }
+        return ResponseEntity.status(404).body("Error: Email address not found in institutional registry.");
     }
 
     @DeleteMapping("/delete/{id}")

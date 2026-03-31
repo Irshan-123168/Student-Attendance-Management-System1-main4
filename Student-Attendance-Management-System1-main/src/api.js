@@ -57,6 +57,27 @@ export const api = {
         }
     },
 
+    async forgotUsername(email) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/auth/forgot-username`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            if (!response.ok) {
+                const errorMsg = await response.text();
+                throw new Error(errorMsg || 'Username recovery failed');
+            }
+            return response.json();
+        } catch (error) {
+            console.error('Forgot username error:', error);
+            if (isNetworkError(error)) {
+                throw new Error('Backend server is unreachable. Please ensure the Spring Boot application is running on port 9040.');
+            }
+            throw error;
+        }
+    },
+
     async register(userData) {
         try {
             const response = await fetch(`${API_BASE_URL}/auth/register`, {
