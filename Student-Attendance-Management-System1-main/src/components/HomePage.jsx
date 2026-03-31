@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle, Users, Shield, Clock, MapPin, Phone, Mail, Globe } from 'lucide-react';
+import { ArrowRight, CheckCircle, Users, Shield, Clock, MapPin, Phone, Mail, Globe, Menu, X } from 'lucide-react';
 
 // Import local assets
 import logoImg from '../assets/logo.png';
@@ -12,9 +12,252 @@ import classroomImg from '../assets/classroom_session.png';
 import facultyMeetingImg from '../assets/faculty_meeting.png';
 import badgesBannerImg from '../assets/badges_banner.png';
 
+const Navbar = ({ onLogin }) => {
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [isMobileOpen, setIsMobileOpen] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 20) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const navLinks = ['Home', 'About', 'Courses', 'Placements', 'Contact'];
+
+    return (
+        <>
+            <style>
+                {`
+                @media (max-width: 768px) {
+                    .desktop-nav {
+                        display: none !important;
+                    }
+                    .login-btn-nav {
+                        display: none !important;
+                    }
+                    .mobile-menu-btn {
+                        display: block !important;
+                    }
+                }
+                .nav-link::after {
+                    content: '';
+                    position: absolute;
+                    width: 0;
+                    height: 2px;
+                    bottom: -4px;
+                    left: 0;
+                    background-color: #1e3a8a;
+                    transition: width 0.3s ease;
+                }
+                .nav-link:hover::after {
+                    width: 100%;
+                }
+                `}
+            </style>
+            <header style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                zIndex: 1000,
+                background: isScrolled ? 'rgba(255, 255, 255, 0.98)' : 'rgba(255, 255, 255, 0.9)',
+                backdropFilter: 'blur(12px)',
+                boxShadow: isScrolled ? '0 4px 20px rgba(0, 0, 0, 0.08)' : '0 2px 10px rgba(0,0,0,0.03)',
+                transition: 'all 0.3s ease',
+                borderTop: '4px solid #1e3a8a',
+            }}>
+                <div style={{
+                    maxWidth: '1200px',
+                    margin: '0 auto',
+                    padding: '0.75rem 2rem',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                }}>
+                    {/* Left Side: Logo & Text */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }}>
+                        <img 
+                            src={logoImg} 
+                            alt="SGP Logo" 
+                            style={{ height: '45px', width: 'auto', objectFit: 'contain' }} 
+                        />
+                        <span style={{
+                            fontSize: '1.4rem',
+                            fontWeight: 800,
+                            color: '#1e3a8a',
+                            letterSpacing: '-0.02em',
+                            fontFamily: "'Inter', 'Segoe UI', sans-serif"
+                        }}>
+                            SGP BALLARI
+                        </span>
+                    </div>
+
+                    {/* Center: Desktop Nav Links */}
+                    <nav className="desktop-nav" style={{
+                        display: 'flex',
+                        gap: '2.5rem',
+                        alignItems: 'center'
+                    }}>
+                        {navLinks.map((link) => (
+                            <a 
+                                key={link}
+                                href={`#${link.toLowerCase()}`}
+                                className="nav-link"
+                                style={{
+                                    color: '#4b5563',
+                                    fontWeight: 600,
+                                    textDecoration: 'none',
+                                    fontSize: '0.95rem',
+                                    transition: 'color 0.2s ease',
+                                    position: 'relative',
+                                    padding: '0.2rem 0'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.color = '#1e3a8a';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.color = '#4b5563';
+                                }}
+                            >
+                                {link}
+                            </a>
+                        ))}
+                    </nav>
+
+                    {/* Right Side: Login Button & Mobile Toggle */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <button 
+                            onClick={onLogin}
+                            className="login-btn-nav"
+                            style={{
+                                backgroundColor: '#1e3a8a',
+                                color: 'white',
+                                padding: '0.6rem 1.75rem',
+                                borderRadius: '100px',
+                                fontWeight: 700,
+                                fontSize: '0.95rem',
+                                border: 'none',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s ease',
+                                boxShadow: '0 4px 12px rgba(30, 58, 138, 0.25)',
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                e.currentTarget.style.boxShadow = '0 6px 16px rgba(30, 58, 138, 0.35)';
+                                e.currentTarget.style.backgroundColor = '#172554';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.transform = 'translateY(0)';
+                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(30, 58, 138, 0.25)';
+                                e.currentTarget.style.backgroundColor = '#1e3a8a';
+                            }}
+                        >
+                            Login
+                        </button>
+                        
+                        <button 
+                            className="mobile-menu-btn"
+                            onClick={() => setIsMobileOpen(!isMobileOpen)}
+                            style={{
+                                background: 'transparent',
+                                border: 'none',
+                                cursor: 'pointer',
+                                color: '#1e3a8a',
+                                padding: '0.5rem',
+                                display: 'none',
+                                transition: 'transform 0.2s ease'
+                            }}
+                            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                        >
+                            {isMobileOpen ? <X size={28} /> : <Menu size={28} />}
+                        </button>
+                    </div>
+                </div>
+
+                {/* Mobile Menu Dropdown */}
+                {isMobileOpen && (
+                    <motion.div 
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mobile-menu-dropdown" 
+                        style={{
+                            position: 'absolute',
+                            top: '100%',
+                            left: 0,
+                            right: 0,
+                            background: 'white',
+                            borderTop: '1px solid #f1f5f9',
+                            boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            padding: '1rem 2rem 2rem',
+                            gap: '0.5rem',
+                        }}
+                    >
+                        {navLinks.map((link) => (
+                            <a 
+                                key={link}
+                                href={`#${link.toLowerCase()}`}
+                                style={{
+                                    color: '#1e293b',
+                                    fontWeight: 600,
+                                    textDecoration: 'none',
+                                    fontSize: '1.1rem',
+                                    padding: '1rem 0',
+                                    borderBottom: '1px solid #f1f5f9',
+                                    display: 'block'
+                                }}
+                                onClick={() => setIsMobileOpen(false)}
+                            >
+                                {link}
+                            </a>
+                        ))}
+                        <button 
+                            onClick={() => {
+                                setIsMobileOpen(false);
+                                onLogin();
+                            }}
+                            style={{
+                                backgroundColor: '#1e3a8a',
+                                color: 'white',
+                                padding: '1rem',
+                                borderRadius: '100px',
+                                fontWeight: 700,
+                                fontSize: '1.05rem',
+                                border: 'none',
+                                cursor: 'pointer',
+                                marginTop: '1.5rem',
+                                textAlign: 'center',
+                                width: '100%',
+                                boxShadow: '0 4px 12px rgba(30, 58, 138, 0.2)',
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.backgroundColor = '#172554';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = '#1e3a8a';
+                            }}
+                        >
+                            Login
+                        </button>
+                    </motion.div>
+                )}
+            </header>
+        </>
+    );
+};
+
 const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
     return (
         <div style={{ position: 'relative' }}>
+            <Navbar onLogin={onLogin} />
             {/* Hero Section */}
             <section className="hero animated-mesh" style={{ 
                 minHeight: '100vh', 
