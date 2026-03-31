@@ -203,7 +203,7 @@ const Layout = ({ children, activeTab, setActiveTab, logout, user, onDeleteAccou
                                         setActiveTab('reports');
                                     } else if (query.includes('curricul')) {
                                         setActiveTab('curriculum');
-                                    } else if (query.includes('dashboard') || query.includes('stats') || query.includes('metric')) {
+                                    } else if (query.includes('dashboard') || query.includes('stats') || query.includes('metric') || query.includes('admin') || query.includes('hub')) {
                                         if (role === 'TEACHER') setActiveTab('faculty-dashboard');
                                         else if (role === 'ADMIN') setActiveTab('admin-dashboard');
                                         else if (role === 'HOD') setActiveTab('hod-dashboard');
