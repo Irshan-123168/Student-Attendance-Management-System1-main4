@@ -88,7 +88,7 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                         <img src="/src/assets/logo.png" alt="Sanjay Gandhi Polytechnic Logo" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
                     </div>
                     <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
-                        {recoveryType ? (recoveryType === 'password' ? 'Recover Access' : 'Recover Username') : 'Welcome Back'}
+                        {recoveryType ? (recoveryType === 'password' ? 'Recover Access' : 'Forgot Username') : 'Welcome Back'}
                     </h2>
                     <p style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>
                         {recoveryType ? `Enter your registered email to retrieve your ${recoveryType}` : 'Sign in to access your portal'}
@@ -124,7 +124,7 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                                     }}
                                     style={{ background: 'none', border: 'none', color: 'var(--primary-color)', fontSize: '0.75rem', fontWeight: 800, cursor: 'pointer', textDecoration: 'underline' }}
                                 >
-                                    Recover Username?
+                                    Forgot Username?
                                 </button>
                             </div>
                             <div style={{ position: 'relative' }}>
