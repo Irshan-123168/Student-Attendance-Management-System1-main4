@@ -4,7 +4,7 @@ import { ArrowRight, CheckCircle, Users, Shield, Clock, MapPin, Phone, Mail, Glo
 
 // Import local assets
 import logoImg from '../assets/logo.png';
-import brandingBadgesImg from '../assets/branding_badges.png';
+import brandingBannerImg from '../assets/branding_banner.png';
 import facultyGroupImg from '../assets/staff_group.png';
 import courtyardImg from '../assets/campus_courtyard.jpg';
 import frontImg from '../assets/campus_front.jpg';
@@ -40,12 +40,12 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                         transition={{ duration: 0.8, ease: "easeOut" }}
                         style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                     >
-                        {/* Enhanced Logo Container - Rectangular for Wide Logo */}
+                        {/* Main Logo Container */}
                         <div style={{ 
                             width: 'min(90%, 500px)', 
                             height: 'auto', 
                             aspectRatio: '3/1',
-                            marginBottom: '1rem',
+                            marginBottom: '1rem', // Reduced margin
                             padding: '1.5rem',
                             background: 'white',
                             backdropFilter: 'blur(10px)',
@@ -67,33 +67,28 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                             />
                         </div>
 
-                        {/* Branding Badges - NBA, Anniversary, etc. */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.3 }}
-                            style={{ 
-                                marginBottom: '3.5rem', 
-                                background: 'rgba(255, 255, 255, 0.15)',
-                                padding: '12px 24px',
-                                borderRadius: '16px',
-                                backdropFilter: 'blur(10px)',
-                                border: '1px solid rgba(255, 255, 255, 0.2)',
-                                display: 'flex',
-                                justifyContent: 'center'
-                            }}
-                        >
+                        {/* Branding Badges Banner - The new image provided */}
+                        <div style={{
+                            width: 'min(90%, 450px)',
+                            marginBottom: '3rem',
+                            padding: '0.75rem',
+                            background: 'rgba(255, 255, 255, 0.05)',
+                            backdropFilter: 'blur(5px)',
+                            borderRadius: '16px',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
                             <img 
-                                src={brandingBadgesImg} 
-                                alt="NBA Accreditation & Anniversary Branding" 
+                                src={brandingBannerImg} 
+                                alt="Institution Branding Badges" 
                                 style={{ 
-                                    height: '60px', 
-                                    width: 'auto', 
-                                    objectFit: 'contain',
-                                    filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.1))'
+                                    width: '100%', 
+                                    height: 'auto', 
+                                    objectFit: 'contain'
                                 }} 
                             />
-                        </motion.div>
+                        </div>
 
                         <h1 style={{ 
                             fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', 
@@ -589,6 +584,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                 <div className="container" style={{ textAlign: 'center' }}>
                     <div style={{ display: 'flex', justifyContent: 'center', gap: '4rem', opacity: 0.6, flexWrap: 'wrap' }}>
                         <TrustItem label="ISO 9001:2015" />
+                        <TrustItem label="NBA Accredited" />
                         <TrustItem label="AICTE Approved" />
                         <TrustItem label="DTE Affiliated" />
                     </div>
