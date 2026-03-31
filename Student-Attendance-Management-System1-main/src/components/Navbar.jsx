@@ -44,7 +44,7 @@ const Navbar = ({ onNavigateToLogin, onNavigateToRegister, onNavigateToDashboard
 
                 <div className="hidden md:flex items-center gap-8">
                     <a 
-                        href="https://www.sgp.edu.in/" 
+                        href="https://sgpbellary.com/" 
                         target="_blank" 
                         rel="noopener noreferrer" 
                         style={{ 
@@ -108,7 +108,7 @@ const Navbar = ({ onNavigateToLogin, onNavigateToRegister, onNavigateToDashboard
                 >
                     <div className="flex flex-col gap-4">
                         <a 
-                            href="https://www.sgp.edu.in/" 
+                            href="https://sgpbellary.com/" 
                             className="bg-gray-50 flex items-center gap-3 p-3 rounded-xl no-underline font-semibold"
                             style={{ color: 'var(--text-primary)' }}
                         >
