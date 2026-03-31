@@ -122,7 +122,7 @@ const LoginPage = ({ onLogin, onSwitchToRegister, onBackToHome }) => {
                                         setError('');
                                         setRecoveryMessage('');
                                     }}
-                                    style={{ background: 'none', border: 'none', color: 'var(--primary-color)', fontSize: '0.75rem', fontWeight: 400, cursor: 'pointer', textDecoration: 'underline' }}
+                                    style={{ background: 'none', border: 'none', color: 'var(--primary-color)', fontSize: '0.75rem', fontWeight: 400, cursor: 'pointer' }}
                                 >
                                     Forgot Username?
                                 </button>
