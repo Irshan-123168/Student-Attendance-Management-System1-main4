@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle, Users, Shield, Clock, MapPin, Phone, Mail, Globe, Menu, X } from 'lucide-react';
+import { ArrowRight, CheckCircle, Users, Shield, Clock, MapPin, Phone, Mail, Globe, Menu, X, Cpu, HardHat, Settings, Zap, Laptop, Hammer, ChevronRight } from 'lucide-react';
 
 // Import local assets
 import logoImg from '../assets/logo.png';
@@ -28,7 +28,13 @@ const Navbar = ({ onLogin }) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const navLinks = ['Home', 'About', 'Courses', 'Placements', 'Contact'];
+    const navItems = [
+        { name: 'Home', href: '#home' },
+        { name: 'About', href: '#about' },
+        { name: 'Courses', href: '#courses' },
+        { name: 'Placements', href: 'https://www.sgp.edu.in/index.php/placements/placement-training.html', target: '_blank', rel: 'noopener noreferrer' },
+        { name: 'Contact', href: '#contact' }
+    ];
 
     return (
         <>
@@ -107,10 +113,12 @@ const Navbar = ({ onLogin }) => {
                         alignItems: 'center',
                         '--nav-hover-color': isScrolled ? '#1e3a8a' : 'white'
                     }}>
-                        {navLinks.map((link) => (
+                        {navItems.map((item) => (
                             <a 
-                                key={link}
-                                href={`#${link.toLowerCase()}`}
+                                key={item.name}
+                                href={item.href}
+                                target={item.target}
+                                rel={item.rel}
                                 className="nav-link"
                                 style={{
                                     color: isScrolled ? '#4b5563' : 'rgba(255, 255, 255, 0.85)',
@@ -128,7 +136,7 @@ const Navbar = ({ onLogin }) => {
                                     e.currentTarget.style.color = isScrolled ? '#4b5563' : 'rgba(255, 255, 255, 0.85)';
                                 }}
                             >
-                                {link}
+                                {item.name}
                             </a>
                         ))}
                     </nav>
@@ -215,10 +223,12 @@ const Navbar = ({ onLogin }) => {
                             gap: '0.5rem',
                         }}
                     >
-                        {navLinks.map((link) => (
+                        {navItems.map((item) => (
                             <a 
-                                key={link}
-                                href={`#${link.toLowerCase()}`}
+                                key={item.name}
+                                href={item.href}
+                                target={item.target}
+                                rel={item.rel}
                                 style={{
                                     color: '#1e293b',
                                     fontWeight: 600,
@@ -230,7 +240,7 @@ const Navbar = ({ onLogin }) => {
                                 }}
                                 onClick={() => setIsMobileOpen(false)}
                             >
-                                {link}
+                                {item.name}
                             </a>
                         ))}
                         <button 
@@ -273,7 +283,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
         <div style={{ position: 'relative' }}>
             <Navbar onLogin={onLogin} />
             {/* Hero Section */}
-            <section className="hero animated-mesh" style={{ 
+            <section id="home" className="hero animated-mesh" style={{ 
                 minHeight: '100vh', 
                 color: 'white',
                 display: 'flex',
@@ -719,169 +729,179 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                 </div>
             </section>
 
-            {/* About Us & Contact Section */}
-            <section style={{ padding: '100px 2rem', background: '#fcfdfe', borderTop: '1px solid var(--border-color)' }}>
-                <div className="container">
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'flex-start' }}>
-                        {/* About Us Info */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8 }}
-                            viewport={{ once: true }}
-                        >
-                            <h2 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '1.5rem' }}>About Us</h2>
-                            <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', lineHeight: 1.8, marginBottom: '2rem' }}>
-                                Sanjay Gandhi Polytechnic is a premier institution dedicated to excellence in technical education. 
-                                Our state-of-the-art infrastructure and experienced faculty foster an environment that encourages 
-                                innovation and growth, preparing our students for global leadership in engineering.
-                            </p>
-                            <a 
-                                href="https://www.sgp.edu.in/" 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                style={{ 
-                                    display: 'inline-flex', 
-                                    alignItems: 'center', 
-                                    gap: '0.5rem', 
-                                    color: 'var(--primary-color)', 
-                                    fontWeight: 700, 
-                                    textDecoration: 'none',
-                                    marginBottom: '2rem'
-                                }}
-                                className="hover-underline"
-                            >
-                                Learn more at our official website
-                                <ArrowRight size={18} />
+            {/* About Us Section */}
+            <section id="about" style={{ padding: '80px 2rem', background: '#fcfdfe' }}>
+                <div className="container" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+                        <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#1e3a8a', marginBottom: '1rem' }}>About SGP</h2>
+                        <div style={{ background: '#fbbf24', height: '4px', width: '60px', margin: '0 auto', borderRadius: '2px' }}></div>
+                    </div>
+                    <div style={{ 
+                        background: 'white', 
+                        padding: '4rem', 
+                        borderRadius: '24px', 
+                        boxShadow: '0 20px 40px -15px rgba(0,0,0,0.05)',
+                        border: '1px solid rgba(0,0,0,0.02)',
+                        textAlign: 'center'
+                    }}>
+                        <p style={{ color: '#4b5563', fontSize: '1.05rem', lineHeight: 1.8, marginBottom: '1.5rem', fontWeight: 500 }}>
+                            Sanjay Gandhi Polytechnic (SGP), Ballari, was established in 1991 as the first premier private co-educational polytechnic in the region.
+                        </p>
+                        <p style={{ color: '#4b5563', fontSize: '1.05rem', lineHeight: 1.8, marginBottom: '1.5rem', fontWeight: 500 }}>
+                            The institute is recognized by the Government of Karnataka, approved by AICTE, New Delhi, and affiliated with the Directorate of Technical Education (DTE), Bengaluru.
+                        </p>
+                        <p style={{ color: '#4b5563', fontSize: '1.05rem', lineHeight: 1.8, fontWeight: 500 }}>
+                            SGP focuses on academic excellence, practical exposure, and overall student development.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            {/* Courses Section */}
+            <section id="courses" style={{ padding: '80px 2rem', background: '#f8fafc' }}>
+                <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                    <div style={{ 
+                        display: 'grid', 
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+                        gap: '2.5rem' 
+                    }}>
+                        <CourseCard 
+                            icon={<Cpu size={40} />} 
+                            title="Electronics & Communication" 
+                            desc="Advanced circuitry and communication systems." 
+                        />
+                        <CourseCard 
+                            icon={<HardHat size={40} />} 
+                            title="Civil Engineering" 
+                            desc="Infrastructure, construction and design." 
+                        />
+                        <CourseCard 
+                            icon={<Settings size={40} />} 
+                            title="Mechanical Engineering" 
+                            desc="Design, manufacturing, and mechanics." 
+                        />
+                        <CourseCard 
+                            icon={<Zap size={40} />} 
+                            title="Electrical & Electronics" 
+                            desc="Power systems and electrical innovations." 
+                        />
+                        <CourseCard 
+                            icon={<Laptop size={40} />} 
+                            title="Computer Science" 
+                            desc="Software development, coding, and algorithms." 
+                        />
+                        <CourseCard 
+                            icon={<Hammer size={40} />} 
+                            title="Metallurgy" 
+                            desc="Material science and metal processing." 
+                        />
+                    </div>
+                </div>
+            </section>
+
+            {/* Core Values / Trust Section */}
+            <section style={{ padding: '60px 2rem', background: '#fcfdfe' }}>
+                <div className="container" style={{ maxWidth: '800px', margin: '0 auto' }}>
+                    <h3 style={{ textAlign: 'center', fontSize: '1.75rem', fontWeight: 800, color: '#1e3a8a', marginBottom: '2rem' }}>Core Values</h3>
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+                        {['Commitment', 'Equity', 'Team Spirit', 'Transparency', 'Quality'].map(value => (
+                            <div key={value} style={{ 
+                                background: '#1e3a8a', 
+                                color: 'white', 
+                                padding: '0.6rem 1.5rem', 
+                                borderRadius: '100px', 
+                                fontWeight: 600,
+                                fontSize: '0.95rem'
+                            }}>
+                                {value}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Footer / Contact Section */}
+            <footer id="contact" style={{ background: '#072e54', color: 'white', padding: '60px 2rem 30px' }}>
+                <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '4rem', marginBottom: '40px' }}>
+                    {/* Contact Info */}
+                    <div>
+                        <h4 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '2rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1rem' }}>Contact Us</h4>
+                        <p style={{ fontWeight: 600, marginBottom: '1.5rem' }}>Sanjay Gandhi Polytechnic (SGP)</p>
+                        
+                        <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', opacity: 0.9 }}>
+                            <MapPin size={20} style={{ flexShrink: 0 }} />
+                            <span>Ballari – 583104, Karnataka.</span>
+                        </div>
+                        <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', opacity: 0.9 }}>
+                            <Phone size={20} style={{ flexShrink: 0 }} />
+                            <span>08392 266331</span>
+                        </div>
+                        <div style={{ display: 'flex', gap: '1rem', opacity: 0.9 }}>
+                            <Mail size={20} style={{ flexShrink: 0 }} />
+                            <span>sgpbellary@gmail.com</span>
+                        </div>
+                    </div>
+
+                    {/* Quick Links */}
+                    <div>
+                        <h4 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '2rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1rem' }}>Quick Links</h4>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <a href="#about" style={{ color: 'white', textDecoration: 'none', opacity: 0.9, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <ChevronRight size={16} /> About Us
                             </a>
-                            <div style={{ background: 'var(--primary-gradient)', height: '4px', width: '80px', borderRadius: '2px' }}></div>
-                        </motion.div>
-
-                        {/* Contact Address */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8 }}
-                            viewport={{ once: true }}
-                            style={{ background: 'white', padding: '3rem', borderRadius: '32px', boxShadow: '0 20px 50px rgba(0,0,0,0.05)', border: '1px solid var(--border-color)' }}
-                        >
-                            <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '2rem' }}>Reach Us</h3>
-                            
-                            <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
-                                <div style={{ minWidth: '50px', height: '50px', background: '#eff6ff', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary-color)' }}>
-                                    <MapPin size={24} />
-                                </div>
-                                <div style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                                    <strong style={{ display: 'block', color: 'var(--text-primary)', marginBottom: '0.25rem' }}>Location</strong>
-                                    "Vidya Soudha", Sanjay Gandhinagar,<br />
-                                    Ballari - 583104,<br />
-                                    Karnataka State
-                                </div>
-                            </div>
-
-                            <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
-                                <div style={{ minWidth: '50px', height: '50px', background: '#fef2f2', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ef4444' }}>
-                                    <Phone size={24} />
-                                </div>
-                                <div style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                                    <strong style={{ display: 'block', color: 'var(--text-primary)', marginBottom: '0.25rem' }}>Phones</strong>
-                                    Landline: 08392 266331 / 267833<br />
-                                    Mobile: 9008066235 / 8197778607
-                                </div>
-                            </div>
-
-                            <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
-                                <div style={{ minWidth: '50px', height: '50px', background: '#f0fdf4', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#22c55e' }}>
-                                    <Mail size={24} />
-                                </div>
-                                <div style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                                    <strong style={{ display: 'block', color: 'var(--text-primary)', marginBottom: '0.25rem' }}>Email</strong>
-                                    sgpbellary@gmail.com
-                                </div>
-                            </div>
-
-                            <div style={{ display: 'flex', gap: '1.5rem' }}>
-                                <div style={{ minWidth: '50px', height: '50px', background: '#fef3c7', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706' }}>
-                                    <Globe size={24} />
-                                </div>
-                                <div style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                                    <strong style={{ display: 'block', color: 'var(--text-primary)', marginBottom: '0.25rem' }}>Official Website</strong>
-                                    <a href="https://www.sgp.edu.in/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>www.sgp.edu.in</a>
-                                </div>
-                            </div>
-                        </motion.div>
+                            <a href="#courses" style={{ color: 'white', textDecoration: 'none', opacity: 0.9, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <ChevronRight size={16} /> Courses
+                            </a>
+                            <a href="https://www.sgp.edu.in/index.php/placements/placement-training.html" target="_blank" rel="noopener noreferrer" style={{ color: 'white', textDecoration: 'none', opacity: 0.9, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <ChevronRight size={16} /> Placements
+                            </a>
+                            <button onClick={onLogin} style={{ background: 'none', border: 'none', color: 'white', textDecoration: 'none', opacity: 0.9, display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', padding: 0, fontSize: '1rem' }}>
+                                <ChevronRight size={16} /> Portal Login
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </section>
 
-            {/* Features Section */}
-            <section style={{ padding: '100px 2rem', background: '#f8fafc' }}>
-                <div className="container">
-                    <div style={{ textAlign: 'center', marginBottom: '80px' }}>
-                        <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>Enterprise Features</h2>
-                        <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>Powerful tools to manage your institution's registry with ease.</p>
-                    </div>
-
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2.5rem' }}>
-                        <FeatureCard 
-                            icon={<Clock className="text-blue-600" />} 
-                            title="Real-time Tracking" 
-                            desc="Monitor attendance records instantly with our high-speed node synchronization." 
-                        />
-                        <FeatureCard 
-                            icon={<Shield className="text-purple-600" />} 
-                            title="SECURE Protocol" 
-                            desc="Enterprise-grade security ensuring all institutional data remains encrypted and safe." 
-                        />
-                        <FeatureCard 
-                            icon={<Users className="text-indigo-600" />} 
-                            title="Global Directory" 
-                            desc="A centralized hub for all faculty and member identities across the entire campus." 
-                        />
-                    </div>
+                <div style={{ textAlign: 'center', opacity: 0.6, fontSize: '0.9rem', paddingTop: '30px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                    © 2024 Sanjay Gandhi Polytechnic, Ballari. All Rights Reserved.
                 </div>
-            </section>
-
-
-
-            {/* Trust Section */}
-            <section style={{ padding: '60px 2rem', background: '#f8fafc', borderTop: '1px solid var(--border-color)' }}>
-                <div className="container" style={{ textAlign: 'center' }}>
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: '4rem', opacity: 0.6, flexWrap: 'wrap' }}>
-                        <TrustItem label="ISO 9001:2015" />
-                        <TrustItem label="NBA Accredited" />
-                        <TrustItem label="AICTE Approved" />
-                        <TrustItem label="DTE Affiliated" />
-                    </div>
-                </div>
-            </section>
-
-
+            </footer>
         </div>
     );
 };
 
-
-
-const FeatureCard = ({ icon, title, desc }) => (
+const CourseCard = ({ icon, title, desc }) => (
     <motion.div 
-        whileHover={{ translateY: -10 }}
-        className="card" 
-        style={{ padding: '3rem', cursor: 'default' }}
+        whileHover={{ translateY: -10, boxShadow: '0 20px 40px -15px rgba(0,0,0,0.1)' }}
+        style={{ 
+            background: 'white', 
+            padding: '2.5rem 2rem', 
+            borderRadius: '16px', 
+            textAlign: 'center',
+            boxShadow: '0 10px 30px -10px rgba(0,0,0,0.05)',
+            border: '2px solid rgba(0,0,0,0.03)',
+            cursor: 'default',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            transition: 'all 0.3s ease'
+        }}
     >
-        <div style={{ width: '60px', height: '60px', background: 'var(--bg-secondary)', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem', fontSize: '1.5rem' }}>
+        <div style={{ 
+            color: '#1e3a8a', 
+            marginBottom: '1.5rem',
+            width: '80px',
+            height: '80px',
+            borderRadius: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+        }}>
             {icon}
         </div>
-        <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--text-primary)' }}>{title}</h3>
-        <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6, fontSize: '0.95rem' }}>{desc}</p>
+        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#1e3a8a', marginBottom: '1rem' }}>{title}</h3>
+        <p style={{ color: '#4b5563', lineHeight: 1.6, fontSize: '0.95rem' }}>{desc}</p>
     </motion.div>
-);
-
-const TrustItem = ({ label }) => (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-        <CheckCircle size={20} className="text-green-500" />
-        <span style={{ fontWeight: 700, fontSize: '1.1rem', letterSpacing: '0.05em', color: 'var(--text-primary)' }}>{label}</span>
-    </div>
 );
 
 export default HomePage;
