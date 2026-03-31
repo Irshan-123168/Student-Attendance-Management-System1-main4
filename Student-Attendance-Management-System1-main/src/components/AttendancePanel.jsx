@@ -58,12 +58,13 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
 
     const handleEditStart = (s) => {
         setEditingStudent(s.id);
+        const validBranch = subjects[s.branch] ? s.branch : selectedBranch;
         setEditForm({ 
             name: s.name, 
             roll: s.roll, 
             studentClass: s.studentClass, 
             status: s.status,
-            branch: s.branch || selectedBranch,
+            branch: validBranch,
             semester: s.semester || selectedSem,
             section: s.section || selectedSection,
             subject: s.subject || selectedSubject
@@ -172,7 +173,7 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
                             onChange={(e) => setSelectedSubject(e.target.value)}
                             style={{ fontWeight: 700 }}
                         >
-                            {subjects[selectedBranch].map(s => <option key={s} value={s}>{s}</option>)}
+                            {(subjects[selectedBranch] || subjects['DCS']).map(s => <option key={s} value={s}>{s}</option>)}
                         </select>
                     </div>
                 </div>
@@ -378,7 +379,7 @@ const AttendancePanel = ({ students, updateStatus, searchQuery, onUpdateStudent 
                                             className="form-input" value={editForm.subject} 
                                             onChange={(e) => setEditForm({...editForm, subject: e.target.value})}
                                         >
-                                            {subjects[editForm.branch || 'DCS'].map(s => <option key={s} value={s}>{s}</option>)}
+                                            {(subjects[editForm.branch] || subjects['DCS']).map(s => <option key={s} value={s}>{s}</option>)}
                                         </select>
                                     </div>
                                 </div>
