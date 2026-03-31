@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { LogIn, LayoutGrid, Home, Menu, X } from 'lucide-react';
+import { LogIn, LayoutGrid, Home, Menu, X, Globe } from 'lucide-react';
 
 const Navbar = ({ onNavigateToLogin, onNavigateToRegister, onNavigateToDashboard, isAuthenticated }) => {
     const [scrolled, setScrolled] = useState(false);
@@ -43,6 +43,24 @@ const Navbar = ({ onNavigateToLogin, onNavigateToRegister, onNavigateToDashboard
                 </div>
 
                 <div className="hidden md:flex items-center gap-8">
+                    <a 
+                        href="https://www.sgp.edu.in/" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        style={{ 
+                            color: scrolled ? 'var(--text-primary)' : 'white', 
+                            textDecoration: 'none', 
+                            fontWeight: 600, 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            gap: '0.5rem',
+                            opacity: 0.8,
+                            fontSize: '0.95rem'
+                        }}
+                    >
+                        <Globe size={18} />
+                        Official Site
+                    </a>
                     {isAuthenticated ? (
                         <button 
                             onClick={onNavigateToDashboard}
@@ -89,6 +107,14 @@ const Navbar = ({ onNavigateToLogin, onNavigateToRegister, onNavigateToDashboard
                     style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: 'white', padding: '1rem', boxShadow: 'var(--shadow-lg)' }}
                 >
                     <div className="flex flex-col gap-4">
+                        <a 
+                            href="https://www.sgp.edu.in/" 
+                            className="bg-gray-50 flex items-center gap-3 p-3 rounded-xl no-underline font-semibold"
+                            style={{ color: 'var(--text-primary)' }}
+                        >
+                            <Globe size={20} />
+                            Official Institutional Site
+                        </a>
                         {isAuthenticated ? (
                             <button onClick={onNavigateToDashboard} className="btn btn-primary w-full">Dashboard</button>
                         ) : (
