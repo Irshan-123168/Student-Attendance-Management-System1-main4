@@ -155,171 +155,6 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                 </div>
             </section>
 
-            {/* ─── Accreditation & Achievements Banner ─── */}
-            <section style={{
-                padding: '40px 2rem',
-                background: 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%)',
-                borderTop: '4px solid #d4af37',
-                borderBottom: '4px solid #d4af37',
-                position: 'relative',
-                overflow: 'hidden'
-            }}>
-                {/* Subtle background dots */}
-                <div style={{
-                    position: 'absolute', inset: 0,
-                    backgroundImage: 'radial-gradient(circle, rgba(212,175,55,0.08) 1px, transparent 1px)',
-                    backgroundSize: '28px 28px',
-                    pointerEvents: 'none'
-                }} />
-
-                <div className="container" style={{ position: 'relative' }}>
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true }}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '3rem',
-                            flexWrap: 'wrap'
-                        }}
-                    >
-                        {/* ── NBA Accreditation Badge ── */}
-                        <motion.div
-                            whileHover={{ scale: 1.06 }}
-                            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}
-                        >
-                            <div style={{
-                                width: '110px', height: '110px',
-                                borderRadius: '50%',
-                                background: 'linear-gradient(135deg, #1a3a7c, #2563eb)',
-                                border: '4px solid #3b82f6',
-                                boxShadow: '0 0 0 3px rgba(59,130,246,0.3), 0 12px 30px rgba(59,130,246,0.4)',
-                                display: 'flex', flexDirection: 'column',
-                                alignItems: 'center', justifyContent: 'center',
-                                position: 'relative',
-                                cursor: 'default'
-                            }}>
-                                {/* Ring text effect */}
-                                <div style={{
-                                    position: 'absolute', inset: '6px',
-                                    borderRadius: '50%',
-                                    border: '1.5px dashed rgba(255,255,255,0.3)'
-                                }} />
-                                <span style={{ fontSize: '1.8rem', fontWeight: 900, color: 'white', lineHeight: 1, letterSpacing: '-0.04em' }}>NBA</span>
-                                <span style={{ fontSize: '0.5rem', fontWeight: 700, color: 'rgba(255,255,255,0.8)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '2px' }}>ME, EEE</span>
-                            </div>
-                            <div style={{ textAlign: 'center' }}>
-                                <p style={{ color: '#93c5fd', fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', margin: 0 }}>NBA Accredited</p>
-                                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.65rem', margin: 0 }}>Accredited by NAAC</p>
-                            </div>
-                        </motion.div>
-
-                        {/* ── Vertical Divider ── */}
-                        <div style={{ width: '1px', height: '100px', background: 'linear-gradient(to bottom, transparent, rgba(212,175,55,0.5), transparent)', flexShrink: 0 }} />
-
-                        {/* ── Central Title ── */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.15, duration: 0.6 }}
-                            viewport={{ once: true }}
-                            style={{ textAlign: 'center', maxWidth: '380px' }}
-                        >
-                            <p style={{ color: '#d4af37', fontWeight: 700, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '0.4rem' }}>
-                                ✦ Accreditations & Recognition ✦
-                            </p>
-                            <h3 style={{ color: 'white', fontWeight: 900, fontSize: '1.5rem', margin: '0 0 0.4rem', lineHeight: 1.2 }}>
-                                Sanjay Gandhi Polytechnic
-                            </h3>
-                            <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.85rem', margin: 0 }}>
-                                Established 1992 · DTE Karnataka · AICTE Approved
-                            </p>
-                        </motion.div>
-
-                        {/* ── Vertical Divider ── */}
-                        <div style={{ width: '1px', height: '100px', background: 'linear-gradient(to bottom, transparent, rgba(212,175,55,0.5), transparent)', flexShrink: 0 }} />
-
-                        {/* ── 28th Anniversary Medal ── */}
-                        <motion.div
-                            whileHover={{ scale: 1.06, rotate: 5 }}
-                            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}
-                        >
-                            <div style={{
-                                width: '110px', height: '110px',
-                                borderRadius: '50%',
-                                background: 'radial-gradient(circle at 35% 35%, #f9e07a, #d4af37 40%, #a07c1e 80%, #6b5010)',
-                                border: '4px solid #d4af37',
-                                boxShadow: '0 0 0 3px rgba(212,175,55,0.3), 0 12px 30px rgba(212,175,55,0.4), inset 0 2px 4px rgba(255,255,255,0.3)',
-                                display: 'flex', flexDirection: 'column',
-                                alignItems: 'center', justifyContent: 'center',
-                                position: 'relative',
-                                cursor: 'default'
-                            }}>
-                                <div style={{
-                                    position: 'absolute', inset: '6px',
-                                    borderRadius: '50%',
-                                    border: '1.5px solid rgba(255,255,255,0.25)'
-                                }} />
-                                <span style={{ fontSize: '2rem', fontWeight: 900, color: '#3d2800', lineHeight: 1 }}>28<sup style={{ fontSize: '0.9rem' }}>th</sup></span>
-                                <span style={{ fontSize: '0.5rem', fontWeight: 800, color: '#3d2800', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Anniversary</span>
-                            </div>
-                            <div style={{ textAlign: 'center' }}>
-                                <p style={{ color: '#fcd34d', fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', margin: 0 }}>28th Anniversary</p>
-                                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.65rem', margin: 0 }}>Years of Excellence</p>
-                            </div>
-                        </motion.div>
-
-                        {/* ── Vertical Divider ── */}
-                        <div style={{ width: '1px', height: '100px', background: 'linear-gradient(to bottom, transparent, rgba(212,175,55,0.5), transparent)', flexShrink: 0 }} />
-
-                        {/* ── Founder / Principal Portrait ── */}
-                        <motion.div
-                            whileHover={{ scale: 1.06 }}
-                            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}
-                        >
-                            <div style={{
-                                width: '110px', height: '110px',
-                                borderRadius: '50%',
-                                background: 'linear-gradient(135deg, #c2410c, #f97316)',
-                                border: '4px solid #f97316',
-                                boxShadow: '0 0 0 3px rgba(249,115,22,0.3), 0 12px 30px rgba(249,115,22,0.4)',
-                                display: 'flex', flexDirection: 'column',
-                                alignItems: 'center', justifyContent: 'center',
-                                overflow: 'hidden',
-                                position: 'relative',
-                                cursor: 'default'
-                            }}>
-                                {/* Stylised silhouette / avatar */}
-                                <div style={{
-                                    width: '44px', height: '44px',
-                                    borderRadius: '50%',
-                                    background: 'rgba(255,255,255,0.25)',
-                                    marginBottom: '4px'
-                                }} />
-                                <div style={{
-                                    width: '70px', height: '50px',
-                                    borderRadius: '40px 40px 0 0',
-                                    background: 'rgba(255,255,255,0.2)'
-                                }} />
-                                <span style={{
-                                    position: 'absolute', bottom: '10px',
-                                    fontSize: '0.5rem', fontWeight: 800,
-                                    color: 'rgba(255,255,255,0.85)',
-                                    textTransform: 'uppercase', letterSpacing: '0.1em'
-                                }}>Founder</span>
-                            </div>
-                            <div style={{ textAlign: 'center' }}>
-                                <p style={{ color: '#fb923c', fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', margin: 0 }}>Founder</p>
-                                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.65rem', margin: 0 }}>T.E.H.R.D Trust</p>
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                </div>
-            </section>
-
             {/* Institution Highlight Section */}
 
             <section style={{ padding: '40px 2rem', background: '#fcfdfe', position: 'relative', overflow: 'hidden' }}>
@@ -745,25 +580,25 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                             icon={<Building2 size={28} />}
                             title="About Institution"
                             desc="Learn about our history, visionary trust, and academic excellence."
-                            link="https://www.sgp.edu.in/about-us/"
+                            link="https://sgpbellary.com/about_sgp.php"
                         />
                         <QuickLinkCard 
                             icon={<BookOpen size={28} />}
                             title="Courses Offered"
                             desc="Explore our specialized diploma programs in various engineering branches."
-                            link="https://www.sgp.edu.in/courses-offered/"
+                            link="https://sgpbellary.com/departments.php"
                         />
                         <QuickLinkCard 
                             icon={<GraduationCap size={28} />}
                             title="Admissions"
                             desc="Information regarding eligibility, application process, and fee structure."
-                            link="https://www.sgp.edu.in/admissions/"
+                            link="https://sgpbellary.com/admission_procedure.php"
                         />
                         <QuickLinkCard 
                             icon={<Briefcase size={28} />}
                             title="Placement Cell"
                             desc="Our dedicated training and placement hub for career opportunities."
-                            link="https://www.sgp.edu.in/placements/"
+                            link="https://sgpbellary.com/traning_placement.php"
                         />
                     </div>
                 </div>
@@ -799,10 +634,10 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                         <div>
                             <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1.5rem' }}>Quick Links</h4>
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                                <li><FooterLink href="https://www.sgp.edu.in/" label="SGP Official Site" /></li>
-                                <li><FooterLink href="https://www.sgp.edu.in/administrative-body/" label="Administration" /></li>
-                                <li><FooterLink href="https://www.sgp.edu.in/egovernance/" label="E-Governance" /></li>
-                                <li><FooterLink href="https://www.sgp.edu.in/contact-us/" label="Connect With Us" /></li>
+                                <li><FooterLink href="https://sgpbellary.com/" label="SGP Official Site" /></li>
+                                <li><FooterLink href="https://sgpbellary.com/administrative_body.php" label="Administration" /></li>
+                                <li><FooterLink href="https://sgpbellary.com/egovernance.php" label="E-Governance" /></li>
+                                <li><FooterLink href="https://sgpbellary.com/contact_us.php" label="Connect With Us" /></li>
                             </ul>
                         </div>
 
