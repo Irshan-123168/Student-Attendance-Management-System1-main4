@@ -52,7 +52,7 @@ const Navbar = ({ onLogin }) => {
                     height: 2px;
                     bottom: -4px;
                     left: 0;
-                    background-color: #1e3a8a;
+                    background-color: var(--nav-hover-color, #1e3a8a);
                     transition: width 0.3s ease;
                 }
                 .nav-link:hover::after {
@@ -66,19 +66,20 @@ const Navbar = ({ onLogin }) => {
                 left: 0,
                 right: 0,
                 zIndex: 1000,
-                background: isScrolled ? 'rgba(255, 255, 255, 0.98)' : 'rgba(255, 255, 255, 0.9)',
-                backdropFilter: 'blur(12px)',
-                boxShadow: isScrolled ? '0 4px 20px rgba(0, 0, 0, 0.08)' : '0 2px 10px rgba(0,0,0,0.03)',
-                transition: 'all 0.3s ease',
-                borderTop: '4px solid #1e3a8a',
+                background: isScrolled ? 'rgba(255, 255, 255, 0.98)' : 'transparent',
+                backdropFilter: isScrolled ? 'blur(12px)' : 'none',
+                boxShadow: isScrolled ? '0 4px 20px rgba(0, 0, 0, 0.08)' : 'none',
+                transition: 'all 0.4s ease-in-out',
+                borderTop: isScrolled ? '4px solid #1e3a8a' : '4px solid transparent',
             }}>
                 <div style={{
                     maxWidth: '1200px',
                     margin: '0 auto',
-                    padding: '0.75rem 2rem',
+                    padding: isScrolled ? '0.75rem 2rem' : '1.5rem 2rem',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
+                    transition: 'padding 0.4s ease-in-out',
                 }}>
                     {/* Left Side: Logo & Text */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }}>
@@ -90,9 +91,10 @@ const Navbar = ({ onLogin }) => {
                         <span style={{
                             fontSize: '1.4rem',
                             fontWeight: 800,
-                            color: '#1e3a8a',
+                            color: isScrolled ? '#1e3a8a' : 'white',
                             letterSpacing: '-0.02em',
-                            fontFamily: "'Inter', 'Segoe UI', sans-serif"
+                            fontFamily: "'Inter', 'Segoe UI', sans-serif",
+                            transition: 'color 0.4s ease'
                         }}>
                             SGP BALLARI
                         </span>
@@ -102,7 +104,8 @@ const Navbar = ({ onLogin }) => {
                     <nav className="desktop-nav" style={{
                         display: 'flex',
                         gap: '2.5rem',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        '--nav-hover-color': isScrolled ? '#1e3a8a' : 'white'
                     }}>
                         {navLinks.map((link) => (
                             <a 
@@ -110,19 +113,19 @@ const Navbar = ({ onLogin }) => {
                                 href={`#${link.toLowerCase()}`}
                                 className="nav-link"
                                 style={{
-                                    color: '#4b5563',
+                                    color: isScrolled ? '#4b5563' : 'rgba(255, 255, 255, 0.85)',
                                     fontWeight: 600,
                                     textDecoration: 'none',
                                     fontSize: '0.95rem',
-                                    transition: 'color 0.2s ease',
+                                    transition: 'color 0.3s ease',
                                     position: 'relative',
                                     padding: '0.2rem 0'
                                 }}
                                 onMouseEnter={(e) => {
-                                    e.currentTarget.style.color = '#1e3a8a';
+                                    e.currentTarget.style.color = isScrolled ? '#1e3a8a' : 'white';
                                 }}
                                 onMouseLeave={(e) => {
-                                    e.currentTarget.style.color = '#4b5563';
+                                    e.currentTarget.style.color = isScrolled ? '#4b5563' : 'rgba(255, 255, 255, 0.85)';
                                 }}
                             >
                                 {link}
@@ -136,26 +139,37 @@ const Navbar = ({ onLogin }) => {
                             onClick={onLogin}
                             className="login-btn-nav"
                             style={{
-                                backgroundColor: '#1e3a8a',
+                                backgroundColor: isScrolled ? '#1e3a8a' : 'rgba(255, 255, 255, 0.15)',
                                 color: 'white',
                                 padding: '0.6rem 1.75rem',
                                 borderRadius: '100px',
                                 fontWeight: 700,
                                 fontSize: '0.95rem',
-                                border: 'none',
+                                border: isScrolled ? '1px solid transparent' : '1px solid rgba(255,255,255,0.4)',
                                 cursor: 'pointer',
                                 transition: 'all 0.3s ease',
-                                boxShadow: '0 4px 12px rgba(30, 58, 138, 0.25)',
+                                boxShadow: isScrolled ? '0 4px 12px rgba(30, 58, 138, 0.25)' : 'none',
+                                backdropFilter: isScrolled ? 'none' : 'blur(10px)'
                             }}
                             onMouseEnter={(e) => {
                                 e.currentTarget.style.transform = 'translateY(-2px)';
-                                e.currentTarget.style.boxShadow = '0 6px 16px rgba(30, 58, 138, 0.35)';
-                                e.currentTarget.style.backgroundColor = '#172554';
+                                if (isScrolled) {
+                                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(30, 58, 138, 0.35)';
+                                    e.currentTarget.style.backgroundColor = '#172554';
+                                } else {
+                                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
+                                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.6)';
+                                }
                             }}
                             onMouseLeave={(e) => {
                                 e.currentTarget.style.transform = 'translateY(0)';
-                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(30, 58, 138, 0.25)';
-                                e.currentTarget.style.backgroundColor = '#1e3a8a';
+                                if (isScrolled) {
+                                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(30, 58, 138, 0.25)';
+                                    e.currentTarget.style.backgroundColor = '#1e3a8a';
+                                } else {
+                                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+                                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
+                                }
                             }}
                         >
                             Login
@@ -168,10 +182,10 @@ const Navbar = ({ onLogin }) => {
                                 background: 'transparent',
                                 border: 'none',
                                 cursor: 'pointer',
-                                color: '#1e3a8a',
+                                color: isScrolled ? '#1e3a8a' : 'white',
                                 padding: '0.5rem',
                                 display: 'none',
-                                transition: 'transform 0.2s ease'
+                                transition: 'transform 0.2s ease, color 0.4s ease'
                             }}
                             onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                             onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
