@@ -440,3 +440,84 @@ tr:hover td {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--text-light);
 }
+
+/* Homepage Badges Section - Strict Minimalist Layout */
+.highlight-section {
+    padding: 60px 2rem;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.badges-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; /* Equal spacing */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.badge-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px; /* Same size for all */
+    height: 200px;
+}
+
+.badge-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+}
+
+.badge-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Use to select specific circle from composite */
+    display: block;
+}
+
+/* Specific Positions for composite image 28newcom.png */
+.badge-nba .badge-image {
+    object-position: 0% 50%;
+}
+
+.badge-anniversary .badge-image {
+    object-position: 50% 50%;
+}
+
+.badge-portrait .badge-image {
+    object-position: 100% 50%;
+}
+
+@media (max-width: 1024px) {
+    .badges-container {
+        gap: 30px;
+    }
+    .badge-wrapper, .badge-circle {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .badges-container {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .badge-wrapper, .badge-circle {
+        width: 200px;
+        height: 200px;
+    }
+}

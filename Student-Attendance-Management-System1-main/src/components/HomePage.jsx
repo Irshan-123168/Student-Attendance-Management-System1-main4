@@ -10,6 +10,7 @@ import frontImg from '../assets/campus_front.jpg';
 import labImg from '../assets/computer_lab.jpg';
 import classroomImg from '../assets/classroom_session.png';
 import facultyMeetingImg from '../assets/faculty_meeting.png';
+import badgesBannerImg from '../assets/badges_banner.png';
 
 const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
     return (
@@ -66,28 +67,7 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                             />
                         </div>
 
-                        {/* Branding Badges Banner - The new image provided */}
-                        <div style={{
-                            width: 'min(90%, 450px)',
-                            marginBottom: '3rem',
-                            padding: '0.75rem',
-                            background: 'rgba(255, 255, 255, 0.05)',
-                            backdropFilter: 'blur(5px)',
-                            borderRadius: '16px',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <img 
-                                src={brandingBannerImg} 
-                                alt="Institution Branding Badges" 
-                                style={{ 
-                                    width: '100%', 
-                                    height: 'auto', 
-                                    objectFit: 'contain'
-                                }} 
-                            />
-                        </div>
+                        {/* Branding Badges Banner - Placeholder or removed until proper image is available */}
 
                         <h1 style={{ 
                             fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', 
@@ -177,8 +157,37 @@ const HomePage = ({ onLogin, onRegister, onDashboard, isAuthenticated }) => {
                     </motion.div>
                 </div>
             </section>
+ 
+             {/* Highlands Highlight Section */}
+             <section className="highlight-section">
+                <div className="container" style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className="badges-container">
+                        {/* First Item: NBA Accreditation */}
+                        <div className="badge-wrapper">
+                            <div className="badge-circle badge-nba">
+                                <img src={badgesBannerImg} alt="NBA Accreditation" className="badge-image" />
+                            </div>
+                        </div>
 
-            {/* Institution Highlight Section */}
+                        {/* Second Item: 28th Anniversary Badge */}
+                        <div className="badge-wrapper">
+                            <div className="badge-circle badge-anniversary">
+                                <img src={badgesBannerImg} alt="28th Anniversary" className="badge-image" />
+                            </div>
+                        </div>
+
+                        {/* Third Item: Portrait of Elderly Woman */}
+                        <div className="badge-wrapper">
+                            <div className="badge-circle badge-portrait">
+                                <img src={badgesBannerImg} alt="Portrait" className="badge-image" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </section>
+
+             {/* Institution Highlight Section */}
+
 
             <section style={{ padding: '40px 2rem', background: '#fcfdfe', position: 'relative', overflow: 'hidden' }}>
                 <div className="container" style={{ position: 'relative' }}>
