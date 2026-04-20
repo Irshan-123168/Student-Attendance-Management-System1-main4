@@ -12,6 +12,20 @@ const AdminDashboard = ({ user, users = [], students = [], onNavigate, searchQue
     const [status, setStatus] = useState({ type: '', message: '' });
     const [showRegistryPopup, setShowRegistryPopup] = useState(false);
     const [selectedSection, setSelectedSection] = useState('All');
+    const [leaveRequests, setLeaveRequests] = useState([]);
+
+    React.useEffect(() => {
+        loadLeaveRequests();
+    }, []);
+
+    const loadLeaveRequests = async () => {
+        try {
+            const data = await api.getLeaveRequests();
+            setLeaveRequests(data);
+        } catch (error) {
+            console.error("Failed to load leave requests:", error);
+        }
+    };
 
     const handleFinalizeRegistry = () => {
         setShowRegistryPopup(true);
@@ -70,7 +84,7 @@ const AdminDashboard = ({ user, users = [], students = [], onNavigate, searchQue
                 <AdminCard icon={<Users />} title="Total Users" value={users.length || "0"} color="#6366f1" />
                 <AdminCard icon={<Shield />} title="Total Students" value={students.length || "0"} color="#10b981" />
                 <AdminCard icon={<Activity />} title="Global Attendance" value={`${globalAttendance}%`} color="#10b981" />
-                <AdminCard icon={<FileText />} title="Active Records" value={students.filter(s => s.status !== 'Pending').length} color="#f59e0b" />
+                <AdminCard icon={<ClipboardCheck />} title="Pending Authorizations" value={leaveRequests.filter(r => r.status === 'Pending').length} color="#f59e0b" />
             </div>
 
             <div className="card" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1.5rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}>
@@ -106,6 +120,7 @@ const AdminDashboard = ({ user, users = [], students = [], onNavigate, searchQue
                         <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Management Quick Links</h3>
                         <div className="grid grid-cols-2 gap-4">
                              <QuickLink label="Finalize Log Registry" desc="Commit && Confirm Registry" onClick={handleFinalizeRegistry} highlight />
+                            <QuickLink label="Leave Gateway" desc="Review Authorizations" onClick={() => onNavigate('leave')} highlight={leaveRequests.some(r => r.status === 'Pending')} />
                             <QuickLink label="Download Registry" desc="Export CSV" onClick={() => generateRegistryExport(students)} />
                             <QuickLink label="Generate Report" desc="Full Ledger" onClick={() => generateStudentReport(students)} />
                             <QuickLink label="Security Audit" desc="Verified Trace" onClick={() => onNavigate('reports')} />

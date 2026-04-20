@@ -12,6 +12,20 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '', setti
     const [newKey, setNewKey] = useState('');
     const [status, setStatus] = useState({ type: '', message: '' });
     const [selectedSection, setSelectedSection] = useState('All');
+    const [leaveRequests, setLeaveRequests] = useState([]);
+
+    React.useEffect(() => {
+        loadLeaveRequests();
+    }, []);
+
+    const loadLeaveRequests = async () => {
+        try {
+            const data = await api.getLeaveRequests();
+            setLeaveRequests(data);
+        } catch (error) {
+            console.error("Failed to load leave requests:", error);
+        }
+    };
 
     const handleUpdateKey = async (e) => {
         e.preventDefault();
@@ -48,6 +62,9 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '', setti
         ? Math.round((filteredBySection.filter(s => s.status === 'Present').length / (filteredBySection.length || 1)) * 100) 
         : 0;
 
+    const pendingLeaveRequests = leaveRequests.filter(r => r.status === 'Pending');
+    const actionsRequiredCount = filteredBySection.filter(s => s.status === 'Absent').length + pendingLeaveRequests.length;
+
     const filteredStudents = filteredBySection.filter(s => 
         (s.name || '').toLowerCase().includes((searchQuery || '').toLowerCase()) || 
         (s.roll || '').toLowerCase().includes((searchQuery || '').toLowerCase())
@@ -72,7 +89,7 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '', setti
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <HODMetricCard icon={<Users />} title="Identified Learners" value={filteredBySection.length} color="#6366f1" />
                 <HODMetricCard icon={<TrendingUp />} title="Presence Rate" value={`${presentRate}%`} color="#10b981" />
-                <HODMetricCard icon={<AlertTriangle />} title="Action Required" value={filteredBySection.filter(s => s.status === 'Absent').length} color="#ef4444" />
+                <HODMetricCard icon={<AlertTriangle />} title="Action Required" value={actionsRequiredCount} color="#ef4444" />
             </div>
 
             <div className="card" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1.5rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}>
@@ -105,9 +122,22 @@ const HodDashboard = ({ user, students = [], onNavigate, searchQuery = '', setti
                 <div className="card">
                     <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Node Activity Stream</h3>
                     <div className="space-y-4">
-                        <DeptActivityItem msg="DCS Seminar attendance sync completed" time="15m ago" type="INFO" />
-                        <DeptActivityItem msg="High absence alert in Node: SEM-04-B" time="2h ago" type="WARNING" />
-                        <DeptActivityItem msg="Faculty authorization updated for DME-01" time="4h ago" type="SUCCESS" />
+                        {pendingLeaveRequests.length > 0 ? (
+                            pendingLeaveRequests.map((req, idx) => (
+                                <DeptActivityItem 
+                                    key={req.id || idx}
+                                    msg={`Pending Authorization: ${req.type} for ${req.facultyName}`} 
+                                    time={`${req.startDate} (${req.duration} days)`} 
+                                    type="WARNING" 
+                                />
+                            ))
+                        ) : (
+                            <>
+                                <DeptActivityItem msg="DCS Seminar attendance sync completed" time="15m ago" type="INFO" />
+                                <DeptActivityItem msg="High absence alert in Node: SEM-04-B" time="2h ago" type="WARNING" />
+                                <DeptActivityItem msg="Faculty authorization updated for DME-01" time="4h ago" type="SUCCESS" />
+                            </>
+                        )}
                     </div>
                 </div>
 

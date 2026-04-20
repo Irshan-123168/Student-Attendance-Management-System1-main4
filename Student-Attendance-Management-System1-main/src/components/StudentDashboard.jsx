@@ -108,6 +108,7 @@ const StudentDashboard = ({ user, students = [], onNavigate, searchQuery = '', s
                     <h3 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Registry Actions</h3>
                     <div className="space-y-3">
                         <ActionButton icon={<CheckCircle />} label="Finalize Log Registry" color="#10b981" onClick={handleFinalizeRegistry} highlight />
+                        <ActionButton icon={<Clock />} label="Leave Gateway" color="#6366f1" onClick={() => onNavigate('leave')} />
                         <ActionButton icon={<Download />} label="Download Registry" color="#6366f1" onClick={() => generateRegistryExport(students)} />
                         <ActionButton icon={<FileText />} label="Syllabus DCS C-25 (PDF)" color="#ec4899" onClick={() => window.open('https://dtek.karnataka.gov.in/storage/pdf-files/ACM/C_25_Draft_1_4_ComputerScience&Engineering.pdf', '_blank')} />
                         <ActionButton icon={<FileText />} label="Syllabus C-20 (Web)" color="#8b5cf6" onClick={() => window.open('https://dtek.karnataka.gov.in/52/c-20-syllabus/en', '_blank')} />
