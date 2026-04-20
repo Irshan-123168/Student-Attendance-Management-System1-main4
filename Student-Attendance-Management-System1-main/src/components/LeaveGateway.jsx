@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ClipboardList, Plus, Clock, CheckCircle, XCircle, FileText, Send } from 'lucide-react';
+import { ClipboardList, Plus, Clock, CheckCircle, XCircle, FileText, Send, User } from 'lucide-react';
+import { api } from '../api';
 
 const LeaveGateway = ({ user }) => {
     const [isApplying, setIsApplying] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
-    const [requests, setRequests] = useState([
-        { id: 1, type: 'Medical', reason: 'Institutional Health Recovery', status: 'Approved', date: '2024-03-10' },
-        { id: 2, type: 'Personal', reason: 'External Node Synchronization', status: 'Pending', date: '2024-03-14' }
-    ]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [requests, setRequests] = useState([]);
 
     const [formData, setFormData] = useState({
         type: 'Educational Sync',
@@ -17,36 +16,71 @@ const LeaveGateway = ({ user }) => {
         reason: ''
     });
 
-    const handleSubmit = (e) => {
+    useEffect(() => {
+        loadRequests();
+    }, []);
+
+    const loadRequests = async () => {
+        setIsLoading(true);
+        try {
+            let data;
+            // HOD and ADMIN see all requests
+            if (user?.role === 'HOD' || user?.role === 'ADMIN') {
+                data = await api.getLeaveRequests();
+            } else {
+                // Others see only their own
+                data = await api.getFacultyLeaveRequests(user?.id);
+            }
+            setRequests(data);
+        } catch (error) {
+            console.error('Failed to load leave requests:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const newRequest = {
-            id: Date.now(),
-            type: formData.type.split(' ')[0], // Extract first word
-            reason: formData.reason,
-            status: 'Pending',
-            date: formData.startDate
-        };
-        setRequests([newRequest, ...requests]);
-        setSuccessMessage(true);
-        setIsApplying(false);
-        setFormData({ type: 'Educational Sync', duration: 1, reason: '' });
-        
-        setTimeout(() => setSuccessMessage(false), 3000);
+        try {
+            const newRequest = {
+                facultyId: user.id,
+                facultyName: user.username,
+                type: formData.type.split(' ')[0], // Extract first word
+                reason: formData.reason,
+                startDate: formData.startDate,
+                duration: parseInt(formData.duration),
+                appliedDate: new Date().toISOString().split('T')[0]
+            };
+            await api.createLeaveRequest(newRequest);
+            setSuccessMessage(true);
+            setIsApplying(false);
+            setFormData({ type: 'Educational Sync', duration: 1, reason: '', startDate: new Date().toISOString().split('T')[0] });
+            loadRequests();
+            setTimeout(() => setSuccessMessage(false), 3000);
+        } catch (error) {
+            alert('Failed to submit leave request: ' + error.message);
+        }
     };
 
-    const handleApprove = (id) => {
-        setRequests(requests.map(req => 
-            req.id === id ? { ...req, status: 'Approved' } : req
-        ));
+    const handleApprove = async (id) => {
+        try {
+            await api.updateLeaveRequestStatus(id, 'Approved');
+            loadRequests();
+        } catch (error) {
+            alert('Failed to approve request: ' + error.message);
+        }
     };
 
-    const handleDisapprove = (id) => {
-        setRequests(requests.map(req => 
-            req.id === id ? { ...req, status: 'Rejected' } : req
-        ));
+    const handleDisapprove = async (id) => {
+        try {
+            await api.updateLeaveRequestStatus(id, 'Rejected');
+            loadRequests();
+        } catch (error) {
+            alert('Failed to reject request: ' + error.message);
+        }
     };
 
-    const isAuthority = user?.role === 'HOD' || user?.role === 'ADMIN' || user?.role === 'TEACHER';
+    const isAuthority = user?.role === 'HOD' || user?.role === 'ADMIN';
 
     return (
         <div className="animate-fade space-y-8">
@@ -83,53 +117,70 @@ const LeaveGateway = ({ user }) => {
                 {/* Active Ledger */}
                 <div className="lg:col-span-2 space-y-4">
                     <h3 style={{ fontWeight: 700, fontSize: '1.1rem', marginBottom: '1.5rem' }}>Active Ledger</h3>
-                    {requests.map((req, idx) => (
-                        <motion.div 
-                            key={req.id}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: idx * 0.1 }}
-                            className="card"
-                            style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-                        >
-                            <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
-                                <div style={{ width: '48px', height: '48px', background: 'var(--bg-tertiary)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary-color)' }}>
-                                    <FileText size={24} />
-                                </div>
-                                <div>
-                                    <p style={{ fontWeight: 700, fontSize: '1rem' }}>{req.type} Authorization</p>
-                                    <p style={{ fontSize: '0.8125rem', color: 'var(--text-light)', fontWeight: 500 }}>{req.reason}</p>
-                                </div>
-                            </div>
-                            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                                <div style={{ textAlign: 'right' }}>
-                                    <span className={`badge badge-${req.status === 'Approved' ? 'success' : req.status === 'Rejected' ? 'danger' : 'warning'}`}>
-                                        {req.status}
-                                    </span>
-                                    <p style={{ fontSize: '0.75rem', color: 'var(--text-light)', marginTop: '0.5rem', fontWeight: 600 }}>{req.date}</p>
-                                </div>
-                                {isAuthority && req.status === 'Pending' && (
-                                    <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                        <button 
-                                            onClick={() => handleApprove(req.id)}
-                                            className="btn btn-primary"
-                                            style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem', borderRadius: '8px', background: 'var(--success-color)', borderColor: 'var(--success-color)' }}
-                                        >
-                                            Approve
-                                        </button>
-                                        <button 
-                                            onClick={() => handleDisapprove(req.id)}
-                                            className="btn btn-secondary"
-                                            style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem', borderRadius: '8px', color: 'var(--error-color)', borderColor: 'var(--error-color)' }}
-                                        >
-                                            Disapprove
-                                        </button>
+                    {isLoading ? (
+                        <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-light)' }}>
+                            <div className="animate-spin" style={{ display: 'inline-block', marginBottom: '1rem' }}><Clock size={32} /></div>
+                            <p style={{ fontWeight: 600 }}>Synchronizing Security Ledger...</p>
+                        </div>
+                    ) : requests.length > 0 ? (
+                        requests.map((req, idx) => (
+                            <motion.div 
+                                key={req.id}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: idx * 0.1 }}
+                                className="card"
+                                style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                            >
+                                <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
+                                    <div style={{ width: '48px', height: '48px', background: 'var(--bg-tertiary)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary-color)' }}>
+                                        <FileText size={24} />
                                     </div>
-                                )}
+                                    <div>
+                                        <p style={{ fontWeight: 700, fontSize: '1rem' }}>{req.type} Authorization</p>
+                                        <p style={{ fontSize: '0.8125rem', color: 'var(--text-light)', fontWeight: 500 }}>{req.reason}</p>
+                                        {isAuthority && (
+                                            <p style={{ fontSize: '0.75rem', color: 'var(--primary-color)', fontWeight: 700, marginTop: '0.25rem' }}>
+                                                BY: {req.facultyName || 'Unknown Faculty'}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+                                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                                    <div style={{ textAlign: 'right' }}>
+                                        <span className={`badge badge-${req.status === 'Approved' ? 'success' : req.status === 'Rejected' ? 'danger' : 'warning'}`}>
+                                            {req.status}
+                                        </span>
+                                        <p style={{ fontSize: '0.75rem', color: 'var(--text-light)', marginTop: '0.5rem', fontWeight: 600 }}>{req.startDate}</p>
+                                    </div>
+                                    {isAuthority && req.status === 'Pending' && (
+                                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                            <button 
+                                                onClick={() => handleApprove(req.id)}
+                                                className="btn btn-primary"
+                                                style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem', borderRadius: '8px', background: 'var(--success-color)', borderColor: 'var(--success-color)' }}
+                                            >
+                                                Approve
+                                            </button>
+                                            <button 
+                                                onClick={() => handleDisapprove(req.id)}
+                                                className="btn btn-secondary"
+                                                style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem', borderRadius: '8px', color: 'var(--error-color)', borderColor: 'var(--error-color)' }}
+                                            >
+                                                Disapprove
+                                            </button>
+                                        </div>
+                                    )}
 
-                            </div>
-                        </motion.div>
-                    ))}
+                                </div>
+                            </motion.div>
+                        ))
+                    ) : (
+                        <div className="card" style={{ textAlign: 'center', padding: '3rem', borderStyle: 'dashed' }}>
+                            <ClipboardList size={48} style={{ margin: '0 auto 1rem', color: 'var(--text-light)', opacity: 0.5 }} />
+                            <p style={{ color: 'var(--text-light)', fontWeight: 600 }}>No permission protocols found in ledger.</p>
+                        </div>
+                    )}
                 </div>
 
                 {/* Gateway Stats */}

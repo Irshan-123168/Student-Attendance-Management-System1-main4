@@ -216,6 +216,59 @@ export const api = {
             console.error('Add student error:', error);
             throw error;
         }
+    },
+
+    // Leave Request endpoints
+    async getLeaveRequests() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/leave-requests`);
+            if (!response.ok) throw new Error('Failed to fetch leave requests');
+            return response.json();
+        } catch (error) {
+            console.error('Fetch leave requests error:', error);
+            throw error;
+        }
+    },
+
+    async getFacultyLeaveRequests(facultyId) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/leave-requests/faculty/${facultyId}`);
+            if (!response.ok) throw new Error('Failed to fetch faculty leave requests');
+            return response.json();
+        } catch (error) {
+            console.error('Fetch faculty leave requests error:', error);
+            throw error;
+        }
+    },
+
+    async createLeaveRequest(requestData) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/leave-requests`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(requestData)
+            });
+            if (!response.ok) throw new Error('Failed to create leave request');
+            return response.json();
+        } catch (error) {
+            console.error('Create leave request error:', error);
+            throw error;
+        }
+    },
+
+    async updateLeaveRequestStatus(id, status) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/leave-requests/${id}/status`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status })
+            });
+            if (!response.ok) throw new Error('Failed to update leave request status');
+            return response.json();
+        } catch (error) {
+            console.error('Update leave request status error:', error);
+            throw error;
+        }
     }
 };
 
