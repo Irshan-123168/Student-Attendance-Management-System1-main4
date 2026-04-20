@@ -248,7 +248,10 @@ export const api = {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestData)
             });
-            if (!response.ok) throw new Error('Failed to create leave request');
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(errorText || 'Failed to create leave request');
+            }
             return response.json();
         } catch (error) {
             console.error('Create leave request error:', error);
